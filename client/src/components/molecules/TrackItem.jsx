@@ -5,7 +5,7 @@ const TrackItem = ({ track }) => {
   return (
     <li>
       <p>{track.titles.full}</p>
-      <Link to={`/lyrics/${track.id}`}>
+      <Link to={`/tracks/${track.id}`}>
         <button type='button'>View Lyrics</button>
       </Link>
     </li>

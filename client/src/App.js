@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
-import Search from './components/organisms/Search';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Search from './components/organisms/Search';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
 import Lyrics from './components/organisms/Lyrics';
+import './App.css';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,13 +19,13 @@ function App() {
   return (
     <div className='App'>
       <h1>Lyrichee</h1>
-      <Search setIsLoading={setIsLoading} setTracks={setTracks} />
       <BrowserRouter>
+        <Search setIsLoading={setIsLoading} setTracks={setTracks} />
         <Switch>
-          <Route exact path='/'>
+          <Route exact path='/search'>
             {trackListDisplay}
           </Route>
-          <Route exact path='/lyrics/:id'>
+          <Route exact path='/tracks/:id'>
             <Lyrics />
           </Route>
         </Switch>

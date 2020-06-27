@@ -35,7 +35,7 @@ const Lyrics = () => {
 
   useEffect(() => {
     axios
-      .get(`/tracks/lyrics/${id}`)
+      .get(`/tracks/${id}`)
       .then((res) => {
         setTrack(res.data.track);
         setLyrics(res.data.lyrics);
