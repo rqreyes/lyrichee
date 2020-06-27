@@ -32,6 +32,7 @@ const Search = ({ setIsLoading, setTracks }) => {
           type='text'
           value={search}
           onChange={(evt) => setSearch(evt.target.value)}
+          required
         />
         <button type='submit'>Search Lyrics</button>
       </form>

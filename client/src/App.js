@@ -4,6 +4,7 @@ import Search from './components/organisms/Search';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
 import Lyrics from './components/organisms/Lyrics';
+import NotFound from './components/organisms/NotFound';
 import './App.css';
 
 function App() {
@@ -22,11 +23,15 @@ function App() {
       <BrowserRouter>
         <Search setIsLoading={setIsLoading} setTracks={setTracks} />
         <Switch>
+          <Route exact path='/'></Route>
           <Route exact path='/search'>
             {trackListDisplay}
           </Route>
           <Route exact path='/tracks/:id'>
             <Lyrics />
+          </Route>
+          <Route>
+            <NotFound />
           </Route>
         </Switch>
       </BrowserRouter>

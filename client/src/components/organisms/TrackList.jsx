@@ -6,7 +6,12 @@ const TrackList = ({ tracks }) => {
     <TrackItem key={track.id} track={track} />
   ));
 
-  return <ul>{trackItemDisplay}</ul>;
+  return (
+    <section>
+      <h2>Search Results</h2>
+      <ul>{trackItemDisplay}</ul>
+    </section>
+  );
 };
 
 export default TrackList;
