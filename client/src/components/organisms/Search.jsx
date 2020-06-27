@@ -2,14 +2,18 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-const Search = ({ setTracks }) => {
+const Search = ({ setIsLoading, setTracks }) => {
   const [search, setSearch] = useState('');
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsLoading((prev) => !prev);
 
     axios
       .get(`/lyrics/${search}`)
-      .then((res) => setTracks(res.data))
+      .then((res) => {
+        setIsLoading((prev) => !prev);
+        setTracks(res.data);
+      })
       .catch((err) => console.log(err));
 
     setSearch('');
