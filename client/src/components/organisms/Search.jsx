@@ -9,7 +9,7 @@ const Search = ({ setIsLoading, setTracks }) => {
     setIsLoading((prev) => !prev);
 
     axios
-      .get(`/lyrics/${search}`)
+      .get(`/tracks/${search}`)
       .then((res) => {
         setIsLoading((prev) => !prev);
         setTracks(res.data);
