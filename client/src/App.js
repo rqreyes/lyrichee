@@ -9,6 +9,7 @@ import Lyrics from './components/organisms/Lyrics';
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
+
   const trackListDisplay = isLoading ? (
     <Spinner />
   ) : tracks.length === 0 ? null : (

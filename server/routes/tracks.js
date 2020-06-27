@@ -8,14 +8,7 @@ router.get('/:search', (req, res) => {
 
   Genius.tracks
     .search(req.params.search)
-    .then((results) => {
-      // const song = results[0];
-      // console.log('results: ', results);
-      // song.lyrics().then((lyrics) => {
-      //   console.log(lyrics);
-      // });
-      res.json(results.slice(0, 20));
-    })
+    .then((results) => res.json(results))
     .catch((err) => console.error(err));
 });
 

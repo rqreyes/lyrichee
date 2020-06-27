@@ -26,6 +26,7 @@ const Search = ({ setIsLoading, setTracks }) => {
         value={search}
         onChange={(evt) => setSearch(evt.target.value)}
       />
+      <button type='submit'>Search Tracks</button>
     </form>
   );
 };
