@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Search from './components/organisms/Search';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
+import Artist from './components/organisms/Artist';
 import Lyrics from './components/organisms/Lyrics';
 import NotFound from './components/organisms/NotFound';
 import './App.css';
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route exact path='/tracks/:id'>
             <Lyrics />
+          </Route>
+          <Route exact path='/artist/:id'>
+            <Artist />
           </Route>
           <Route>
             <NotFound />

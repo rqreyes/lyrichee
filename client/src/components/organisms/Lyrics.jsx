@@ -12,22 +12,31 @@ const Lyrics = () => {
   if (Object.keys(track) === 0 || lyrics === '') {
     lyricsDisplay = <Spinner />;
   } else {
-    const videoURL = track.raw.media
-      .find((media) => media.provider === 'youtube')
-      .url.replace('watch?v=', 'embed/');
+    let videoDisplay;
+    const videoURL = track.raw.media.find(
+      (media) => media.provider === 'youtube'
+    );
 
-    lyricsDisplay = (
-      <Fragment>
-        <h2>{track.titles.full}</h2>
+    if (videoURL) {
+      videoDisplay = (
         <iframe
           width='560'
           height='315'
-          src={`${videoURL}`}
+          src={`${videoURL.replace('watch?v=', 'embed/')}`}
           frameBorder='0'
           allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
           allowFullScreen
           title='music video'
         ></iframe>
+      );
+    } else {
+      videoDisplay = null;
+    }
+
+    lyricsDisplay = (
+      <Fragment>
+        <h2>{track.titles.full}</h2>
+        {videoDisplay}
         <pre>{lyrics}</pre>
       </Fragment>
     );
