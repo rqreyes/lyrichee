@@ -20,8 +20,8 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>Lyrichee</h1>
       <BrowserRouter>
+        <h1>Lyrichee</h1>
         <Search setIsLoading={setIsLoading} setTracks={setTracks} />
         <Switch>
           <Route exact path='/'></Route>
