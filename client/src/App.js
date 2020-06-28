@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import Search from './components/organisms/Search';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
@@ -21,7 +21,9 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <h1>Lyrichee</h1>
+        <Link to='/'>
+          <h1>Lyrichee</h1>
+        </Link>
         <Search setIsLoading={setIsLoading} setTracks={setTracks} />
         <Switch>
           <Route exact path='/'></Route>
