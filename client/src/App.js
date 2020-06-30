@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import Search from './components/organisms/Search';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
+import ArtistList from './components/organisms/ArtistList';
 import Artist from './components/organisms/Artist';
 import Lyrics from './components/organisms/Lyrics';
 import NotFound from './components/organisms/NotFound';
@@ -11,11 +12,16 @@ import './App.css';
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [tracks, setTracks] = useState([]);
+  const [artists, setArtists] = useState([]);
 
-  const trackListDisplay = isLoading ? (
+  const searchResultsDisplay = isLoading ? (
     <Spinner />
   ) : tracks.length === 0 ? null : (
-    <TrackList tracks={tracks} />
+    <Fragment>
+      <h2>Search Results</h2>
+      <TrackList tracks={tracks} />
+      <ArtistList artists={artists} />
+    </Fragment>
   );
 
   return (
@@ -24,11 +30,15 @@ function App() {
         <Link to='/'>
           <h1>Lyrichee</h1>
         </Link>
-        <Search setIsLoading={setIsLoading} setTracks={setTracks} />
+        <Search
+          setIsLoading={setIsLoading}
+          setTracks={setTracks}
+          setArtists={setArtists}
+        />
         <Switch>
           <Route exact path='/'></Route>
           <Route exact path='/search'>
-            {trackListDisplay}
+            {searchResultsDisplay}
           </Route>
           <Route exact path='/tracks/:id'>
             <Lyrics />

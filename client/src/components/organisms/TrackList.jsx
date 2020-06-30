@@ -8,7 +8,7 @@ const TrackList = ({ tracks }) => {
 
   return (
     <section>
-      <h2>Search Results</h2>
+      <h3>Tracks</h3>
       <ul>{trackItemDisplay}</ul>
     </section>
   );
