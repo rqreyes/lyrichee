@@ -6,6 +6,7 @@ import TrackList from './components/organisms/TrackList';
 import ArtistList from './components/organisms/ArtistList';
 import Artist from './components/organisms/Artist';
 import Lyrics from './components/organisms/Lyrics';
+import Footer from './components/organisms/Footer';
 import NotFound from './components/organisms/NotFound';
 import './styles/styles.scss';
 
@@ -51,6 +52,9 @@ function App() {
             </Route>
           </Switch>
         </main>
+        <footer>
+          <Footer />
+        </footer>
       </BrowserRouter>
     </div>
   );

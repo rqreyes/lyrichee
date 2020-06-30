@@ -16,6 +16,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: $brown;
   background: $white;
   position: relative;
 
@@ -38,7 +39,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
 }
 
 input {
@@ -57,5 +57,14 @@ button {
 
   &:hover {
     background: $green-dark;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
