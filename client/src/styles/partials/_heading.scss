@@ -1,0 +1,17 @@
+.heading {
+  margin-bottom: 20px;
+
+  h1 {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+  }
+
+  img {
+    width: 300px;
+  }
+}

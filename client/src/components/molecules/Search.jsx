@@ -44,7 +44,7 @@ const Search = ({ setIsLoading, setTracks, setArtists }) => {
   }, []);
 
   return (
-    <section className='search'>
+    <div className='search'>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
@@ -61,7 +61,7 @@ const Search = ({ setIsLoading, setTracks, setArtists }) => {
         Finding lyrics just got <strong>sweeter</strong>
       </p>
       {redirect ? <Redirect to={`/search?q=${searchSubmit}`} /> : null}
-    </section>
+    </div>
   );
 };
 

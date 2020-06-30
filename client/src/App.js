@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
-import Search from './components/organisms/Search';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Header from './components/organisms/Header';
 import Spinner from './components/atoms/Spinner';
 import TrackList from './components/organisms/TrackList';
 import ArtistList from './components/organisms/ArtistList';
@@ -28,30 +28,29 @@ function App() {
     <div className='App'>
       <BrowserRouter>
         <header>
-          <Link to='/'>
-            <h1>Lyrichee</h1>
-          </Link>
-          <Search
+          <Header
             setIsLoading={setIsLoading}
             setTracks={setTracks}
             setArtists={setArtists}
           />
         </header>
-        <Switch>
-          <Route exact path='/'></Route>
-          <Route exact path='/search'>
-            {searchResultsDisplay}
-          </Route>
-          <Route exact path='/tracks/:id'>
-            <Lyrics />
-          </Route>
-          <Route exact path='/artist/:id'>
-            <Artist />
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
+        <main>
+          <Switch>
+            <Route exact path='/'></Route>
+            <Route exact path='/search'>
+              {searchResultsDisplay}
+            </Route>
+            <Route exact path='/tracks/:id'>
+              <Lyrics />
+            </Route>
+            <Route exact path='/artist/:id'>
+              <Artist />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
+        </main>
       </BrowserRouter>
     </div>
   );
