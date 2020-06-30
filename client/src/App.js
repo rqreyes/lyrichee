@@ -7,7 +7,7 @@ import ArtistList from './components/organisms/ArtistList';
 import Artist from './components/organisms/Artist';
 import Lyrics from './components/organisms/Lyrics';
 import NotFound from './components/organisms/NotFound';
-import './App.css';
+import './styles/styles.scss';
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,14 +27,16 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Link to='/'>
-          <h1>Lyrichee</h1>
-        </Link>
-        <Search
-          setIsLoading={setIsLoading}
-          setTracks={setTracks}
-          setArtists={setArtists}
-        />
+        <header>
+          <Link to='/'>
+            <h1>Lyrichee</h1>
+          </Link>
+          <Search
+            setIsLoading={setIsLoading}
+            setTracks={setTracks}
+            setArtists={setArtists}
+          />
+        </header>
         <Switch>
           <Route exact path='/'></Route>
           <Route exact path='/search'>

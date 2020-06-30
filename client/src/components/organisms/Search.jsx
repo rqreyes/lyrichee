@@ -1,6 +1,8 @@
-import React, { useState, Fragment, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Search = ({ setIsLoading, setTracks, setArtists }) => {
   const [search, setSearch] = useState('');
@@ -42,7 +44,7 @@ const Search = ({ setIsLoading, setTracks, setArtists }) => {
   }, []);
 
   return (
-    <Fragment>
+    <section className='search'>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
@@ -51,10 +53,15 @@ const Search = ({ setIsLoading, setTracks, setArtists }) => {
           required
           ref={searchRef}
         />
-        <button type='submit'>Search Lyrics</button>
+        <button type='submit'>
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
       </form>
+      <p>
+        Finding lyrics just got <strong>sweeter</strong>
+      </p>
       {redirect ? <Redirect to={`/search?q=${searchSubmit}`} /> : null}
-    </Fragment>
+    </section>
   );
 };
 

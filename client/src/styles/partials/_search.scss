@@ -1,0 +1,29 @@
+.search {
+  form {
+    position: relative;
+  }
+
+  button {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    padding: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  svg {
+    width: 50% !important;
+    height: 50%;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  strong {
+    color: $red;
+  }
+}
