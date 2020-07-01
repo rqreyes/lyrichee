@@ -39,6 +39,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 800px;
 }
 
 input {
@@ -47,6 +48,11 @@ input {
   border: 1px solid #eee;
   border-radius: 100px;
   box-shadow: 0 2px 4px #eee;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -58,6 +64,12 @@ button {
   &:hover {
     background: $green-dark;
   }
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 
 a {

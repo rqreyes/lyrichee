@@ -1,0 +1,17 @@
+.track-list {
+  li {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 20px;
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .artist-item-info {
+    display: flex;
+  }
+}

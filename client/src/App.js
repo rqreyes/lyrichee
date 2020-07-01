@@ -18,11 +18,13 @@ function App() {
   const searchResultsDisplay = isLoading ? (
     <Spinner />
   ) : tracks.length === 0 ? null : (
-    <Fragment>
+    <section className='search-results'>
       <h2>Search Results</h2>
-      <TrackList tracks={tracks} />
-      <ArtistList artists={artists} />
-    </Fragment>
+      <div className='track-artist-list'>
+        <TrackList tracks={tracks} />
+        <ArtistList artists={artists} />
+      </div>
+    </section>
   );
 
   return (

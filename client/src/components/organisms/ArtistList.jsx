@@ -7,7 +7,7 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <section>
+    <section className='artist-list'>
       <h3>Artists</h3>
       <ul>{artistItemDisplay}</ul>
     </section>

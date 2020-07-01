@@ -7,7 +7,7 @@ const TrackList = ({ tracks }) => {
   ));
 
   return (
-    <section>
+    <section className='track-list'>
       <h3>Tracks</h3>
       <ul>{trackItemDisplay}</ul>
     </section>

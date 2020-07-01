@@ -1,0 +1,10 @@
+.search-results {
+  .track-artist-list {
+    display: flex;
+  }
+
+  .track-list,
+  .artist-list {
+    flex: 1;
+  }
+}
