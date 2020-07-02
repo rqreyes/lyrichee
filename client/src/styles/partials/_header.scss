@@ -1,1 +1,57 @@
+.heading {
+  margin-bottom: 20px;
 
+  h1 {
+    visibility: hidden;
+    position: absolute;
+  }
+
+  a {
+    display: flex;
+    justify-content: center;
+  }
+
+  img {
+    width: 300px;
+  }
+}
+
+.search {
+  form {
+    position: relative;
+  }
+
+  button {
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    padding: 0;
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  svg {
+    width: 50% !important;
+    height: 50%;
+  }
+
+  p {
+    text-align: center;
+    margin: 10px auto 0;
+  }
+
+  strong {
+    color: $red;
+  }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .search {
+    input {
+      width: 400px;
+    }
+  }
+}

@@ -2,15 +2,11 @@ import React, { Fragment } from 'react';
 import Heading from '../molecules/Heading';
 import Search from '../molecules/Search';
 
-const Header = ({ setIsLoading, setTracks, setArtists }) => {
+const Header = () => {
   return (
     <Fragment>
       <Heading />
-      <Search
-        setIsLoading={setIsLoading}
-        setTracks={setTracks}
-        setArtists={setArtists}
-      />
+      <Search />
     </Fragment>
   );
 };

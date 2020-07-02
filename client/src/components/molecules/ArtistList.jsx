@@ -1,5 +1,5 @@
 import React from 'react';
-import ArtistItem from '../molecules/ArtistItem';
+import ArtistItem from '../atoms/ArtistItem';
 
 const ArtistList = ({ artists }) => {
   const artistItemDisplay = artists.map((artist) => (
@@ -7,10 +7,10 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <section className='artist-list'>
+    <div>
       <h3>Artists</h3>
       <ul>{artistItemDisplay}</ul>
-    </section>
+    </div>
   );
 };
 

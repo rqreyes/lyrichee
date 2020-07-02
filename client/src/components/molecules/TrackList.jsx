@@ -1,5 +1,5 @@
 import React from 'react';
-import TrackItem from '../molecules/TrackItem';
+import TrackItem from '../atoms/TrackItem';
 
 const TrackList = ({ tracks }) => {
   const trackItemDisplay = tracks.map((track) => (
@@ -7,10 +7,10 @@ const TrackList = ({ tracks }) => {
   ));
 
   return (
-    <section className='track-list'>
+    <div>
       <h3>Tracks</h3>
       <ul>{trackItemDisplay}</ul>
-    </section>
+    </div>
   );
 };
 
