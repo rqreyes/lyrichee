@@ -12,12 +12,11 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <header>
-          <Header />
-        </header>
         <main>
           <Switch>
-            <Route exact path='/'></Route>
+            <Route exact path='/'>
+              <Header focus={true} />
+            </Route>
             <Route exact path='/search'>
               <SearchResults />
             </Route>
@@ -28,6 +27,7 @@ function App() {
               <Artist />
             </Route>
             <Route>
+              <Header focus={true} />
               <NotFound />
             </Route>
           </Switch>

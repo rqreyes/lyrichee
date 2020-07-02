@@ -2,18 +2,21 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Spinner from '../atoms/Spinner';
+import Header from './Header';
 
 const Lyrics = () => {
-  const [track, setTrack] = useState({});
-  const [lyrics, setLyrics] = useState('');
+  const [trackData, setTrackData] = useState({
+    track: {},
+    lyrics: '',
+  });
   const { id } = useParams();
   let lyricsDisplay;
 
-  if (Object.keys(track) === 0 || lyrics === '') {
+  if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
     lyricsDisplay = <Spinner />;
   } else {
     let videoDisplay;
-    const videoURL = track.raw.media.find(
+    const videoURL = trackData.track.raw.media.find(
       (media) => media.provider === 'youtube'
     );
 
@@ -33,9 +36,12 @@ const Lyrics = () => {
 
     lyricsDisplay = (
       <Fragment>
-        <h2>{track.titles.full}</h2>
-        {videoDisplay}
-        <pre>{lyrics}</pre>
+        <Header />
+        <section>
+          <h2>{trackData.track.titles.full}</h2>
+          {videoDisplay}
+          <pre>{trackData.lyrics}</pre>
+        </section>
       </Fragment>
     );
   }
@@ -44,13 +50,12 @@ const Lyrics = () => {
     axios
       .get(`/tracks/${id}`)
       .then((res) => {
-        setTrack(res.data.track);
-        setLyrics(res.data.lyrics);
+        setTrackData({ track: res.data.track, lyrics: res.data.lyrics });
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  return <section>{lyricsDisplay}</section>;
+  return lyricsDisplay;
 };
 
 export default Lyrics;

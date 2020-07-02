@@ -1,13 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import Heading from '../molecules/Heading';
 import Search from '../molecules/Search';
 
-const Header = () => {
+const Header = ({ focus }) => {
   return (
-    <Fragment>
+    <header>
       <Heading />
-      <Search />
-    </Fragment>
+      <Search focus={focus} />
+    </header>
   );
 };
 
