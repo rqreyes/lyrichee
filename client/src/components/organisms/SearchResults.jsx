@@ -10,16 +10,11 @@ const SearchResults = () => {
     tracks: [],
     artists: [],
   });
-
   const location = useLocation();
   const searchQuery = queryString.parse(location.search).q;
 
   useEffect(() => {
-    if (
-      searchQuery &&
-      searchResults.tracks.length === 0 &&
-      searchResults.artists.length === 0
-    ) {
+    if (searchQuery) {
       const fetchSearch = (searchQuery) => {
         axios
           .get(`/search?q=${searchQuery}`)
@@ -42,12 +37,7 @@ const SearchResults = () => {
 
       fetchSearch(searchQuery);
     }
-  }, [
-    searchQuery,
-    searchResults.tracks.length,
-    searchResults.artists.length,
-    setSearchResults,
-  ]);
+  }, [searchQuery, setSearchResults]);
 
   return (
     <section className='search-results'>
