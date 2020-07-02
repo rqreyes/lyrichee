@@ -1,12 +1,12 @@
 import React from 'react';
 import spinner from '../../images/spinner.gif';
 
-const Spinner = () => {
+const Loading = () => {
   return (
     <div>
-      <img src={spinner} alt='Loading...' />
+      <img src={spinner} alt='loading' />
     </div>
   );
 };
 
-export default Spinner;
+export default Loading;

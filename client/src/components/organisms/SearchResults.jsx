@@ -2,7 +2,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import axios from 'axios';
-import Spinner from '../atoms/Spinner';
+import Loading from '../atoms/Loading';
 import Header from './Header';
 import TrackList from '../molecules/TrackList';
 import ArtistList from '../molecules/ArtistList';
@@ -17,7 +17,7 @@ const SearchResults = () => {
 
   const searchResultsDisplay =
     searchResults.tracks.length === 0 || searchResults.artists.length === 0 ? (
-      <Spinner />
+      <Loading />
     ) : (
       <Fragment>
         <Header />

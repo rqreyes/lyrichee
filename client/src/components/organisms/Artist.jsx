@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Spinner from '../atoms/Spinner';
+import Loading from '../atoms/Loading';
 import Header from './Header';
 import TrackList from '../molecules/TrackList';
 
@@ -12,7 +12,7 @@ const Artist = () => {
 
   const artistDisplay =
     Object.keys(artist) === 0 || artistTracks.length === 0 ? (
-      <Spinner />
+      <Loading />
     ) : (
       <Fragment>
         <Header />

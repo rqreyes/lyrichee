@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Spinner from '../atoms/Spinner';
+import Loading from '../atoms/Loading';
 import Header from './Header';
 
 const Lyrics = () => {
@@ -13,7 +13,7 @@ const Lyrics = () => {
   let lyricsDisplay;
 
   if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
-    lyricsDisplay = <Spinner />;
+    lyricsDisplay = <Loading />;
   } else {
     let videoDisplay;
     const videoURL = trackData.track.raw.media.find(
