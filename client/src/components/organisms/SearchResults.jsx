@@ -26,8 +26,8 @@ const SearchResults = () => {
         <Header />
         <section className='search-results'>
           <div className='search-query'>
-            <p>"{searchQuery}"</p>
             <h2>Search Results</h2>
+            <p>"{searchQuery}"</p>
           </div>
           <div className='list-container'>
             <TrackList tracks={searchResults.tracks} />

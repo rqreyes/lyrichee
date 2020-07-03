@@ -44,11 +44,10 @@ body {
 }
 
 input {
+  @include shadow;
   width: 100%;
   padding: 10px 20px;
-  border: 1px solid #eee;
   border-radius: 100px;
-  box-shadow: 0 2px 4px #eee;
 }
 
 .button-group {
@@ -98,11 +97,6 @@ p {
   }
 
   a {
-    color: $red;
-    transition: color 0.2s;
-
-    &:hover {
-      color: $green-dark;
-    }
+    @include color-hover;
   }
 }

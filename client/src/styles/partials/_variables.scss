@@ -6,3 +6,17 @@ $lychee: #f7dfd4;
 $brown: #472816;
 $green: #6bb745;
 $green-dark: #5ca943;
+
+@mixin color-hover {
+  color: $red;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $green-dark;
+  }
+}
+
+@mixin shadow {
+  border: 1px solid #eee;
+  box-shadow: 0 2px 4px #eee;
+}

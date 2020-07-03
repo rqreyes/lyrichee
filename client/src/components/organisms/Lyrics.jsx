@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../atoms/Loading';
 import Header from './Header';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 
 const Lyrics = () => {
   const [trackData, setTrackData] = useState({
@@ -27,23 +29,48 @@ const Lyrics = () => {
   if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
     lyricsDisplay = <Loading />;
   } else {
-    let videoDisplay;
-    const videoURL = trackData.track.raw.media.find(
+    // display youtube video
+    let youtubeDisplay;
+    const youtubeURL = trackData.track.raw.media.find(
       (media) => media.provider === 'youtube'
     );
-
-    // display youtube video
-    if (videoURL) {
-      videoDisplay = (
+    if (youtubeURL) {
+      youtubeDisplay = (
         <div className='embed-container'>
           <iframe
-            src={`${videoURL.url.replace('watch?v=', 'embed/')}`}
+            src={`${youtubeURL.url.replace('watch?v=', 'embed/')}`}
             frameBorder='0'
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
             title='music video'
           ></iframe>
         </div>
+      );
+    }
+
+    // display spotify icon
+    let spotifyDisplay;
+    const spotifyURL = trackData.track.raw.media.find(
+      (media) => media.provider === 'spotify'
+    );
+    if (spotifyURL) {
+      spotifyDisplay = (
+        <a href={spotifyURL.url} target='_blank' rel='noopener noreferrer'>
+          <FontAwesomeIcon icon={faSpotify} />
+        </a>
+      );
+    }
+
+    // display soundcloud icon
+    let soundcloudDisplay;
+    const soundcloudURL = trackData.track.raw.media.find(
+      (media) => media.provider === 'soundcloud'
+    );
+    if (soundcloudURL) {
+      soundcloudDisplay = (
+        <a href={soundcloudURL.url} target='_blank' rel='noopener noreferrer'>
+          <FontAwesomeIcon icon={faSoundcloud} />
+        </a>
       );
     }
 
@@ -56,7 +83,13 @@ const Lyrics = () => {
           <h2>
             {trackData.track.artist.name} - {trackData.track.titles.featured}
           </h2>
-          <div className='media'>{videoDisplay}</div>
+          <div className='media'>
+            {youtubeDisplay}
+            <div className='providers'>
+              {spotifyDisplay}
+              {soundcloudDisplay}
+            </div>
+          </div>
           <div className='lyrics-content'>{parsedLyrics}</div>
         </section>
       </Fragment>
