@@ -48,7 +48,7 @@ const Artist = () => {
             src={artistProfile.artist.thumbnail}
             alt='artist thumbnail'
           />
-          {parsedDOM}
+          <div>{parsedDOM}</div>
           <TrackList tracks={artistProfile.tracks} />
         </section>
       </Fragment>

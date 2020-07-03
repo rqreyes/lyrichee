@@ -12,6 +12,16 @@ const Lyrics = () => {
   const { id } = useParams();
   let lyricsDisplay;
 
+  const parseLyrics = (lyrics) => {
+    return lyrics.split(/\n\n/).map((section) => (
+      <div>
+        {section.split(/\n/).map((line) => (
+          <p>{line}</p>
+        ))}
+      </div>
+    ));
+  };
+
   if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
     lyricsDisplay = <Loading />;
   } else {
@@ -22,25 +32,27 @@ const Lyrics = () => {
 
     if (videoURL) {
       videoDisplay = (
-        <iframe
-          width='560'
-          height='315'
-          src={`${videoURL.url.replace('watch?v=', 'embed/')}`}
-          frameBorder='0'
-          allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-          allowFullScreen
-          title='music video'
-        ></iframe>
+        <div className='embed-container'>
+          <iframe
+            src={`${videoURL.url.replace('watch?v=', 'embed/')}`}
+            frameBorder='0'
+            allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+            allowFullScreen
+            title='music video'
+          ></iframe>
+        </div>
       );
     }
+
+    const parsedLyrics = parseLyrics(trackData.lyrics);
 
     lyricsDisplay = (
       <Fragment>
         <Header />
-        <section>
+        <section className='lyrics'>
           <h2>{trackData.track.titles.full}</h2>
-          {videoDisplay}
-          <pre>{trackData.lyrics}</pre>
+          <div className='media'>{videoDisplay}</div>
+          <div className='lyrics-content'>{parsedLyrics}</div>
         </section>
       </Fragment>
     );
