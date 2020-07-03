@@ -17,6 +17,7 @@ const SearchResults = () => {
   const location = useLocation();
   const searchQuery = queryString.parse(location.search).q;
 
+  // display loading or search results
   const searchResultsDisplay =
     searchResults.tracks.length === 0 || searchResults.artists.length === 0 ? (
       <Loading />
@@ -36,6 +37,7 @@ const SearchResults = () => {
       </Fragment>
     );
 
+  // fetch search results
   useEffect(() => {
     if (searchQuery) {
       const fetchSearch = (searchQuery) => {

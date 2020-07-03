@@ -16,6 +16,7 @@ const Search = ({ focus }) => {
     setSearch('');
   };
 
+  // focus on input
   useEffect(() => {
     if (focus) searchRef.current.focus();
   }, [focus]);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const TrackItem = ({ track }) => {
+  // display album art or placeholder image
   const albumDisplay = track.album
     ? track.album.cover_art_url
     : track.thumbnail

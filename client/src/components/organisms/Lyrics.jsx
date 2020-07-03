@@ -12,6 +12,7 @@ const Lyrics = () => {
   const { id } = useParams();
   let lyricsDisplay;
 
+  // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
     return lyrics.split(/\n\n/).map((section) => (
       <div>
@@ -22,6 +23,7 @@ const Lyrics = () => {
     ));
   };
 
+  // display loading or track information
   if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
     lyricsDisplay = <Loading />;
   } else {
@@ -30,6 +32,7 @@ const Lyrics = () => {
       (media) => media.provider === 'youtube'
     );
 
+    // display youtube video
     if (videoURL) {
       videoDisplay = (
         <div className='embed-container'>
@@ -60,6 +63,7 @@ const Lyrics = () => {
     );
   }
 
+  // fetch track information
   useEffect(() => {
     axios
       .get(`/tracks/${id}`)

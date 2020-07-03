@@ -13,6 +13,7 @@ const Artist = () => {
   const { id } = useParams();
   let artistProfileDisplay;
 
+  // parse the description DOM into HTML
   const parseDOM = (DOM) => {
     return DOM.map((parent, ind) => {
       if (typeof parent === 'string') return parent;
@@ -29,6 +30,7 @@ const Artist = () => {
     });
   };
 
+  // display loading or artist profile
   if (
     Object.keys(artistProfile.artist).length === 0 ||
     artistProfile.tracks.length === 0
@@ -55,6 +57,7 @@ const Artist = () => {
     );
   }
 
+  // fetch artist information
   useEffect(() => {
     axios
       .get(`/artist/${id}`)
