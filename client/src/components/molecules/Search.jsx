@@ -35,7 +35,7 @@ const Search = ({ focus }) => {
         </button>
       </form>
       <p>
-        Finding lyrics just got <strong>sweeter</strong>
+        Learning lyrics just got more <strong>appeeling</strong>
       </p>
       {redirect ? <Redirect to={`/search?q=${searchSubmit}`} /> : null}
     </div>

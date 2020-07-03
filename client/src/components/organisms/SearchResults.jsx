@@ -7,11 +7,13 @@ import Header from './Header';
 import TrackList from '../molecules/TrackList';
 import ArtistList from '../molecules/ArtistList';
 
+const initSearchResults = {
+  tracks: [],
+  artists: [],
+};
+
 const SearchResults = () => {
-  const [searchResults, setSearchResults] = useState({
-    tracks: [],
-    artists: [],
-  });
+  const [searchResults, setSearchResults] = useState(initSearchResults);
   const location = useLocation();
   const searchQuery = queryString.parse(location.search).q;
 
@@ -35,21 +37,26 @@ const SearchResults = () => {
     );
 
   useEffect(() => {
+    setSearchResults(initSearchResults);
+  }, []);
+
+  useEffect(() => {
     if (searchQuery) {
       const fetchSearch = (searchQuery) => {
         axios
           .get(`/search?q=${searchQuery}`)
           .then((res) => {
             const tracks = res.data;
-            const uniqueArtists = {};
+            const artists = res.data.reduce((artistsArr, track) => {
+              if (
+                artistsArr.findIndex(
+                  (artist) => artist.name === track.artist.name
+                ) < 0
+              )
+                artistsArr.push(track.artist);
 
-            res.data.forEach(
-              (track) => (uniqueArtists[track.artist.name] = track.artist.id)
-            );
-            const artists = Object.keys(uniqueArtists).map((artist) => ({
-              id: uniqueArtists[artist],
-              name: artist,
-            }));
+              return artistsArr;
+            }, []);
 
             setSearchResults({ tracks, artists });
           })

@@ -10,11 +10,13 @@ const TrackItem = ({ track }) => {
 
   return (
     <li>
-      <div>
+      <div className='item-details'>
         <img src={albumDisplay} alt='album art' />
         <div>
+          <p className='item-title'>
+            <strong>{track.titles.featured}</strong>
+          </p>
           <p>{track.artist.name}</p>
-          <p>{track.titles.featured}</p>
         </div>
       </div>
 
