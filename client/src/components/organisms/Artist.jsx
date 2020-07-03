@@ -14,14 +14,18 @@ const Artist = () => {
   let artistProfileDisplay;
 
   const parseDOM = (DOM) => {
-    return DOM.map((parent) => {
+    return DOM.map((parent, ind) => {
       if (typeof parent === 'string') return parent;
 
       const Tag = parent.tag;
       const parentAttributes = parent.attributes;
       if (parent.tag === 'a') parentAttributes.target = '_blank';
 
-      return <Tag {...parentAttributes}>{parseDOM(parent.children)}</Tag>;
+      return (
+        <Tag key={`key-${ind}`} {...parentAttributes}>
+          {parseDOM(parent.children)}
+        </Tag>
+      );
     });
   };
 
