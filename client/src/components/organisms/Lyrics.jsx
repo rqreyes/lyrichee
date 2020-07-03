@@ -50,7 +50,9 @@ const Lyrics = () => {
       <Fragment>
         <Header />
         <section className='lyrics'>
-          <h2>{trackData.track.titles.full}</h2>
+          <h2>
+            {trackData.track.artist.name} - {trackData.track.titles.featured}
+          </h2>
           <div className='media'>{videoDisplay}</div>
           <div className='lyrics-content'>{parsedLyrics}</div>
         </section>
