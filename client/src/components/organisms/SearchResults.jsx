@@ -37,10 +37,6 @@ const SearchResults = () => {
     );
 
   useEffect(() => {
-    setSearchResults(initSearchResults);
-  }, []);
-
-  useEffect(() => {
     if (searchQuery) {
       const fetchSearch = (searchQuery) => {
         axios

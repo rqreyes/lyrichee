@@ -28,13 +28,23 @@
     height: 80px;
     border-radius: 4px;
     margin-right: 10px;
+
+    &.artist-thumbnail {
+      display: block;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto;
+    }
   }
 
-  p {
-    margin: 0;
+  .track-list,
+  .artist-list {
+    p {
+      margin: 0;
 
-    &.item-title {
-      margin-bottom: 2px;
+      &.item-title {
+        margin-bottom: 2px;
+      }
     }
   }
 }
@@ -45,7 +55,8 @@
     .list-container {
       display: flex;
 
-      > div {
+      .track-list,
+      .artist-list {
         flex: 1;
       }
     }

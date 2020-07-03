@@ -6,40 +6,61 @@ import Header from './Header';
 import TrackList from '../molecules/TrackList';
 
 const Artist = () => {
-  const [artist, setArtist] = useState({});
-  const [artistTracks, setArtistTracks] = useState([]);
+  const [artistProfile, setArtistProfile] = useState({
+    artist: {},
+    tracks: [],
+  });
   const { id } = useParams();
+  let artistProfileDisplay;
 
-  const artistDisplay =
-    Object.keys(artist) === 0 || artistTracks.length === 0 ? (
-      <Loading />
-    ) : (
+  const parseDOM = (DOM) => {
+    return DOM.map((parent) => {
+      if (typeof parent === 'string') return parent;
+
+      const Tag = parent.tag;
+      const parentAttributes = parent.attributes;
+      if (parent.tag === 'a') parentAttributes.target = '_blank';
+
+      return <Tag {...parentAttributes}>{parseDOM(parent.children)}</Tag>;
+    });
+  };
+
+  if (
+    Object.keys(artistProfile.artist).length === 0 ||
+    artistProfile.tracks.length === 0
+  ) {
+    artistProfileDisplay = <Loading />;
+  } else {
+    const parsedDOM = parseDOM(
+      artistProfile.artist.raw.description.dom.children
+    );
+    artistProfileDisplay = (
       <Fragment>
         <Header />
-        <section>
+        <section className='search-results'>
+          <h2>{artistProfile.artist.name}</h2>
           <img
-            src={artist.thumbnail}
-            alt='profile'
-            width='200px'
-            height='200px'
+            className='artist-thumbnail'
+            src={artistProfile.artist.thumbnail}
+            alt='artist thumbnail'
           />
-          <h2>{artist.name}</h2>
-          <TrackList tracks={artistTracks} />
+          {parsedDOM}
+          <TrackList tracks={artistProfile.tracks} />
         </section>
       </Fragment>
     );
+  }
 
   useEffect(() => {
     axios
       .get(`/artist/${id}`)
       .then((res) => {
-        setArtist(res.data.artist);
-        setArtistTracks(res.data.tracks);
+        setArtistProfile({ artist: res.data.artist, tracks: res.data.tracks });
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  return artistDisplay;
+  return artistProfileDisplay;
 };
 
 export default Artist;

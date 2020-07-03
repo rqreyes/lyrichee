@@ -21,11 +21,11 @@ const TrackItem = ({ track }) => {
       </div>
 
       <div className='button-group'>
-        <Link to={`/artist/${track.artist.id}`}>
-          <button type='button'>View Artist</button>
-        </Link>
         <Link to={`/tracks/${track.id}`}>
           <button type='button'>View Lyrics</button>
+        </Link>
+        <Link to={`/artist/${track.artist.id}`}>
+          <button type='button'>View Artist</button>
         </Link>
       </div>
     </li>

@@ -1,16 +1,2 @@
 footer {
-  margin-bottom: 10px;
-
-  a {
-    &:hover {
-      strong {
-        color: $green-dark;
-      }
-    }
-  }
-
-  strong {
-    color: $red;
-    transition: color 0.2s;
-  }
 }
