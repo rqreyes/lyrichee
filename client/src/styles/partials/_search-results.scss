@@ -41,26 +41,3 @@
     }
   }
 }
-
-.artist-profile {
-  img {
-    display: block;
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 20px;
-  }
-}
-
-// Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {
-  .search-results {
-    .list-container {
-      display: flex;
-
-      .track-list,
-      .artist-list {
-        flex: 1;
-      }
-    }
-  }
-}

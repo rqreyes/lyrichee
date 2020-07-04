@@ -43,18 +43,19 @@ const Artist = () => {
     artistProfileDisplay = (
       <Fragment>
         <Header />
-        <main>
-          <section className='artist-profile'>
+        <main className='artist'>
+          <section className='info'>
             <h2>{artistProfile.artist.name}</h2>
-            <img
-              className='artist-thumbnail'
-              src={artistProfile.artist.thumbnail}
-              alt='artist thumbnail'
-            />
-            <div>{parsedDOM}</div>
+            <img src={artistProfile.artist.thumbnail} alt='artist thumbnail' />
           </section>
-          <section className='search-results'>
-            <TrackList tracks={artistProfile.tracks} />
+          <section className='full-container'>
+            <div className='search-results left-half'>
+              <TrackList tracks={artistProfile.tracks} />
+            </div>
+            <div className='right-half'>
+              <h3>About</h3>
+              <div>{parsedDOM}</div>
+            </div>
           </section>
         </main>
       </Fragment>

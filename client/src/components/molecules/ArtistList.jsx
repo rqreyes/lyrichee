@@ -7,7 +7,7 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <div className='artist-list'>
+    <div className='artist-list right-half'>
       <h3>Artists</h3>
       <ul>{artistItemDisplay}</ul>
     </div>

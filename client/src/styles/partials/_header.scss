@@ -16,7 +16,6 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1040px;
   height: 60px;
   padding: 0 20px;
   margin: auto;
@@ -25,10 +24,6 @@ header {
 .logo,
 nav {
   flex: 1;
-}
-
-.search {
-  flex: 4;
 }
 
 .logo {
@@ -48,6 +43,9 @@ nav {
 }
 
 .search {
+  flex: 4;
+  max-width: 400px;
+
   form {
     position: relative;
   }

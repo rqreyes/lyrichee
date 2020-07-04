@@ -40,6 +40,8 @@ body {
 }
 
 main {
+  max-width: 1000px;
+  padding: 0 10px;
   margin-bottom: 58px;
 }
 
@@ -98,5 +100,32 @@ p {
 
   a {
     @include color-hover;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .full-container {
+    display: flex;
+
+    .left-half,
+    .right-half {
+      flex: 1;
+    }
+
+    .left-half {
+      margin-right: 10px;
+    }
+
+    .right-half {
+      margin-left: 10px;
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  main {
+    padding: 0;
   }
 }

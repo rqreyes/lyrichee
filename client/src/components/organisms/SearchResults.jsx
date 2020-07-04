@@ -29,7 +29,7 @@ const SearchResults = () => {
             <h2>Search Results</h2>
             <p>"{searchQuery}"</p>
           </section>
-          <section className='list-container'>
+          <section className='full-container'>
             <TrackList tracks={searchResults.tracks} />
             <ArtistList artists={searchResults.artists} />
           </section>
