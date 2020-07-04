@@ -29,48 +29,76 @@ const Lyrics = () => {
   if (Object.keys(trackData).length === 0 || trackData.lyrics === '') {
     lyricsDisplay = <Loading />;
   } else {
-    // display youtube video
-    let youtubeDisplay;
-    const youtubeURL = trackData.track.raw.media.find(
-      (media) => media.provider === 'youtube'
-    );
-    if (youtubeURL) {
-      youtubeDisplay = (
-        <div className='embed-container'>
-          <iframe
-            src={`${youtubeURL.url.replace('watch?v=', 'embed/')}`}
-            frameBorder='0'
-            allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
-            allowFullScreen
-            title='music video'
-          ></iframe>
-        </div>
-      );
-    }
+    // display media
+    let mediaDisplay;
 
-    // display spotify icon
-    let spotifyDisplay;
-    const spotifyURL = trackData.track.raw.media.find(
-      (media) => media.provider === 'spotify'
-    );
-    if (spotifyURL) {
-      spotifyDisplay = (
-        <a href={spotifyURL.url} target='_blank' rel='noopener noreferrer'>
-          <FontAwesomeIcon icon={faSpotify} />
-        </a>
+    if (trackData.track.raw.media.length > 0) {
+      // display youtube video
+      let youtubeDisplay;
+      const youtubeURL = trackData.track.raw.media.find(
+        (media) => media.provider === 'youtube'
       );
-    }
+      if (youtubeURL) {
+        youtubeDisplay = (
+          <div className='embed-container'>
+            <iframe
+              src={`${youtubeURL.url.replace('watch?v=', 'embed/')}`}
+              frameBorder='0'
+              allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+              allowFullScreen
+              title='music video'
+            ></iframe>
+          </div>
+        );
+      }
 
-    // display soundcloud icon
-    let soundcloudDisplay;
-    const soundcloudURL = trackData.track.raw.media.find(
-      (media) => media.provider === 'soundcloud'
-    );
-    if (soundcloudURL) {
-      soundcloudDisplay = (
-        <a href={soundcloudURL.url} target='_blank' rel='noopener noreferrer'>
-          <FontAwesomeIcon icon={faSoundcloud} />
-        </a>
+      // display providers
+      let providersDisplay;
+      const spotifyURL = trackData.track.raw.media.find(
+        (media) => media.provider === 'spotify'
+      );
+      const soundcloudURL = trackData.track.raw.media.find(
+        (media) => media.provider === 'soundcloud'
+      );
+
+      if (spotifyURL || soundcloudURL) {
+        // display spotify icon
+        let spotifyDisplay;
+        if (spotifyURL) {
+          spotifyDisplay = (
+            <a href={spotifyURL.url} target='_blank' rel='noopener noreferrer'>
+              <FontAwesomeIcon icon={faSpotify} />
+            </a>
+          );
+        }
+
+        // display soundcloud icon
+        let soundcloudDisplay;
+        if (soundcloudURL) {
+          soundcloudDisplay = (
+            <a
+              href={soundcloudURL.url}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              <FontAwesomeIcon icon={faSoundcloud} />
+            </a>
+          );
+        }
+
+        providersDisplay = (
+          <div className='providers'>
+            {spotifyDisplay}
+            {soundcloudDisplay}
+          </div>
+        );
+      }
+
+      mediaDisplay = (
+        <section className='media'>
+          {youtubeDisplay}
+          {providersDisplay}
+        </section>
       );
     }
 
@@ -83,13 +111,7 @@ const Lyrics = () => {
           <h2>
             {trackData.track.artist.name} - {trackData.track.titles.featured}
           </h2>
-          <section className='media'>
-            {youtubeDisplay}
-            <div className='providers'>
-              {spotifyDisplay}
-              {soundcloudDisplay}
-            </div>
-          </section>
+          {mediaDisplay}
           <section className='lyrics-content'>{parsedLyrics}</section>
         </main>
       </Fragment>
