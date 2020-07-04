@@ -79,19 +79,19 @@ const Lyrics = () => {
     lyricsDisplay = (
       <Fragment>
         <Header />
-        <section className='lyrics'>
+        <main className='lyrics'>
           <h2>
             {trackData.track.artist.name} - {trackData.track.titles.featured}
           </h2>
-          <div className='media'>
+          <section className='media'>
             {youtubeDisplay}
             <div className='providers'>
               {spotifyDisplay}
               {soundcloudDisplay}
             </div>
-          </div>
-          <div className='lyrics-content'>{parsedLyrics}</div>
-        </section>
+          </section>
+          <section className='lyrics-content'>{parsedLyrics}</section>
+        </main>
       </Fragment>
     );
   }

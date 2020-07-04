@@ -24,16 +24,16 @@ const SearchResults = () => {
     ) : (
       <Fragment>
         <Header />
-        <section className='search-results'>
-          <div className='search-query'>
+        <main className='search-results'>
+          <section className='search-query'>
             <h2>Search Results</h2>
             <p>"{searchQuery}"</p>
-          </div>
-          <div className='list-container'>
+          </section>
+          <section className='list-container'>
             <TrackList tracks={searchResults.tracks} />
             <ArtistList artists={searchResults.artists} />
-          </div>
-        </section>
+          </section>
+        </main>
       </Fragment>
     );
 

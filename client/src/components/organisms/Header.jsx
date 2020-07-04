@@ -1,14 +1,27 @@
 import React from 'react';
-import Heading from '../molecules/Heading';
+import Headroom from 'react-headroom';
+import Logo from '../molecules/Logo';
 import Search from '../molecules/Search';
+import Nav from '../molecules/Nav';
 
-const Header = ({ focus }) => {
-  return (
-    <header>
-      <Heading />
-      <Search focus={focus} />
-    </header>
+const Header = ({ landing }) => {
+  const landingDisplay = landing ? (
+    <Headroom>
+      <header>
+        <Nav />
+      </header>
+    </Headroom>
+  ) : (
+    <Headroom>
+      <header>
+        <Logo />
+        <Search />
+        <Nav />
+      </header>
+    </Headroom>
   );
+
+  return landingDisplay;
 };
 
 export default Header;

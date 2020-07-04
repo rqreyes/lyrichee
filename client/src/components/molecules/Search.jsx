@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Search = ({ focus }) => {
+const Search = ({ landing }) => {
   const [search, setSearch] = useState('');
   const [searchSubmit, setSearchSubmit] = useState('');
   const [redirect, setRedirect] = useState(false);
@@ -16,10 +16,17 @@ const Search = ({ focus }) => {
     setSearch('');
   };
 
+  // display slogan
+  const sloganDisplay = landing ? (
+    <p>
+      Learning lyrics just got more <strong>appeeling</strong>
+    </p>
+  ) : null;
+
   // focus on input
   useEffect(() => {
-    if (focus) searchRef.current.focus();
-  }, [focus]);
+    if (landing) searchRef.current.focus();
+  }, [landing]);
 
   return (
     <div className='search'>
@@ -35,9 +42,7 @@ const Search = ({ focus }) => {
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </form>
-      <p>
-        Learning lyrics just got more <strong>appeeling</strong>
-      </p>
+      {sloganDisplay}
       {redirect ? <Redirect to={`/search?q=${searchSubmit}`} /> : null}
     </div>
   );
