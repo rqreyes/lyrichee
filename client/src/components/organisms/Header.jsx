@@ -6,11 +6,9 @@ import Nav from '../molecules/Nav';
 
 const Header = ({ landing }) => {
   const landingDisplay = landing ? (
-    <Headroom>
-      <header>
-        <Nav />
-      </header>
-    </Headroom>
+    <header className='landing-header'>
+      <Nav />
+    </header>
   ) : (
     <Headroom>
       <header>

@@ -36,9 +36,11 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 800px;
-  padding: 10px 10px 58px;
   margin: auto;
+}
+
+main {
+  margin-bottom: 58px;
 }
 
 input {

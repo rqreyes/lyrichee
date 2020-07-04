@@ -7,7 +7,7 @@ const Landing = () => {
   return (
     <Fragment>
       <Header landing={true} />
-      <main>
+      <main className='landing-main'>
         <Logo landing={true} />
         <Search landing={true} />
       </main>

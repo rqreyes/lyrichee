@@ -4,13 +4,13 @@ import LogoFont from '../../images/logo-font.png';
 import LogoIcon from '../../images/logo-icon.png';
 
 const Logo = ({ landing }) => {
-  const logoDisplay = landing ? LogoFont : LogoIcon;
+  const logoSrc = landing ? LogoFont : LogoIcon;
 
   return (
     <div className='logo'>
       <Link to='/'>
         <h1>Lyrichee</h1>
-        <img src={logoDisplay} alt='logo' />
+        <img src={logoSrc} alt='logo' />
       </Link>
     </div>
   );
