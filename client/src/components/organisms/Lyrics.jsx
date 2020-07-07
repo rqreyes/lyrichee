@@ -11,15 +11,16 @@ const Lyrics = () => {
     track: {},
     lyrics: '',
   });
+  const [hideLyrics, setHideLyrics] = useState(false);
   const { id } = useParams();
   let lyricsDisplay;
 
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
-    return lyrics.split(/\n\n/).map((section) => (
-      <div>
-        {section.split(/\n/).map((line) => (
-          <p>{line}</p>
+    return lyrics.split(/\n\n/).map((section, ind) => (
+      <div key={`section-${ind}`}>
+        {section.split(/\n/).map((line, ind) => (
+          <p key={`line-${ind}`}>{line}</p>
         ))}
       </div>
     ));
@@ -30,7 +31,7 @@ const Lyrics = () => {
     lyricsDisplay = <Loading />;
   } else {
     // display media
-    let mediaDisplay;
+    let streamsDisplay;
 
     if (trackData.track.raw.media.length > 0) {
       // display youtube video
@@ -94,16 +95,34 @@ const Lyrics = () => {
         );
       }
 
-      mediaDisplay = (
+      streamsDisplay = (
         <div className='left-half'>
-          <h3>Media</h3>
+          <h3>Streams</h3>
           {youtubeDisplay}
           {providersDisplay}
         </div>
       );
     }
 
-    const parsedLyrics = parseLyrics(trackData.lyrics);
+    const lyricsClass = hideLyrics ? 'hidden' : '';
+    const parsedLyrics = (
+      <Fragment>
+        <div className='checkbox-group'>
+          <label className='checkbox-label'>
+            <input
+              type='checkbox'
+              checked={hideLyrics}
+              onChange={() => setHideLyrics((prev) => !prev)}
+            />
+            <div className='checkbox-custom'></div>
+            <span>Hide All</span>
+          </label>
+        </div>
+        <div className={`lyrics-content ${lyricsClass}`}>
+          {parseLyrics(trackData.lyrics)}
+        </div>
+      </Fragment>
+    );
 
     lyricsDisplay = (
       <Fragment>
@@ -127,8 +146,8 @@ const Lyrics = () => {
             </div>
           </section>
           <section className='full-container'>
-            {mediaDisplay}
-            <div className='right-half lyrics-content'>
+            {streamsDisplay}
+            <div className='right-half'>
               <h3>Lyrics</h3>
               {parsedLyrics}
             </div>
