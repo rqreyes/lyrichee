@@ -19,11 +19,14 @@ header {
   height: 60px;
   padding: 0 20px;
   margin: auto;
-}
 
-.logo,
-nav {
-  flex: 1;
+  > div {
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .logo {
@@ -34,16 +37,15 @@ nav {
 
   a {
     display: flex;
-    width: 50px;
   }
 
   img {
-    width: 50px;
+    height: 50px;
   }
 }
 
 .search {
-  flex: 4;
+  flex: 1 0 auto;
   max-width: 400px;
 
   form {
@@ -79,9 +81,24 @@ nav {
   display: flex;
   justify-content: flex-end;
 
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    margin-right: 6px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
   svg {
-    width: 25px !important;
-    height: 25px !important;
+    width: 18px !important;
+    height: 18px !important;
   }
 }
 

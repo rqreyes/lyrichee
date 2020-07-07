@@ -44,4 +44,14 @@
       }
     }
   }
+
+  .button-group {
+    flex-direction: column;
+
+    a {
+      &:nth-child(2) {
+        margin-top: 10px;
+      }
+    }
+  }
 }
