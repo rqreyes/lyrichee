@@ -95,10 +95,11 @@ const Lyrics = () => {
       }
 
       mediaDisplay = (
-        <section className='media'>
+        <div className='left-half'>
+          <h3>Media</h3>
           {youtubeDisplay}
           {providersDisplay}
-        </section>
+        </div>
       );
     }
 
@@ -108,11 +109,30 @@ const Lyrics = () => {
       <Fragment>
         <Header />
         <main className='lyrics'>
-          <h2>
-            {trackData.track.artist.name} - {trackData.track.titles.featured}
-          </h2>
-          {mediaDisplay}
-          <section className='lyrics-content'>{parsedLyrics}</section>
+          <section className='info'>
+            <div
+              className='thumbnail-container'
+              style={{
+                backgroundImage: `url(${trackData.track.artist.image})`,
+              }}
+            >
+              <img
+                src={trackData.track.album.cover_art_url}
+                alt='album cover art thumbnail'
+              />
+            </div>
+            <div className='details'>
+              <h2>{trackData.track.titles.featured}</h2>
+              <p>{trackData.track.artist.name}</p>
+            </div>
+          </section>
+          <section className='full-container'>
+            {mediaDisplay}
+            <div className='right-half lyrics-content'>
+              <h3>Lyrics</h3>
+              {parsedLyrics}
+            </div>
+          </section>
         </main>
       </Fragment>
     );
