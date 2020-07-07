@@ -37,19 +37,36 @@ const Artist = () => {
   ) {
     artistProfileDisplay = <Loading />;
   } else {
+    const alternateNames = artistProfile.artist.raw.alternate_names.length
+      ? artistProfile.artist.raw.alternate_names.join(', ')
+      : '';
     const parsedDOM = parseDOM(
       artistProfile.artist.raw.description.dom.children
     );
+
     artistProfileDisplay = (
       <Fragment>
         <Header />
         <main className='artist'>
           <section className='info'>
-            <h2>{artistProfile.artist.name}</h2>
-            <img src={artistProfile.artist.thumbnail} alt='artist thumbnail' />
+            <div
+              className='thumbnail-container'
+              style={{
+                backgroundImage: `url(${artistProfile.artist.image})`,
+              }}
+            >
+              <img
+                src={artistProfile.artist.thumbnail}
+                alt='artist thumbnail'
+              />
+            </div>
+            <div className='details'>
+              <h2>{artistProfile.artist.name}</h2>
+              <p>AKA: {alternateNames}</p>
+            </div>
           </section>
           <section className='full-container'>
-            <div className='search-results left-half'>
+            <div className='search-results'>
               <TrackList tracks={artistProfile.tracks} />
             </div>
             <div className='right-half'>

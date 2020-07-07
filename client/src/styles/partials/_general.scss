@@ -40,9 +40,7 @@ body {
 }
 
 main {
-  max-width: 1000px;
-  padding: 0 10px;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
 }
 
 input {
@@ -101,6 +99,18 @@ p {
   a {
     @include color-hover;
   }
+}
+
+.left-half,
+.right-half {
+  background: #fff;
+  padding: 20px 10px;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.left-half {
+  margin-bottom: 10px;
 }
 
 // Medium devices (tablets, 768px and up)
