@@ -6,6 +6,7 @@ $lychee: #f7dfd4;
 $brown: #472816;
 $green: #6bb745;
 $green-dark: #5ca943;
+$border: 1px solid #eee;
 
 @mixin color-hover {
   color: $red;
@@ -17,6 +18,6 @@ $green-dark: #5ca943;
 }
 
 @mixin shadow {
-  border: 1px solid #eee;
+  border: $border;
   box-shadow: 0 2px 4px #eee;
 }
