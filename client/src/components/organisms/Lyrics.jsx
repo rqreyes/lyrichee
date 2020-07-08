@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../atoms/Loading';
 import Header from './Header';
+import LyricsSection from '../molecules/LyricsSection';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 
@@ -11,19 +12,22 @@ const Lyrics = () => {
     track: {},
     lyrics: '',
   });
-  const [hideLyrics, setHideLyrics] = useState(false);
+  const [hideAll, setHideAll] = useState(false);
+  const [showSectionButtons, setShowSectionButtons] = useState(false);
   const { id } = useParams();
   let lyricsDisplay;
 
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
-    return lyrics.split(/\n\n/).map((section, ind) => (
-      <div key={`section-${ind}`}>
-        {section.split(/\n/).map((line, ind) => (
-          <p key={`line-${ind}`}>{line}</p>
-        ))}
-      </div>
-    ));
+    return lyrics
+      .split(/\n\n/)
+      .map((section, ind) => (
+        <LyricsSection
+          key={`section-${ind}`}
+          section={section}
+          showSectionButtons={showSectionButtons}
+        />
+      ));
   };
 
   // display loading or track information
@@ -104,23 +108,33 @@ const Lyrics = () => {
       );
     }
 
-    const lyricsClass = hideLyrics ? 'hidden' : '';
+    let lyricsClass = 'lyrics-content';
+    if (hideAll) lyricsClass += ' hide';
+    if (showSectionButtons) lyricsClass += ' section-buttons';
+
     const parsedLyrics = (
       <Fragment>
         <div className='checkbox-group'>
           <label className='checkbox-label'>
             <input
               type='checkbox'
-              checked={hideLyrics}
-              onChange={() => setHideLyrics((prev) => !prev)}
+              checked={showSectionButtons}
+              onChange={() => setShowSectionButtons((prev) => !prev)}
+            />
+            <div className='checkbox-custom'></div>
+            <span>By Section</span>
+          </label>
+          <label className='checkbox-label'>
+            <input
+              type='checkbox'
+              checked={hideAll}
+              onChange={() => setHideAll((prev) => !prev)}
             />
             <div className='checkbox-custom'></div>
             <span>Hide All</span>
           </label>
         </div>
-        <div className={`lyrics-content ${lyricsClass}`}>
-          {parseLyrics(trackData.lyrics)}
-        </div>
+        <div className={lyricsClass}>{parseLyrics(trackData.lyrics)}</div>
       </Fragment>
     );
 
