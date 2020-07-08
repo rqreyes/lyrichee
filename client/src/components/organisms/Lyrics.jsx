@@ -12,8 +12,9 @@ const Lyrics = () => {
     track: {},
     lyrics: '',
   });
+  const [learnLine, setLearnLine] = useState(false);
+  const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
-  const [showSectionButtons, setShowSectionButtons] = useState(false);
   const { id } = useParams();
   let lyricsDisplay;
 
@@ -25,7 +26,8 @@ const Lyrics = () => {
         <LyricsSection
           key={`section-${ind}`}
           section={section}
-          showSectionButtons={showSectionButtons}
+          learnLine={learnLine}
+          learnSection={learnSection}
         />
       ));
   };
@@ -109,8 +111,8 @@ const Lyrics = () => {
     }
 
     let lyricsClass = 'lyrics-content';
+    if (learnSection) lyricsClass += ' learn-section';
     if (hideAll) lyricsClass += ' hide';
-    if (showSectionButtons) lyricsClass += ' section-buttons';
 
     const parsedLyrics = (
       <Fragment>
@@ -118,8 +120,17 @@ const Lyrics = () => {
           <label className='checkbox-label'>
             <input
               type='checkbox'
-              checked={showSectionButtons}
-              onChange={() => setShowSectionButtons((prev) => !prev)}
+              checked={learnLine}
+              onChange={() => setLearnLine((prev) => !prev)}
+            />
+            <div className='checkbox-custom'></div>
+            <span>By Line</span>
+          </label>
+          <label className='checkbox-label'>
+            <input
+              type='checkbox'
+              checked={learnSection}
+              onChange={() => setLearnSection((prev) => !prev)}
             />
             <div className='checkbox-custom'></div>
             <span>By Section</span>

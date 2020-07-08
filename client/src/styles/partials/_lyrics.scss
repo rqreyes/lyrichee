@@ -46,7 +46,7 @@
   .checkbox-label {
     display: flex;
     align-items: center;
-    margin: auto;
+    margin: 0 10px;
     position: relative;
     cursor: pointer;
 
@@ -63,7 +63,7 @@
             height: 28px;
             z-index: 999;
             transform: scale(3);
-            transition: all 0.2s ease-out;
+            transition: all 0.4s;
           }
 
           &::after {
@@ -84,16 +84,18 @@
       border-radius: 4px;
       margin-right: 10px;
       position: relative;
-      transition: all 0.2s ease-out;
+      transition: all 0.4s;
 
       &::before {
         content: '';
-        width: 0px;
-        height: 0px;
-        border: 2px solid $pink;
+        background: $pink;
         border-radius: 4px;
         box-sizing: border-box;
         position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
         transform: scale(0);
       }
 
@@ -106,8 +108,8 @@
         position: absolute;
         top: 14px;
         left: 14px;
-        transform: rotate(0deg) scale(0);
-        transition: all 0.2s ease-out;
+        transform: rotate(45deg) scale(0);
+        transition: all 0.4s;
       }
     }
   }
@@ -115,6 +117,7 @@
   .lyrics-content {
     opacity: 1;
     visibility: visible;
+    padding-right: 30px;
     transition: all 0.6s;
 
     &.hide {
@@ -122,34 +125,30 @@
       visibility: hidden;
     }
 
-    &.section-buttons {
-      > div {
-        margin-bottom: 10px;
-
-        &:last-child {
-          margin-bottom: 0;
+    &.learn-section {
+      .lyrics-section-content {
+        > div {
+          &:last-child {
+            margin-bottom: 10px;
+          }
         }
       }
-
-      .lyrics-section-content {
-        padding: 10px 0;
-      }
     }
+  }
 
-    p {
-      margin: 0 0 4px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-
-    button {
+  .lyrics-section {
+    .section-button {
       opacity: 1;
       visibility: visible;
       height: 40px;
       padding: 0;
+      margin-bottom: 10px;
       transition: all 0.6s;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
 
       &.hide {
         opacity: 0;
@@ -160,16 +159,51 @@
           height: 0;
         }
       }
+    }
+
+    > div {
+      overflow: hidden;
+      transition: all 0.6s;
+    }
+  }
+
+  .lyrics-line {
+    display: flex;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    margin: 0 0 4px;
+    transition: all 0.6s;
+
+    .line-button {
+      opacity: 1;
+      visibility: visible;
+      width: 20px;
+      height: 20px;
+      color: $pink;
+      background: none;
+      padding: 0;
+      margin-right: 10px;
+      transition: all 0.6s;
 
       svg {
         width: 20px;
         height: 20px;
       }
-    }
-  }
 
-  .lyrics-section {
-    overflow: hidden;
-    transition: all 0.6s;
+      &.hide {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+
+    p {
+      opacity: 1;
+      transition: all 0.6s;
+
+      &.hide {
+        opacity: 0;
+      }
+    }
   }
 }

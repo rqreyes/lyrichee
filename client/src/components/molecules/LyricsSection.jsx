@@ -1,19 +1,20 @@
 import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import LyricsLine from '../atoms/LyricsLine';
 
-const LyricsSection = ({ section, showSectionButtons }) => {
+const LyricsSection = ({ section, learnLine, learnSection }) => {
   const [hideSection, setHideSection] = useState(false);
   const lyricsSectionRef = useRef();
 
-  const showSectionButtonsClasses = showSectionButtons ? '' : 'hide';
-  const showSectionButtonsDisplay = hideSection ? (
+  const learnSectionButtonClasses = learnSection ? '' : 'hide';
+  const learnSectionButtonDisplay = hideSection ? (
     <FontAwesomeIcon icon={faMinusCircle} />
   ) : (
     <FontAwesomeIcon icon={faPlusCircle} />
   );
 
-  if (lyricsSectionRef.current && !showSectionButtons) {
+  if (!learnSection && lyricsSectionRef.current) {
     lyricsSectionRef.current.style.maxHeight = `${lyricsSectionRef.current.scrollHeight}px`;
   } else if (lyricsSectionRef.current) {
     lyricsSectionRef.current.style.maxHeight = hideSection
@@ -22,20 +23,18 @@ const LyricsSection = ({ section, showSectionButtons }) => {
   }
 
   return (
-    <div>
+    <div className='lyrics-section'>
       <button
         type='button'
-        className={showSectionButtonsClasses}
+        className={`section-button ${learnSectionButtonClasses}`}
         onClick={() => setHideSection((prev) => !prev)}
       >
-        {showSectionButtonsDisplay}
+        {learnSectionButtonDisplay}
       </button>
-      <div className='lyrics-section' ref={lyricsSectionRef}>
-        <div className='lyrics-section-content'>
-          {section.split(/\n/).map((line, ind) => (
-            <p key={`line-${ind}`}>{line}</p>
-          ))}
-        </div>
+      <div className='lyrics-section-content' ref={lyricsSectionRef}>
+        {section.split(/\n/).map((line, ind) => (
+          <LyricsLine key={`line-${ind}`} line={line} learnLine={learnLine} />
+        ))}
       </div>
     </div>
   );
