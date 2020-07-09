@@ -50,30 +50,29 @@ const Artist = () => {
         <main className='artist'>
           <section className='info'>
             <div
-              className='thumbnail-container'
+              className='hero'
               style={{
                 backgroundImage: `url(${artistProfile.artist.image})`,
               }}
-            >
+            ></div>
+            <div className='details'>
               <img
                 src={artistProfile.artist.thumbnail}
                 alt='artist thumbnail'
               />
-            </div>
-            <div className='details'>
-              <h2>{artistProfile.artist.name}</h2>
-              <p>AKA: {alternateNames}</p>
+              <div className='details-text'>
+                <h2>{artistProfile.artist.name}</h2>
+                <p>AKA: {alternateNames}</p>
+              </div>
             </div>
           </section>
-          <section className='full-container'>
-            <div className='search-results'>
-              <TrackList tracks={artistProfile.tracks} />
-            </div>
-            <div className='right-half'>
+          <div className='container full-container'>
+            <TrackList tracks={artistProfile.tracks} />
+            <section className='right-half'>
               <h3>About</h3>
               <div>{parsedDOM}</div>
-            </div>
-          </section>
+            </section>
+          </div>
         </main>
       </Fragment>
     );

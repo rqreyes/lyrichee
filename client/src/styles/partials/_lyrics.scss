@@ -1,4 +1,21 @@
 .lyrics {
+  .streams,
+  .lyrics-container {
+    background: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 20px 10px;
+  }
+
+  .streams {
+    padding: 20px 40px;
+    margin-bottom: 10px;
+  }
+
+  .lyrics-container {
+    padding: 20px 10px;
+  }
+
   .embed-container {
     position: relative;
     padding-bottom: 56.25%;
@@ -10,6 +27,7 @@
     iframe,
     object,
     embed {
+      border-radius: 10px;
       position: absolute;
       top: 0;
       left: 0;
@@ -40,7 +58,7 @@
   .checkbox-group {
     display: flex;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .checkbox-label {
@@ -59,6 +77,7 @@
         ~ .checkbox-custom {
           &::before {
             opacity: 0;
+            visibility: hidden;
             width: 28px;
             height: 28px;
             z-index: 999;
@@ -115,14 +134,10 @@
   }
 
   .lyrics-content {
-    opacity: 1;
-    visibility: visible;
-    padding-right: 30px;
     transition: all 0.6s;
 
     &.hide {
       opacity: 0;
-      visibility: hidden;
     }
 
     &.learn-section {
@@ -138,8 +153,6 @@
 
   .lyrics-section {
     .section-button {
-      opacity: 1;
-      visibility: visible;
       height: 40px;
       padding: 0;
       margin-bottom: 10px;
@@ -152,7 +165,6 @@
 
       &.hide {
         opacity: 0;
-        visibility: hidden;
         height: 0;
 
         svg {
@@ -170,13 +182,9 @@
   .lyrics-line {
     display: flex;
     align-items: center;
-    opacity: 1;
-    visibility: visible;
     margin: 0 0 4px;
-    transition: all 0.6s;
 
     .line-button {
-      opacity: 1;
       visibility: visible;
       width: 20px;
       height: 20px;

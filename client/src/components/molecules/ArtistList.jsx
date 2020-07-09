@@ -7,10 +7,10 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <div className='artist-list right-half'>
+    <section className='search-items artist-list right-half'>
       <h3>Artists</h3>
       <ul>{artistItemDisplay}</ul>
-    </div>
+    </section>
   );
 };
 

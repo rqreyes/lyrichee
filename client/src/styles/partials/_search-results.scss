@@ -6,7 +6,9 @@
     padding: 20px 10px;
     margin-bottom: 10px;
   }
+}
 
+.search-items {
   li {
     @include shadow;
     display: flex;
@@ -34,14 +36,11 @@
     margin-right: 10px;
   }
 
-  .track-list,
-  .artist-list {
-    p {
-      margin: 0;
+  p {
+    margin: 0;
 
-      &.item-title {
-        margin-bottom: 2px;
-      }
+    &.item-title {
+      margin-bottom: 2px;
     }
   }
 

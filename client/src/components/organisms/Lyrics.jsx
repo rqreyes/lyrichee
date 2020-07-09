@@ -102,11 +102,11 @@ const Lyrics = () => {
       }
 
       streamsDisplay = (
-        <div className='left-half'>
+        <section className='streams'>
           <h3>Streams</h3>
           {youtubeDisplay}
           {providersDisplay}
-        </div>
+        </section>
       );
     }
 
@@ -124,7 +124,7 @@ const Lyrics = () => {
               onChange={() => setLearnLine((prev) => !prev)}
             />
             <div className='checkbox-custom'></div>
-            <span>By Line</span>
+            <span>Line</span>
           </label>
           <label className='checkbox-label'>
             <input
@@ -133,7 +133,7 @@ const Lyrics = () => {
               onChange={() => setLearnSection((prev) => !prev)}
             />
             <div className='checkbox-custom'></div>
-            <span>By Section</span>
+            <span>Section</span>
           </label>
           <label className='checkbox-label'>
             <input
@@ -142,7 +142,7 @@ const Lyrics = () => {
               onChange={() => setHideAll((prev) => !prev)}
             />
             <div className='checkbox-custom'></div>
-            <span>Hide All</span>
+            <span>All</span>
           </label>
         </div>
         <div className={lyricsClass}>{parseLyrics(trackData.lyrics)}</div>
@@ -155,27 +155,26 @@ const Lyrics = () => {
         <main className='lyrics'>
           <section className='info'>
             <div
-              className='thumbnail-container'
+              className='hero'
               style={{
                 backgroundImage: `url(${trackData.track.artist.image})`,
               }}
-            >
+            ></div>
+            <div className='details'>
               <img
                 src={trackData.track.album.cover_art_url}
                 alt='album cover art thumbnail'
               />
-            </div>
-            <div className='details'>
-              <h2>{trackData.track.titles.featured}</h2>
-              <p>{trackData.track.artist.name}</p>
+              <div className='details-text'>
+                <h2>{trackData.track.titles.featured}</h2>
+                <p>{trackData.track.artist.name}</p>
+              </div>
             </div>
           </section>
-          <section className='full-container'>
-            {streamsDisplay}
-            <div className='right-half'>
-              <h3>Lyrics</h3>
-              {parsedLyrics}
-            </div>
+          {streamsDisplay}
+          <section className='lyrics-container'>
+            <h3>Lyrics</h3>
+            {parsedLyrics}
           </section>
         </main>
       </Fragment>
