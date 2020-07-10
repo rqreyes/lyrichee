@@ -110,6 +110,10 @@ nav {
   .button-group {
     display: flex;
     flex-direction: column;
+    padding: 10px 0;
+    background: #fff;
+    border-left: 1px solid #eee;
+    border-bottom: 1px solid #eee;
   }
 
   button {
@@ -117,12 +121,14 @@ nav {
     justify-content: flex-start;
     align-items: center;
     font-size: 20px;
-    background: $green-dark;
+    color: $brown;
+    background: none;
     border-radius: 0;
     white-space: nowrap;
 
     &:hover {
-      background: $green;
+      color: $green-dark;
+      background: none;
     }
   }
 

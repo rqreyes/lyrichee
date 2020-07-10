@@ -75,12 +75,14 @@
 
       &:checked {
         ~ .checkbox-custom {
+          background: $green-dark;
+
           &::before {
             visibility: hidden;
             opacity: 0;
             width: 28px;
             height: 28px;
-            z-index: 999;
+            z-index: 99;
             transform: scale(3);
             transition: all 0.4s;
           }
@@ -105,9 +107,13 @@
       position: relative;
       transition: all 0.4s;
 
+      &:hover {
+        background: $green !important;
+      }
+
       &::before {
         content: '';
-        background: $pink;
+        background: $green-dark;
         border-radius: 4px;
         box-sizing: border-box;
         position: absolute;
@@ -152,24 +158,34 @@
   }
 
   .lyrics-section {
+    &.active {
+      .section-button {
+        background: $green-dark;
+      }
+    }
+
     .section-button {
       height: 40px;
       padding: 0;
       margin-bottom: 10px;
       transition: all 0.6s;
 
-      svg {
-        width: 20px;
-        height: 20px;
+      &:hover {
+        background: $green !important;
       }
 
-      &.hide {
+      &.hide-section {
         opacity: 0;
         height: 0;
 
         svg {
           height: 0;
         }
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
       }
     }
 
@@ -184,7 +200,28 @@
     align-items: center;
     margin: 0 0 4px;
 
+    &.hide-line {
+      .line-button {
+        opacity: 1;
+      }
+
+      p {
+        opacity: 0;
+      }
+    }
+
+    &.active {
+      .line-button {
+        color: $green-dark;
+      }
+
+      p {
+        opacity: 1;
+      }
+    }
+
     .line-button {
+      opacity: 0;
       width: 20px;
       height: 20px;
       color: $pink;
@@ -193,24 +230,18 @@
       margin-right: 10px;
       transition: all 0.6s;
 
+      &:hover {
+        color: $green !important;
+      }
+
       svg {
         width: 20px;
         height: 20px;
       }
-
-      &.hide {
-        visibility: hidden;
-        opacity: 0;
-      }
     }
 
     p {
-      opacity: 1;
       transition: all 0.6s;
-
-      &.hide {
-        opacity: 0;
-      }
     }
   }
 }

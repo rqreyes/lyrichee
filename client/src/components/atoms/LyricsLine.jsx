@@ -5,28 +5,25 @@ import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 const LyricsLine = ({ line, learnLine }) => {
   const [hideLine, setHideLine] = useState(false);
 
-  const learnLineButtonClasses = learnLine ? '' : 'hide';
-  let learnLineButtonDisplay;
-  let learnLineClasses;
-
-  if (learnLine && !hideLine) {
-    learnLineButtonDisplay = <FontAwesomeIcon icon={faPlusCircle} />;
-    learnLineClasses = 'hide';
-  } else {
-    learnLineButtonDisplay = <FontAwesomeIcon icon={faMinusCircle} />;
-    learnLineClasses = '';
-  }
+  const learnLineClass = learnLine ? 'hide-line' : '';
+  const learnLineTextClass = hideLine ? 'active' : '';
+  const learnLineButtonDisplay =
+    learnLine && !hideLine ? (
+      <FontAwesomeIcon icon={faPlusCircle} />
+    ) : (
+      <FontAwesomeIcon icon={faMinusCircle} />
+    );
 
   return (
-    <div className='lyrics-line'>
+    <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
       <button
         type='button'
-        className={`line-button ${learnLineButtonClasses}`}
+        className='line-button'
         onClick={() => setHideLine((prev) => !prev)}
       >
         {learnLineButtonDisplay}
       </button>
-      <p className={learnLineClasses}>{line}</p>
+      <p>{line}</p>
     </div>
   );
 };

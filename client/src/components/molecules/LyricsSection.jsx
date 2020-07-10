@@ -6,13 +6,18 @@ import LyricsLine from '../atoms/LyricsLine';
 const LyricsSection = ({ section, learnLine, learnSection }) => {
   const [hideSection, setHideSection] = useState(false);
   const lyricsSectionRef = useRef();
+  let learnSectionClass;
+  let learnSectionButtonDisplay;
 
-  const learnSectionButtonClasses = learnSection ? '' : 'hide';
-  const learnSectionButtonDisplay = hideSection ? (
-    <FontAwesomeIcon icon={faMinusCircle} />
-  ) : (
-    <FontAwesomeIcon icon={faPlusCircle} />
-  );
+  const learnSectionButtonClass = learnSection ? '' : 'hide-section';
+
+  if (hideSection) {
+    learnSectionClass = 'active';
+    learnSectionButtonDisplay = <FontAwesomeIcon icon={faMinusCircle} />;
+  } else {
+    learnSectionClass = '';
+    learnSectionButtonDisplay = <FontAwesomeIcon icon={faPlusCircle} />;
+  }
 
   if (!learnSection && lyricsSectionRef.current) {
     lyricsSectionRef.current.style.maxHeight = `${lyricsSectionRef.current.scrollHeight}px`;
@@ -23,10 +28,10 @@ const LyricsSection = ({ section, learnLine, learnSection }) => {
   }
 
   return (
-    <div className='lyrics-section'>
+    <div className={`lyrics-section ${learnSectionClass}`}>
       <button
         type='button'
-        className={`section-button ${learnSectionButtonClasses}`}
+        className={`section-button ${learnSectionButtonClass}`}
         onClick={() => setHideSection((prev) => !prev)}
       >
         {learnSectionButtonDisplay}
