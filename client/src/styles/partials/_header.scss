@@ -156,6 +156,21 @@ nav {
       position: static;
     }
 
-    @include nav-large;
+    .button-group {
+      flex-direction: row;
+      padding: 0;
+      background: none;
+      border: 0;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 4px;
+
+      &:hover {
+        color: $green-dark;
+      }
+    }
   }
 }

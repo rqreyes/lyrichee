@@ -3,17 +3,20 @@
   margin-bottom: 20vh;
 
   nav {
-    visibility: visible;
-    opacity: 1;
-    position: static;
+    top: auto;
   }
 
-  @include nav-large;
+  .button-group {
+    background: none;
+    padding: 0;
+    border: 0;
+  }
 }
 
 .landing-main {
   width: 100%;
   max-width: 400px;
+  padding: 0 10px;
   margin: auto;
 
   .logo {
@@ -41,5 +44,12 @@
   button {
     width: 40px;
     height: 40px;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .landing-main {
+    padding: 0;
   }
 }
