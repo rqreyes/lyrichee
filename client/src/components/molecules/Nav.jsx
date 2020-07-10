@@ -8,23 +8,28 @@ import {
   faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Nav = () => {
+const Nav = ({ toggleOpen }) => {
   const history = useHistory();
+  const navClass = toggleOpen ? 'open' : '';
 
   return (
-    <nav>
+    <nav className={navClass}>
       <div className='button-group'>
         <button type='button' onClick={() => history.goBack()}>
           <FontAwesomeIcon icon={faArrowLeft} />
+          Back
         </button>
         <button type='button' onClick={() => history.goForward()}>
           <FontAwesomeIcon icon={faArrowRight} />
+          Forward
         </button>
         <button type='button'>
           <FontAwesomeIcon icon={faStar} />
+          Favorites
         </button>
         <button type='button'>
           <FontAwesomeIcon icon={faSignInAlt} />
+          Sign In
         </button>
       </div>
     </nav>

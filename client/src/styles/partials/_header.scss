@@ -16,6 +16,7 @@ header {
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 950px;
   height: 60px;
   padding: 0 20px;
   margin: auto;
@@ -45,7 +46,7 @@ header {
 }
 
 .search {
-  max-width: 400px;
+  flex: 1;
 
   form {
     position: relative;
@@ -76,36 +77,85 @@ header {
   }
 }
 
+.menu {
+  position: relative;
+
+  .menu-button,
+  .menu-button svg {
+    width: 30px;
+    height: 30px;
+  }
+
+  .menu-button {
+    color: $brown;
+    padding: 0;
+    background: none;
+  }
+}
+
 nav {
-  display: flex;
-  justify-content: flex-end;
+  opacity: 0;
+  visibility: hidden;
+  width: 200px;
+  position: absolute;
+  top: 47px;
+  right: -20px;
+  transition: all 0.2s;
+
+  &.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .button-group {
+    display: flex;
+    flex-direction: column;
+  }
 
   button {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    border-radius: 50%;
-    margin-right: 6px;
+    font-size: 20px;
+    background: $green-dark;
+    border-radius: 0;
+    white-space: nowrap;
 
-    &:last-child {
-      margin-right: 0;
+    &:hover {
+      background: $green;
     }
   }
 
   svg {
-    width: 18px !important;
-    height: 18px !important;
+    width: 20px !important;
+    margin-right: 10px;
   }
 }
 
-// Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {
-  .search {
-    input {
-      width: 400px;
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  nav {
+    width: auto;
+
+    &.open {
+      position: static;
+    }
+
+    .button-group {
+      flex-direction: row;
+    }
+
+    button {
+      font-size: 16px;
+      color: $brown;
+      padding: 10px;
+      background: none;
+      border-radius: 4px;
+
+      &:hover {
+        color: $green-dark;
+        background: none;
+      }
     }
   }
 }
