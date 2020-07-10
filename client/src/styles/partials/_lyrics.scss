@@ -76,8 +76,8 @@
       &:checked {
         ~ .checkbox-custom {
           &::before {
-            opacity: 0;
             visibility: hidden;
+            opacity: 0;
             width: 28px;
             height: 28px;
             z-index: 999;
@@ -199,8 +199,8 @@
       }
 
       &.hide {
-        opacity: 0;
         visibility: hidden;
+        opacity: 0;
       }
     }
 

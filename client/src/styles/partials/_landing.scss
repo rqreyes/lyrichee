@@ -1,6 +1,14 @@
 .landing-header {
   justify-content: flex-end;
   margin-bottom: 20vh;
+
+  nav {
+    visibility: visible;
+    opacity: 1;
+    position: static;
+  }
+
+  @include nav-large;
 }
 
 .landing-main {

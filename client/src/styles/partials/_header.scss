@@ -94,8 +94,8 @@ header {
 }
 
 nav {
-  opacity: 0;
   visibility: hidden;
+  opacity: 0;
   width: 200px;
   position: absolute;
   top: 47px;
@@ -103,8 +103,8 @@ nav {
   transition: all 0.2s;
 
   &.open {
-    opacity: 1;
     visibility: visible;
+    opacity: 1;
   }
 
   .button-group {
@@ -141,21 +141,6 @@ nav {
       position: static;
     }
 
-    .button-group {
-      flex-direction: row;
-    }
-
-    button {
-      font-size: 16px;
-      color: $brown;
-      padding: 10px;
-      background: none;
-      border-radius: 4px;
-
-      &:hover {
-        color: $green-dark;
-        background: none;
-      }
-    }
+    @include nav-large;
   }
 }
