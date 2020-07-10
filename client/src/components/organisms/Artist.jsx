@@ -15,6 +15,8 @@ const Artist = () => {
 
   // parse the description DOM into HTML
   const parseDOM = (DOM) => {
+    if (DOM === undefined) return;
+
     return DOM.map((parent, ind) => {
       if (typeof parent === 'string') return parent;
 
@@ -37,9 +39,11 @@ const Artist = () => {
   ) {
     artistProfileDisplay = <Loading />;
   } else {
-    const alternateNames = artistProfile.artist.raw.alternate_names.length
-      ? artistProfile.artist.raw.alternate_names.join(', ')
-      : '';
+    const alternateNames = artistProfile.artist.raw.alternate_names.length ? (
+      <p>AKA: {artistProfile.artist.raw.alternate_names.join(', ')}</p>
+    ) : (
+      ''
+    );
     const parsedDOM = parseDOM(
       artistProfile.artist.raw.description.dom.children
     );
@@ -62,7 +66,7 @@ const Artist = () => {
               />
               <div className='details-text'>
                 <h2>{artistProfile.artist.name}</h2>
-                <p>AKA: {alternateNames}</p>
+                {alternateNames}
               </div>
             </div>
           </section>

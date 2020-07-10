@@ -130,6 +130,15 @@ nav {
       color: $green-dark;
       background: none;
     }
+
+    &:disabled {
+      color: #ddd;
+
+      &:hover {
+        color: #ddd;
+        cursor: auto;
+      }
+    }
   }
 
   svg {

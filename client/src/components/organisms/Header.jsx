@@ -17,7 +17,7 @@ const Header = ({ landing }) => {
   const menuDisplay = toggleOpen ? <Nav toggleOpen={toggleOpen} /> : <Menu />;
   const headerDisplay = landing ? (
     <header className='landing-header'>
-      <Nav landing={landing} />
+      <Nav />
     </header>
   ) : (
     <Headroom>

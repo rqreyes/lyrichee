@@ -1,4 +1,5 @@
 import React from 'react';
+import NavContextProvider from './contexts/NavContext';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Landing from './components/organisms/Landing';
 import SearchResults from './components/organisms/SearchResults';
@@ -11,28 +12,28 @@ import './styles/styles.scss';
 function App() {
   return (
     <div className='App'>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path='/'>
-            <Landing />
-          </Route>
-          <Route exact path='/search'>
-            <SearchResults />
-          </Route>
-          <Route exact path='/tracks/:id'>
-            <Lyrics />
-          </Route>
-          <Route exact path='/artist/:id'>
-            <Artist />
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch>
-        <footer>
+      <NavContextProvider>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/'>
+              <Landing />
+            </Route>
+            <Route exact path='/search'>
+              <SearchResults />
+            </Route>
+            <Route exact path='/tracks/:id'>
+              <Lyrics />
+            </Route>
+            <Route exact path='/artist/:id'>
+              <Artist />
+            </Route>
+            <Route>
+              <NotFound />
+            </Route>
+          </Switch>
           <Footer />
-        </footer>
-      </BrowserRouter>
+        </BrowserRouter>
+      </NavContextProvider>
     </div>
   );
 }
