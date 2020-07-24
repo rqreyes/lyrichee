@@ -166,7 +166,7 @@ export default ({ data }) => {
           <span>All</span>
         </label>
       </div>
-      <button className='btn-info' onClick={updateLearnReset}>
+      <button className='reset' onClick={updateLearnReset}>
         Reset
       </button>
       <div className={lyricsClass}>{parseLyrics(data.lyrics)}</div>
@@ -196,7 +196,7 @@ export default ({ data }) => {
               <p>{data.track.artist.name}</p>
               <Link href={`/artist/${data.track.artist.id}`}>
                 <a>
-                  <button className='btn-info'>View Artist</button>
+                  <button className='artist'>View Artist</button>
                 </a>
               </Link>
             </div>

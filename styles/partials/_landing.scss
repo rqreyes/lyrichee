@@ -3,6 +3,7 @@
   margin-bottom: 20vh;
 
   nav {
+    background: none;
     top: auto;
   }
 
@@ -48,6 +49,12 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
+  .landing-header {
+    nav {
+      background: none;
+    }
+  }
+
   .landing-main {
     padding: 0;
   }

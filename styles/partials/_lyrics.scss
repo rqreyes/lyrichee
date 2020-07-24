@@ -1,4 +1,14 @@
 .lyrics {
+  .artist,
+  .reset {
+    width: auto;
+  }
+
+  .reset {
+    display: block;
+    margin: 0 auto 10px;
+  }
+
   .streams,
   .lyrics-container {
     background: #fff;
@@ -14,10 +24,6 @@
 
   .lyrics-container {
     padding: 20px 10px;
-
-    .btn-info {
-      margin-bottom: 10px;
-    }
   }
 
   .embed-container {

@@ -71,12 +71,6 @@ button {
   &:hover {
     background: $green-dark;
   }
-
-  &.btn-info {
-    display: block;
-    width: auto;
-    margin: auto;
-  }
 }
 
 ul {
@@ -189,7 +183,7 @@ p {
 
     .details-text {
       padding: 0;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     img {
