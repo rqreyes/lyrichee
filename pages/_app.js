@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import NProgress from 'nprogress';
 import Loading from '../components/atoms/Loading';
 import Header from '../components/organisms/Header';
 import Footer from '../components/organisms/Footer';
+import 'nprogress/nprogress.css';
 import '../styles/styles.scss';
 
 export default ({ Component, pageProps, router }) => {
@@ -19,12 +21,18 @@ export default ({ Component, pageProps, router }) => {
     </>
   );
 
+  NProgress.configure({
+    minimum: 0.4,
+  });
+
   useEffect(() => {
     const start = () => {
       setLoading(true);
+      NProgress.start();
     };
     const end = () => {
       setLoading(false);
+      NProgress.done();
     };
 
     router.events.on('routeChangeStart', start);

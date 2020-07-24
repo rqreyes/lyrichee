@@ -5,7 +5,7 @@ const ArtistItem = ({ artist }) => {
     <li>
       <div className='item-details'>
         <img src={artist.thumbnail} alt='artist thumbnail' />
-        <p>
+        <p className='item-content'>
           <strong>{artist.name}</strong>
         </p>
       </div>

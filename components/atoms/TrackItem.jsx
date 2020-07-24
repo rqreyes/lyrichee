@@ -16,7 +16,7 @@ const TrackItem = ({ track }) => {
     <li>
       <div className='item-details'>
         <img src={albumDisplay} alt='album art' />
-        <div>
+        <div className='item-content'>
           <p className='item-title'>
             <strong>{track.titles.featured}</strong>
           </p>

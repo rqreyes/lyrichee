@@ -215,6 +215,21 @@ p {
   }
 }
 
+// NProgress
+#nprogress {
+  .bar {
+    background: $red;
+  }
+  .peg {
+    box-shadow: 0 0 10px $red, 0 0 5px $red;
+  }
+
+  .spinner-icon {
+    border-top-color: $red;
+    border-left-color: $red;
+  }
+}
+
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
   .container {
