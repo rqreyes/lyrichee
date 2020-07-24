@@ -1,9 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import LyricsLine from '../atoms/LyricsLine';
 
-const LyricsSection = ({ section, learnLine, learnSection }) => {
+const LyricsSection = ({ section, learnLine, learnSection, learnReset }) => {
   const [hideSection, setHideSection] = useState(false);
   const lyricsSectionRef = useRef();
   let learnSectionClass;
@@ -27,6 +27,10 @@ const LyricsSection = ({ section, learnLine, learnSection }) => {
       : '0px';
   }
 
+  useEffect(() => {
+    setHideSection(false);
+  }, [learnReset]);
+
   return (
     <div className={`lyrics-section ${learnSectionClass}`}>
       <button
@@ -38,7 +42,12 @@ const LyricsSection = ({ section, learnLine, learnSection }) => {
       </button>
       <div className='lyrics-section-content' ref={lyricsSectionRef}>
         {section.split(/\n/).map((line, ind) => (
-          <LyricsLine key={`line-${ind}`} line={line} learnLine={learnLine} />
+          <LyricsLine
+            key={`line-${ind}`}
+            line={line}
+            learnLine={learnLine}
+            learnReset={learnReset}
+          />
         ))}
       </div>
     </div>

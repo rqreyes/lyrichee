@@ -2,11 +2,15 @@ import Link from 'next/link';
 
 const TrackItem = ({ track }) => {
   // display album art or placeholder image
-  const albumDisplay = track.album
-    ? track.album.cover_art_url
-    : track.thumbnail
-    ? track.thumbnail
-    : 'https://picsum.photos/200';
+  let albumDisplay;
+
+  if (track.album) {
+    albumDisplay = track.album.cover_art_url;
+  } else if (track.thumbnail) {
+    albumDisplay = track.thumbnail;
+  } else {
+    albumDisplay = '/images/no-image.png';
+  }
 
   return (
     <li>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
@@ -25,6 +26,14 @@ export default ({ data }) => {
   const [learnLine, setLearnLine] = useState(false);
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
+  const [learnReset, setLearnReset] = useState(false);
+
+  const updateLearnReset = () => {
+    setLearnLine(false);
+    setLearnSection(false);
+    setHideAll(false);
+    setLearnReset(!learnReset);
+  };
 
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
@@ -36,9 +45,21 @@ export default ({ data }) => {
           section={section}
           learnLine={learnLine}
           learnSection={learnSection}
+          learnReset={learnReset}
         />
       ));
   };
+
+  // display album art or placeholder image
+  let albumDisplay;
+
+  if (data.track.album) {
+    albumDisplay = data.track.album.cover_art_url;
+  } else if (data.track.thumbnail) {
+    albumDisplay = data.track.thumbnail;
+  } else {
+    albumDisplay = '/images/no-image.png';
+  }
 
   // display media
   let streamsDisplay;
@@ -145,6 +166,9 @@ export default ({ data }) => {
           <span>All</span>
         </label>
       </div>
+      <button className='btn-info' onClick={updateLearnReset}>
+        Reset
+      </button>
       <div className={lyricsClass}>{parseLyrics(data.lyrics)}</div>
     </>
   );
@@ -166,13 +190,15 @@ export default ({ data }) => {
             }}
           ></div>
           <div className='details'>
-            <img
-              src={data.track.album.cover_art_url}
-              alt='album cover art thumbnail'
-            />
+            <img src={albumDisplay} alt='album cover art thumbnail' />
             <div className='details-text'>
               <h2>{data.track.titles.featured}</h2>
               <p>{data.track.artist.name}</p>
+              <Link href={`/artist/${data.track.artist.id}`}>
+                <a>
+                  <button className='btn-info'>View Artist</button>
+                </a>
+              </Link>
             </div>
           </div>
         </section>

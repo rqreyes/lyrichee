@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-const LyricsLine = ({ line, learnLine }) => {
+const LyricsLine = ({ line, learnLine, learnReset }) => {
   const [hideLine, setHideLine] = useState(false);
 
   const learnLineClass = learnLine ? 'hide-line' : '';
@@ -13,6 +13,10 @@ const LyricsLine = ({ line, learnLine }) => {
     ) : (
       <FontAwesomeIcon icon={faMinusCircle} />
     );
+
+  useEffect(() => {
+    setHideLine(false);
+  }, [learnReset]);
 
   return (
     <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
