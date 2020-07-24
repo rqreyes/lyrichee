@@ -18,18 +18,24 @@ const LyricsLine = ({ line, learnLine, learnReset }) => {
     setHideLine(false);
   }, [learnReset]);
 
-  return (
-    <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
-      <button
-        type='button'
-        className='line-button'
-        onClick={() => setHideLine((prev) => !prev)}
-      >
-        {learnLineButtonDisplay}
-      </button>
-      <p>{line}</p>
-    </div>
-  );
+  const regex = RegExp('^\\[');
+
+  if (regex.test(line)) {
+    return <p className='lyrics-section-header'>{line}</p>;
+  } else {
+    return (
+      <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
+        <button
+          type='button'
+          className='line-button'
+          onClick={() => setHideLine((prev) => !prev)}
+        >
+          {learnLineButtonDisplay}
+        </button>
+        <p>{line}</p>
+      </div>
+    );
+  }
 };
 
 export default LyricsLine;

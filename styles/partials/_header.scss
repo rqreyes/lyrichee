@@ -97,7 +97,8 @@ nav {
   @include shadow;
   visibility: hidden;
   opacity: 0;
-  width: 200px;
+  background: #fff;
+  border-right: 0;
   position: absolute;
   top: 47px;
   right: -20px;
@@ -112,9 +113,6 @@ nav {
     display: flex;
     flex-direction: column;
     padding: 10px 0;
-    background: #fff;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
   }
 
   button {
@@ -159,14 +157,11 @@ nav {
     opacity: 1;
     border: 0;
     box-shadow: none;
-    width: auto;
     position: static;
 
     .button-group {
       flex-direction: row;
       padding: 0;
-      background: none;
-      border: 0;
     }
 
     button {
