@@ -23,6 +23,7 @@ export default ({ Component, pageProps, router }) => {
 
   NProgress.configure({
     minimum: 0.4,
+    showSpinner: false,
   });
 
   useEffect(() => {

@@ -124,6 +124,16 @@ p {
     background-position: center;
   }
 
+  img {
+    display: block;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border: 6px solid #fff;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
   .details {
     display: flex;
     flex-direction: column;
@@ -140,14 +150,8 @@ p {
     padding: 0 10px;
   }
 
-  img {
-    display: block;
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border: 6px solid #fff;
-    border-radius: 10px;
-    margin: 0 auto;
+  h2 {
+    margin-bottom: 0;
   }
 }
 
