@@ -1,4 +1,5 @@
 import TrackItem from '../atoms/TrackItem';
+import { StyledSectionList } from '../organisms/Styles';
 
 const TrackList = ({ tracks }) => {
   const trackItemDisplay = tracks.map((track) => (
@@ -6,10 +7,10 @@ const TrackList = ({ tracks }) => {
   ));
 
   return (
-    <section className='search-items track-list left-half'>
+    <StyledSectionList className='half-left'>
       <h3>Tracks</h3>
       <ul>{trackItemDisplay}</ul>
-    </section>
+    </StyledSectionList>
   );
 };
 

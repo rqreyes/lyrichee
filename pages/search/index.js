@@ -1,8 +1,20 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import styled from 'styled-components';
+import { StyledContainerFull } from '../../components/organisms/Styles';
 import TrackList from '../../components/molecules/TrackList';
 import ArtistList from '../../components/molecules/ArtistList';
+
+const StyledSection = styled.section`
+  text-align: center;
+  background: #fff;
+  border: 0;
+  border-bottom: ${({ theme }) => theme.border};
+  border-radius: 0;
+  padding: 20px 10px;
+  margin-bottom: 10px;
+`;
 
 const getSearchResults = async (key, query) => {
   const { data } = await axios.get(
@@ -36,15 +48,15 @@ export default ({ data }) => {
         <title>Lyrichee Search | {router.query.q}</title>
       </Head>
       <>
-        <main className='search-results'>
-          <section className='search-query'>
+        <main>
+          <StyledSection>
             <h2>Search Results</h2>
             <p>"{router.query.q}"</p>
-          </section>
-          <div className='container full-container'>
+          </StyledSection>
+          <StyledContainerFull>
             <TrackList tracks={tracks} />
             <ArtistList artists={artists} />
-          </div>
+          </StyledContainerFull>
         </main>
       </>
     </>

@@ -19,6 +19,9 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-headroom": "^3.0.0",
-    "sass": "^1.26.10"
+    "styled-components": "^5.1.1"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.10.7"
   }
 }

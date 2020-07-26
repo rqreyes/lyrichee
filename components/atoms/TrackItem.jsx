@@ -14,16 +14,15 @@ const TrackItem = ({ track }) => {
 
   return (
     <li>
-      <div className='item-details'>
+      <div className='item-content'>
         <img src={albumDisplay} alt='album art' />
-        <div className='item-content'>
-          <p className='item-title'>
+        <div>
+          <p>
             <strong>{track.titles.featured}</strong>
           </p>
           <p>{track.artist.name}</p>
         </div>
       </div>
-
       <div className='button-group'>
         <Link href={`/track/${track.id}`}>
           <a>

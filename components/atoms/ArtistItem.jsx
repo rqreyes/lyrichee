@@ -3,9 +3,9 @@ import Link from 'next/link';
 const ArtistItem = ({ artist }) => {
   return (
     <li>
-      <div className='item-details'>
+      <div className='item-content'>
         <img src={artist.thumbnail} alt='artist thumbnail' />
-        <p className='item-content'>
+        <p>
           <strong>{artist.name}</strong>
         </p>
       </div>

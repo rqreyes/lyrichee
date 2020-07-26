@@ -1,6 +1,14 @@
 import Head from 'next/head';
+import styled from 'styled-components';
 import Logo from '../components/molecules/Logo';
 import Search from '../components/molecules/Search';
+
+const StyledMain = styled.main`
+  width: 100%;
+  max-width: 400px;
+  padding: 0 10px;
+  margin: auto;
+`;
 
 const Landing = () => {
   return (
@@ -8,10 +16,10 @@ const Landing = () => {
       <Head>
         <title>Lyrichee</title>
       </Head>
-      <main className='landing-main'>
+      <StyledMain>
         <Logo landing />
         <Search landing />
-      </main>
+      </StyledMain>
     </>
   );
 };

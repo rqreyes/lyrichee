@@ -1,4 +1,5 @@
 import ArtistItem from '../atoms/ArtistItem';
+import { StyledSectionList } from '../organisms/Styles';
 
 const ArtistList = ({ artists }) => {
   const artistItemDisplay = artists.map((artist) => (
@@ -6,10 +7,10 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <section className='search-items artist-list right-half'>
+    <StyledSectionList className='half-right'>
       <h3>Artists</h3>
       <ul>{artistItemDisplay}</ul>
-    </section>
+    </StyledSectionList>
   );
 };
 
