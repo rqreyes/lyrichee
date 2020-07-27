@@ -60,10 +60,10 @@ const StyledButton = styled.button`
   }
 
   &:disabled {
-    color: #ccc;
+    color: ${({ theme }) => theme.colors.grey};
 
     &:hover {
-      color: #ccc;
+      color: ${({ theme }) => theme.colors.grey};
       cursor: auto;
     }
   }

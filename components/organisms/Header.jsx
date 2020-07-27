@@ -39,7 +39,6 @@ const StyledHeader = styled.header`
     landing &&
     `
       justify-content: flex-end;
-      margin-bottom: 20vh;
   `}
 `;
 

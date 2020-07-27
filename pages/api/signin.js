@@ -13,7 +13,7 @@ export default async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // if email is not registered or if password is not a match, then send an error
+    // if username is not registered or if password is not a match, then send an error
     const user = await User.findOne({ username });
     const isMatch = user
       ? await bcrypt.compare(password, user.password)

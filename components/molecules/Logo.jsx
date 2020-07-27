@@ -29,7 +29,7 @@ const StyledImg = styled.img`
 `;
 
 const Logo = ({ landing }) => {
-  const logoSrc = landing ? '/images/logo-font.png' : '/images/logo-icon.png';
+  const logoSrc = landing ? '/images/logo-text.png' : '/images/logo-icon.png';
 
   return (
     <Link href='/'>

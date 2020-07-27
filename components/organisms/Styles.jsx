@@ -159,3 +159,9 @@ export const StyledSectionList = styled.section`
     }
   }
 `;
+
+export const StyledMainCenter = styled.main`
+  max-width: 420px;
+  padding: 0 10px;
+  margin: 20vh auto 0;
+`;

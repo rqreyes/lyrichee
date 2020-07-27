@@ -19,6 +19,11 @@ const StyledForm = styled.form`
 `;
 
 const StyledInput = styled.input`
+  padding: 10px 40px 10px 20px;
+  border: ${({ theme }) => theme.border};
+  border-radius: 100px;
+  box-shadow: ${({ theme }) => theme.boxShadow};
+
   ${({ landing }) =>
     landing &&
     `

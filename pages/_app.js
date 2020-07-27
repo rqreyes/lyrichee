@@ -10,6 +10,7 @@ import { createGlobalStyle, ThemeProvider } from 'styled-components';
 const theme = {
   colors: {
     snow: 'snow',
+    grey: '#ccc',
     pink: '#f7a3c0',
     red: '#e04666',
     redDark: '#a6001f',
@@ -93,10 +94,7 @@ const GlobalStyle = createGlobalStyle`
 
   input {
     width: 100%;
-    padding: 10px 20px;
-    border: ${({ theme }) => theme.border};
-    border-radius: 100px;
-    box-shadow: ${({ theme }) => theme.boxShadow};
+    color: ${({ theme }) => theme.colors.brown}
   }
 
   .button-group {
