@@ -39,6 +39,7 @@ const StyledButton = styled.button`
   svg {
     width: 50% !important;
     height: 50%;
+    margin-bottom: 2px;
   }
 
   ${({ landing }) =>
