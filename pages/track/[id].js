@@ -466,7 +466,7 @@ export default ({ data }) => {
           {data.track.titles.featured}
         </title>
       </Head>
-      <main className='lyrics'>
+      <main>
         <StyledSectionInfo>
           <div
             className='hero'

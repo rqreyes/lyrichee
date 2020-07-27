@@ -56,7 +56,7 @@ export default ({ data }) => {
       <Head>
         <title>Lyrichee Artist | {data.artist.name}</title>
       </Head>
-      <main className='artist'>
+      <main>
         <StyledSectionInfo>
           <div
             className='hero'

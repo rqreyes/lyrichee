@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Loading from '../components/atoms/Loading';
 import Header from '../components/organisms/Header';
 import Footer from '../components/organisms/Footer';
 import 'nprogress/nprogress.css';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 const theme = {
   colors: {

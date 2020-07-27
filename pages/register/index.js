@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import Head from 'next/head';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
@@ -65,49 +66,56 @@ export default () => {
         password,
         passwordConfirm,
       });
-      console.log('data: ', data);
+
+      console.log('data', data);
+      localStorage.setItem('auth-token', data.token);
     } catch (error) {
       setError(error.response.data.message);
     }
   };
 
   return (
-    <StyledRegister>
-      <Logo text />
-      <form onSubmit={handleSubmit}>
-        <StyledLabel isPopulated={username}>
-          <span>Username</span>
-          <FontAwesomeIcon icon={faUser} />
-          <StyledInput
-            type='text'
-            value={username}
-            onChange={(evt) => setUsername(evt.target.value)}
-            required
-          />
-        </StyledLabel>
-        <StyledLabel isPopulated={password}>
-          <span>Password</span>
-          <FontAwesomeIcon icon={faLock} />
-          <StyledInput
-            type='password'
-            value={password}
-            onChange={(evt) => setPassword(evt.target.value)}
-            required
-          />
-        </StyledLabel>
-        <StyledLabel isPopulated={passwordConfirm}>
-          <span>Confirm Password</span>
-          <FontAwesomeIcon icon={faUserLock} />
-          <StyledInput
-            type='password'
-            value={passwordConfirm}
-            onChange={(evt) => setPasswordConfirm(evt.target.value)}
-            required
-          />
-        </StyledLabel>
-        <button type='submit'>Register</button>
-      </form>
-      {errorDisplay}
-    </StyledRegister>
+    <>
+      <Head>
+        <title>Lyrichee Register</title>
+      </Head>
+      <StyledRegister>
+        <Logo text />
+        <form onSubmit={handleSubmit}>
+          <StyledLabel isPopulated={username}>
+            <span>Username</span>
+            <FontAwesomeIcon icon={faUser} />
+            <StyledInput
+              type='text'
+              value={username}
+              onChange={(evt) => setUsername(evt.target.value)}
+              required
+            />
+          </StyledLabel>
+          <StyledLabel isPopulated={password}>
+            <span>Password</span>
+            <FontAwesomeIcon icon={faLock} />
+            <StyledInput
+              type='password'
+              value={password}
+              onChange={(evt) => setPassword(evt.target.value)}
+              required
+            />
+          </StyledLabel>
+          <StyledLabel isPopulated={passwordConfirm}>
+            <span>Confirm Password</span>
+            <FontAwesomeIcon icon={faUserLock} />
+            <StyledInput
+              type='password'
+              value={passwordConfirm}
+              onChange={(evt) => setPasswordConfirm(evt.target.value)}
+              required
+            />
+          </StyledLabel>
+          <button type='submit'>Register</button>
+        </form>
+        {errorDisplay}
+      </StyledRegister>
+    </>
   );
 };
