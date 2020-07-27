@@ -6,11 +6,16 @@ const User = require('../../models/userModel');
 export default async (req, res) => {
   try {
     await dbConnect();
-    const { username, password } = req.body;
+    const { username, password, passwordConfirm } = req.body;
 
     // if username or password are missing, then send an error
-    if (!username || !password) {
+    if (!username || !password || !passwordConfirm) {
       return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    // if passwords do not match, then send an error
+    if (password !== passwordConfirm) {
+      return res.status(400).json({ message: 'Passwords must match' });
     }
 
     // if username already exists, then send an error

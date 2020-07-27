@@ -3,18 +3,16 @@ import { StyledMainCenter } from '../components/organisms/Styles';
 import Logo from '../components/molecules/Logo';
 import Search from '../components/molecules/Search';
 
-const Landing = () => {
+export default () => {
   return (
     <>
       <Head>
         <title>Lyrichee</title>
       </Head>
       <StyledMainCenter>
-        <Logo landing />
-        <Search landing />
+        <Logo text home />
+        <Search home />
       </StyledMainCenter>
     </>
   );
 };
-
-export default Landing;

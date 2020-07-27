@@ -11,8 +11,8 @@ const StyledSearch = styled.div`
 const StyledForm = styled.form`
   position: relative;
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       margin-bottom: 20px;
   `}
@@ -24,8 +24,8 @@ const StyledInput = styled.input`
   border-radius: 100px;
   box-shadow: ${({ theme }) => theme.boxShadow};
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       font-size: 24px;
   `}
@@ -47,8 +47,8 @@ const StyledButton = styled.button`
     margin-bottom: 2px;
   }
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       width: 40px;
       height: 40px;
@@ -63,7 +63,7 @@ const StyledStrong = styled.strong`
   color: ${({ theme }) => theme.colors.red};
 `;
 
-const Search = ({ landing }) => {
+const Search = ({ home }) => {
   const [search, setSearch] = useState('');
   const searchRef = useRef(null);
   const router = useRouter();
@@ -75,7 +75,7 @@ const Search = ({ landing }) => {
   };
 
   // display slogan
-  const sloganDisplay = landing ? (
+  const sloganDisplay = home ? (
     <StyledSlogan>
       Learning lyrics just got more <StyledStrong>appeeling</StyledStrong>
     </StyledSlogan>
@@ -83,21 +83,21 @@ const Search = ({ landing }) => {
 
   // focus on input
   useEffect(() => {
-    if (landing) searchRef.current.focus();
-  }, [landing]);
+    if (home) searchRef.current.focus();
+  }, [home]);
 
   return (
     <StyledSearch>
-      <StyledForm landing={landing} onSubmit={handleSubmit}>
+      <StyledForm home={home} onSubmit={handleSubmit}>
         <StyledInput
-          landing={landing}
+          home={home}
           type='text'
           value={search}
           onChange={(evt) => setSearch(evt.target.value)}
           required
           ref={searchRef}
         />
-        <StyledButton landing={landing} type='submit'>
+        <StyledButton home={home} type='submit'>
           <FontAwesomeIcon icon={faSearch} />
         </StyledButton>
       </StyledForm>

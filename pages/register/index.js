@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { StyledMainCenter } from '../../components/organisms/Styles';
 import Logo from '../../components/molecules/Logo';
+import Error from '../../components/atoms/Error';
 
 const StyledRegister = styled(StyledMainCenter)`
   background: #fff;
   padding: 40px;
   border: ${({ theme }) => theme.border};
   border-radius: 10px;
+
+  img {
+    margin: 0 auto 20px;
+  }
 `;
 
 const StyledLabel = styled.label`
@@ -25,8 +30,8 @@ const StyledLabel = styled.label`
     left: 0;
   }
 
-  ${({ isEmpty }) =>
-    !isEmpty &&
+  ${({ isPopulated }) =>
+    isPopulated &&
     `
     svg {
       color: #5ca943;
@@ -42,28 +47,14 @@ const StyledInput = styled.input`
 `;
 
 export default () => {
-  const [username, setUsername] = useState({ text: '', isEmpty: true });
-  const [password, setPassword] = useState({ text: '', isEmpty: true });
-  const [passwordConfirm, setPasswordConfirm] = useState({
-    text: '',
-    isEmpty: true,
-  });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [error, setError] = useState('');
 
-  const handleUsername = (evt) => {
-    if (evt.target.value === '') setUsername({ text: '', isEmpty: true });
-    else setUsername({ text: evt.target.value, isEmpty: false });
-  };
-
-  const handlePassword = (evt) => {
-    if (evt.target.value === '') setPassword({ text: '', isEmpty: true });
-    else setPassword({ text: evt.target.value, isEmpty: false });
-  };
-
-  const handlePasswordConfirm = (evt) => {
-    if (evt.target.value === '')
-      setPasswordConfirm({ text: '', isEmpty: true });
-    else setPasswordConfirm({ text: evt.target.value, isEmpty: false });
-  };
+  const errorDisplay = error ? (
+    <Error error={error} setError={setError} />
+  ) : null;
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -72,49 +63,51 @@ export default () => {
       const { data } = await axios.post('http://localhost:3000/api/register', {
         username,
         password,
+        passwordConfirm,
       });
       console.log('data: ', data);
     } catch (error) {
-      console.log(error);
+      setError(error.response.data.message);
     }
   };
 
   return (
     <StyledRegister>
-      <Logo landing />
+      <Logo text />
       <form onSubmit={handleSubmit}>
-        <StyledLabel isEmpty={username.isEmpty}>
+        <StyledLabel isPopulated={username}>
           <span>Username</span>
           <FontAwesomeIcon icon={faUser} />
           <StyledInput
             type='text'
-            value={username.text}
-            onChange={handleUsername}
+            value={username}
+            onChange={(evt) => setUsername(evt.target.value)}
             required
           />
         </StyledLabel>
-        <StyledLabel isEmpty={password.isEmpty}>
+        <StyledLabel isPopulated={password}>
           <span>Password</span>
           <FontAwesomeIcon icon={faLock} />
           <StyledInput
             type='password'
-            value={password.text}
-            onChange={handlePassword}
+            value={password}
+            onChange={(evt) => setPassword(evt.target.value)}
             required
           />
         </StyledLabel>
-        <StyledLabel isEmpty={passwordConfirm.isEmpty}>
+        <StyledLabel isPopulated={passwordConfirm}>
           <span>Confirm Password</span>
           <FontAwesomeIcon icon={faUserLock} />
           <StyledInput
             type='password'
-            value={passwordConfirm.text}
-            onChange={handlePasswordConfirm}
+            value={passwordConfirm}
+            onChange={(evt) => setPasswordConfirm(evt.target.value)}
             required
           />
         </StyledLabel>
         <button type='submit'>Register</button>
       </form>
+      {errorDisplay}
     </StyledRegister>
   );
 };

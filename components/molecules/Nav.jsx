@@ -92,9 +92,9 @@ const StyledButton = styled.button`
   }
 `;
 
-const Nav = ({ landing, toggleOpen }) => {
+const Nav = ({ home, toggleOpen }) => {
   return (
-    <StyledNav landing={landing} toggleOpen={toggleOpen}>
+    <StyledNav home={home} toggleOpen={toggleOpen}>
       <StyledButtonGroup>
         <StyledButton type='button'>
           <FontAwesomeIcon icon={faStar} />

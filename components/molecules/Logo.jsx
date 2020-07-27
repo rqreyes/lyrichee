@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const StyledLink = styled.a`
   display: flex;
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       justify-content: center;
       margin-bottom: 20px;
@@ -20,22 +20,22 @@ const StyledH1 = styled.h1`
 const StyledImg = styled.img`
   height: 50px;
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       width: 300px;
       height: auto;
   `}
 `;
 
-const Logo = ({ landing }) => {
-  const logoSrc = landing ? '/images/logo-text.png' : '/images/logo-icon.png';
+const Logo = ({ text, home }) => {
+  const logoSrc = text ? '/images/logo-text.png' : '/images/logo-icon.png';
 
   return (
     <Link href='/'>
-      <StyledLink landing={landing}>
+      <StyledLink home={home}>
         <StyledH1>Lyrichee</StyledH1>
-        <StyledImg landing={landing} src={logoSrc} alt='logo' />
+        <StyledImg home={home} src={logoSrc} alt='logo' />
       </StyledLink>
     </Link>
   );

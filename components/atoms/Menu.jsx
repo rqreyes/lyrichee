@@ -31,7 +31,7 @@ const StyledMenuButton = styled.button`
   }
 `;
 
-const Menu = ({ landing }) => {
+const Menu = ({ home }) => {
   const [toggleOpen, setToggleOpen] = useState(false);
   const menuIconDisplay = toggleOpen ? (
     <FontAwesomeIcon icon={faTimes} />
@@ -47,7 +47,7 @@ const Menu = ({ landing }) => {
       >
         {menuIconDisplay}
       </StyledMenuButton>
-      <Nav landing={landing} toggleOpen={toggleOpen} />
+      <Nav home={home} toggleOpen={toggleOpen} />
     </StyledMenu>
   );
 };

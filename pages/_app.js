@@ -40,6 +40,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
   }
 
+  button {
+    font-size: 14px;
+  }
+
   input {
     font-size: 16px;
   }
@@ -174,8 +178,7 @@ const GlobalStyle = createGlobalStyle`
 export default ({ Component, pageProps, router }) => {
   const [loading, setLoading] = useState(false);
 
-  const headerDisplay =
-    router.pathname === '/' ? <Header landing /> : <Header />;
+  const headerDisplay = router.pathname === '/' ? <Header home /> : <Header />;
   const loadingDisplay = loading ? (
     <Loading />
   ) : (

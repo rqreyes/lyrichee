@@ -35,17 +35,17 @@ const StyledHeader = styled.header`
     }
   }
 
-  ${({ landing }) =>
-    landing &&
+  ${({ home }) =>
+    home &&
     `
       justify-content: flex-end;
   `}
 `;
 
-const Header = ({ landing }) => {
-  const headerDisplay = landing ? (
-    <StyledHeader landing={landing}>
-      <Menu landing={landing} />
+const Header = ({ home }) => {
+  const headerDisplay = home ? (
+    <StyledHeader home={home}>
+      <Menu home={home} />
     </StyledHeader>
   ) : (
     <StyledHeadroom>
