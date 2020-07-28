@@ -5,49 +5,13 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
-import { StyledMainCenter } from '../../components/organisms/Styles';
+import {
+  StyledMainFormContainer,
+  StyledMainFormLabel,
+  StyledMainFormInput,
+} from '../../components/organisms/Styles';
 import Logo from '../../components/molecules/Logo';
 import Error from '../../components/atoms/Error';
-
-const StyledRegister = styled(StyledMainCenter)`
-  background: #fff;
-  padding: 40px;
-  border: ${({ theme }) => theme.border};
-  border-radius: 10px;
-
-  img {
-    margin: 0 auto 20px;
-  }
-`;
-
-const StyledLabel = styled.label`
-  position: relative;
-
-  svg {
-    width: 20px;
-    height: 20px;
-    color: ${({ theme }) => theme.colors.red};
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-
-  ${({ isPopulated }) =>
-    isPopulated &&
-    `
-    svg {
-      color: #5ca943;
-    }
-  `}
-`;
-
-const StyledInput = styled.input`
-  padding: 10px 10px 10px 30px;
-  border: 0;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
-  margin-bottom: 20px;
-`;
 
 export default () => {
   const [username, setUsername] = useState('');
@@ -82,43 +46,43 @@ export default () => {
       <Head>
         <title>Lyrichee Register</title>
       </Head>
-      <StyledRegister>
+      <StyledMainFormContainer>
         <Logo text />
         <form onSubmit={handleSubmit}>
-          <StyledLabel isPopulated={username}>
+          <StyledMainFormLabel isPopulated={username}>
             <span>Username</span>
             <FontAwesomeIcon icon={faUser} />
-            <StyledInput
+            <StyledMainFormInput
               type='text'
               value={username}
               onChange={(evt) => setUsername(evt.target.value)}
               required
             />
-          </StyledLabel>
-          <StyledLabel isPopulated={password}>
+          </StyledMainFormLabel>
+          <StyledMainFormLabel isPopulated={password}>
             <span>Password</span>
             <FontAwesomeIcon icon={faLock} />
-            <StyledInput
+            <StyledMainFormInput
               type='password'
               value={password}
               onChange={(evt) => setPassword(evt.target.value)}
               required
             />
-          </StyledLabel>
-          <StyledLabel isPopulated={passwordConfirm}>
+          </StyledMainFormLabel>
+          <StyledMainFormLabel isPopulated={passwordConfirm}>
             <span>Confirm Password</span>
             <FontAwesomeIcon icon={faUserLock} />
-            <StyledInput
+            <StyledMainFormInput
               type='password'
               value={passwordConfirm}
               onChange={(evt) => setPasswordConfirm(evt.target.value)}
               required
             />
-          </StyledLabel>
+          </StyledMainFormLabel>
           <button type='submit'>Register</button>
         </form>
         {errorDisplay}
-      </StyledRegister>
+      </StyledMainFormContainer>
     </>
   );
 };

@@ -27,8 +27,6 @@ export default async (req, res) => {
 
     res.json({
       token,
-      userId: user._id,
-      favorites: user.favorites,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });

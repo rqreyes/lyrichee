@@ -165,3 +165,42 @@ export const StyledMainCenter = styled.main`
   padding: 0 10px;
   margin: 20vh auto 0;
 `;
+
+export const StyledMainFormContainer = styled(StyledMainCenter)`
+  background: #fff;
+  padding: 40px;
+  border: ${({ theme }) => theme.border};
+  border-radius: 10px;
+
+  img {
+    margin: 0 auto 20px;
+  }
+`;
+
+export const StyledMainFormLabel = styled.label`
+  position: relative;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: ${({ theme }) => theme.colors.red};
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  ${({ isPopulated }) =>
+    isPopulated &&
+    `
+      svg {
+        color: #5ca943;
+      }
+  `}
+`;
+
+export const StyledMainFormInput = styled.input`
+  padding: 10px 10px 10px 30px;
+  border: 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey};
+  margin-bottom: 20px;
+`;
