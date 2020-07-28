@@ -77,7 +77,7 @@ const Search = ({ home }) => {
   // display slogan
   const sloganDisplay = home ? (
     <StyledSlogan>
-      Learning lyrics just got more <StyledStrong>appeeling</StyledStrong>
+      Learning lyrics just became more <StyledStrong>appeeling</StyledStrong>
     </StyledSlogan>
   ) : null;
 

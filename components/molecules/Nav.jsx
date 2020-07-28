@@ -1,5 +1,13 @@
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faMusic,
+  faStar,
+  faSignInAlt,
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 const StyledNav = styled.nav`
@@ -59,15 +67,6 @@ const StyledButton = styled.button`
     background: none;
   }
 
-  &:disabled {
-    color: ${({ theme }) => theme.colors.grey};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.grey};
-      cursor: auto;
-    }
-  }
-
   svg {
     width: 20px !important;
     margin-right: 10px;
@@ -93,18 +92,52 @@ const StyledButton = styled.button`
 `;
 
 const Nav = ({ home, toggleOpen }) => {
+  const router = useRouter();
+
+  const removeData = () => {
+    Cookies.remove('token');
+    router.push('/');
+  };
+
+  const navDisplay = Cookies.get('token') ? (
+    <>
+      <Link href='/favorites'>
+        <a>
+          <StyledButton type='button'>
+            <FontAwesomeIcon icon={faStar} />
+            Favorites
+          </StyledButton>
+        </a>
+      </Link>
+      <StyledButton type='button' onClick={removeData}>
+        <FontAwesomeIcon icon={faSignOutAlt} />
+        Sign Out
+      </StyledButton>
+    </>
+  ) : (
+    <>
+      <Link href='/register'>
+        <a>
+          <StyledButton type='button'>
+            <FontAwesomeIcon icon={faMusic} />
+            Register
+          </StyledButton>
+        </a>
+      </Link>
+      <Link href='/signin'>
+        <a>
+          <StyledButton type='button'>
+            <FontAwesomeIcon icon={faSignInAlt} />
+            Sign In
+          </StyledButton>
+        </a>
+      </Link>
+    </>
+  );
+
   return (
     <StyledNav home={home} toggleOpen={toggleOpen}>
-      <StyledButtonGroup>
-        <StyledButton type='button'>
-          <FontAwesomeIcon icon={faStar} />
-          Favorites
-        </StyledButton>
-        <StyledButton type='button'>
-          <FontAwesomeIcon icon={faSignInAlt} />
-          Sign In
-        </StyledButton>
-      </StyledButtonGroup>
+      <StyledButtonGroup>{navDisplay}</StyledButtonGroup>
     </StyledNav>
   );
 };

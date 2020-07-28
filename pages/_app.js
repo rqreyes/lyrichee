@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import NProgress from 'nprogress';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Loading from '../components/atoms/Loading';
 import Header from '../components/organisms/Header';
@@ -212,6 +214,21 @@ export default ({ Component, pageProps, router }) => {
       router.events.off('routeChangeError', end);
     };
   }, []);
+
+  useEffect(() => {
+    (async () => {
+      if (Cookies.get('token')) {
+        const { data } = await axios.post('/api/verify', {
+          token: Cookies.get('token'),
+        });
+
+        if (!data) {
+          Cookies.remove('token');
+        }
+      }
+    })();
+  });
+
   return (
     <>
       <Head>

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -52,6 +54,7 @@ export default () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
+  const router = useRouter();
 
   const errorDisplay = error ? (
     <Error error={error} setError={setError} />
@@ -67,8 +70,8 @@ export default () => {
         passwordConfirm,
       });
 
-      console.log('data', data);
-      localStorage.setItem('auth-token', data.token);
+      Cookies.set('token', data.token);
+      router.push('/favorites');
     } catch (error) {
       setError(error.response.data.message);
     }
