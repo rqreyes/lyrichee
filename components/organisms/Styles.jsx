@@ -183,19 +183,12 @@ export const StyledMainFormLabel = styled.label`
   svg {
     width: 20px;
     height: 20px;
-    color: ${({ theme }) => theme.colors.red};
+    color: ${({ isPopulated, theme }) =>
+      isPopulated ? theme.colors.greenDark : theme.colors.red};
     position: absolute;
     bottom: 0;
     left: 0;
   }
-
-  ${({ isPopulated }) =>
-    isPopulated &&
-    `
-      svg {
-        color: #5ca943;
-      }
-  `}
 `;
 
 export const StyledMainFormInput = styled.input`

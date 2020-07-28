@@ -1,15 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
+import cookie from 'cookie';
+import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
+import { faStar as faStarFull } from '@fortawesome/free-solid-svg-icons';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 import { StyledSectionInfo } from '../../components/organisms/Styles';
 import LyricsSection from '../../components/molecules/LyricsSection';
 
+const StyledButtonOptions = styled.div`
+  display: flex;
+`;
+
 const StyledButton = styled.button`
   width: auto;
+`;
+
+const StyledButtonFavorite = styled(StyledButton)`
+  color: ${({ favorite, theme }) =>
+    favorite ? theme.colors.greenDark : theme.colors.red};
+  padding: 0;
+  background: none;
+  margin-right: 16px;
+
+  &:hover {
+    color: ${({ favorite, theme }) =>
+      favorite ? theme.colors.red : theme.colors.greenDark};
+    background: none;
+  }
+
+  svg {
+    height: 36px;
+  }
 `;
 
 const StyledButtonReset = styled(StyledButton)`
@@ -288,16 +314,36 @@ const getTrack = async (key, id) => {
   return data;
 };
 
+const getFavoriteItem = async (key, id, token) => {
+  const { data } = await axios.get(
+    'http://localhost:3000/api/user/favoriteItem',
+    {
+      params: {
+        token,
+        queryId: encodeURI(id),
+      },
+    }
+  );
+  return data;
+};
+
 export async function getServerSideProps(context) {
-  const data = await getTrack(null, context.params.id);
+  const dataTrack = await getTrack(null, context.params.id);
+  const dataFavoriteItem = await getFavoriteItem(
+    null,
+    context.params.id,
+    cookie.parse(context.req.headers.cookie).token
+  );
   return {
     props: {
-      data,
+      dataTrack,
+      dataFavoriteItem,
     },
   };
 }
 
-export default ({ data }) => {
+export default ({ dataTrack, dataFavoriteItem }) => {
+  const [favorite, setFavorite] = useState(dataFavoriteItem);
   const [learnLine, setLearnLine] = useState(false);
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
@@ -328,21 +374,27 @@ export default ({ data }) => {
   // display album art or placeholder image
   let albumDisplay;
 
-  if (data.track.album) {
-    albumDisplay = data.track.album.cover_art_url;
-  } else if (data.track.thumbnail) {
-    albumDisplay = data.track.thumbnail;
+  if (dataTrack.track.album) {
+    albumDisplay = dataTrack.track.album.cover_art_url;
+  } else if (dataTrack.track.thumbnail) {
+    albumDisplay = dataTrack.track.thumbnail;
   } else {
     albumDisplay = '/images/no-image.png';
   }
 
+  const favoriteDisplay = favorite ? (
+    <FontAwesomeIcon icon={faStarFull} />
+  ) : (
+    <FontAwesomeIcon icon={faStarEmpty} />
+  );
+
   // display media
   let streamsDisplay;
 
-  if (data.track.raw.media.length > 0) {
+  if (dataTrack.track.raw.media.length > 0) {
     // display youtube video
     let youtubeDisplay;
-    const youtubeURL = data.track.raw.media.find(
+    const youtubeURL = dataTrack.track.raw.media.find(
       (media) => media.provider === 'youtube'
     );
     if (youtubeURL) {
@@ -361,10 +413,10 @@ export default ({ data }) => {
 
     // display providers
     let providersDisplay;
-    const spotifyURL = data.track.raw.media.find(
+    const spotifyURL = dataTrack.track.raw.media.find(
       (media) => media.provider === 'spotify'
     );
-    const soundcloudURL = data.track.raw.media.find(
+    const soundcloudURL = dataTrack.track.raw.media.find(
       (media) => media.provider === 'soundcloud'
     );
 
@@ -453,17 +505,46 @@ export default ({ data }) => {
         Reset
       </StyledButtonReset>
       <StyledLyricsContent className={lyricsClass}>
-        {parseLyrics(data.lyrics)}
+        {parseLyrics(dataTrack.lyrics)}
       </StyledLyricsContent>
     </>
   );
+
+  useEffect(() => {
+    (async () => {
+      try {
+        if (favorite) {
+          await axios.post('http://localhost:3000/api/user/favoriteItem', {
+            token: Cookies.get('token'),
+            trackData: {
+              trackId: dataTrack.track.id,
+              trackTitle: dataTrack.track.titles.featured,
+              albumUrl: albumDisplay,
+              lines: [],
+              linesTotal: 20,
+              percentLearned: 0,
+            },
+          });
+        } else {
+          await axios.delete('http://localhost:3000/api/user/favoriteItem', {
+            params: {
+              token: Cookies.get('token'),
+              queryId: dataTrack.track.id,
+            },
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [favorite]);
 
   return (
     <>
       <Head>
         <title>
-          Lyrichee Track | {data.track.artist.name} -{' '}
-          {data.track.titles.featured}
+          Lyrichee Track | {dataTrack.track.artist.name} -{' '}
+          {dataTrack.track.titles.featured}
         </title>
       </Head>
       <main>
@@ -471,19 +552,28 @@ export default ({ data }) => {
           <div
             className='hero'
             style={{
-              backgroundImage: `url(${data.track.artist.image})`,
+              backgroundImage: `url(${dataTrack.track.artist.image})`,
             }}
           ></div>
           <div className='details'>
             <img src={albumDisplay} alt='album cover art thumbnail' />
             <div className='details-text'>
-              <h2>{data.track.titles.featured}</h2>
-              <p>{data.track.artist.name}</p>
-              <Link href={`/artist/${data.track.artist.id}`}>
-                <a>
-                  <StyledButton className='artist'>View Artist</StyledButton>
-                </a>
-              </Link>
+              <h2>{dataTrack.track.titles.featured}</h2>
+              <p>{dataTrack.track.artist.name}</p>
+              <StyledButtonOptions>
+                <StyledButtonFavorite
+                  favorite={favorite}
+                  type='button'
+                  onClick={() => setFavorite((prev) => !prev)}
+                >
+                  {favoriteDisplay}
+                </StyledButtonFavorite>
+                <Link href={`/artist/${dataTrack.track.artist.id}`}>
+                  <a>
+                    <StyledButton className='artist'>View Artist</StyledButton>
+                  </a>
+                </Link>
+              </StyledButtonOptions>
             </div>
           </div>
         </StyledSectionInfo>

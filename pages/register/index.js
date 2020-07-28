@@ -28,11 +28,14 @@ export default () => {
     evt.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:3000/api/register', {
-        username,
-        password,
-        passwordConfirm,
-      });
+      const { data } = await axios.post(
+        'http://localhost:3000/api/user/register',
+        {
+          username,
+          password,
+          passwordConfirm,
+        }
+      );
 
       Cookies.set('token', data.token);
       router.push('/favorites');

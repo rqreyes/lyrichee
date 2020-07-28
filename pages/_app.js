@@ -218,7 +218,7 @@ export default ({ Component, pageProps, router }) => {
   useEffect(() => {
     (async () => {
       if (Cookies.get('token')) {
-        const { data } = await axios.post('/api/verify', {
+        const { data } = await axios.post('/api/user/verify', {
           token: Cookies.get('token'),
         });
 

@@ -27,10 +27,13 @@ export default () => {
     evt.preventDefault();
 
     try {
-      const { data } = await axios.post('http://localhost:3000/api/signin', {
-        username,
-        password,
-      });
+      const { data } = await axios.post(
+        'http://localhost:3000/api/user/signin',
+        {
+          username,
+          password,
+        }
+      );
 
       Cookies.set('token', data.token);
       router.push('/favorites');

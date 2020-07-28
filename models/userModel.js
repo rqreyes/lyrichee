@@ -5,7 +5,10 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   favorites: [
     {
-      trackId: { type: String },
+      trackId: { type: Number },
+      trackTitle: { type: String },
+      trackArtist: { type: String },
+      albumUrl: { type: String },
       lines: [Number],
       linesTotal: { type: Number },
       percentLearned: { type: Number },
