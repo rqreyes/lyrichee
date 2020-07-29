@@ -1,9 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-const LyricsLine = ({ line, learnLine, learnReset }) => {
-  const [hideLine, setHideLine] = useState(false);
+const LyricsLine = ({
+  favorite,
+  learnedLine,
+  line,
+  learnLine,
+  learnReset,
+  sectionIdx,
+  lineIdx,
+  updateLearnedLyrics,
+}) => {
+  const [hideLine, setHideLine] = useState(learnedLine);
 
   const learnLineClass = learnLine ? 'hide-line' : '';
   const learnLineTextClass = hideLine ? 'active' : '';
@@ -14,22 +23,35 @@ const LyricsLine = ({ line, learnLine, learnReset }) => {
       <FontAwesomeIcon icon={faMinusCircle} />
     );
 
-  useEffect(() => {
-    setHideLine(false);
-  }, [learnReset]);
+  const handleHideLine = () => {
+    setHideLine((prev) => {
+      if (Object.keys(favorite).length) {
+        if (prev) updateLearnedLyrics(false, sectionIdx, lineIdx);
+        else updateLearnedLyrics(true, sectionIdx, lineIdx);
+      }
+
+      return !prev;
+    });
+  };
 
   const regex = RegExp('^\\[');
+
+  const isFirstRun = useRef(true);
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    setHideLine(false);
+  }, [learnReset]);
 
   if (regex.test(line)) {
     return <p className='lyrics-section-header'>{line}</p>;
   } else {
     return (
       <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
-        <button
-          type='button'
-          className='line-button'
-          onClick={() => setHideLine((prev) => !prev)}
-        >
+        <button type='button' className='line-button' onClick={handleHideLine}>
           {learnLineButtonDisplay}
         </button>
         <p>{line}</p>

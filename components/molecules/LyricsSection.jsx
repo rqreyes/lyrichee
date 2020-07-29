@@ -3,7 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import LyricsLine from '../atoms/LyricsLine';
 
-const LyricsSection = ({ section, learnLine, learnSection, learnReset }) => {
+const LyricsSection = ({
+  favorite,
+  learnedSection,
+  section,
+  learnLine,
+  learnSection,
+  learnReset,
+  sectionIdx,
+  updateLearnedLyrics,
+}) => {
   const [hideSection, setHideSection] = useState(false);
   const lyricsSectionRef = useRef();
   let learnSectionClass;
@@ -27,7 +36,13 @@ const LyricsSection = ({ section, learnLine, learnSection, learnReset }) => {
       : '0px';
   }
 
+  const isFirstRun = useRef(true);
   useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
     setHideSection(false);
   }, [learnReset]);
 
@@ -41,12 +56,17 @@ const LyricsSection = ({ section, learnLine, learnSection, learnReset }) => {
         {learnSectionButtonDisplay}
       </button>
       <div className='lyrics-section-content' ref={lyricsSectionRef}>
-        {section.split(/\n/).map((line, ind) => (
+        {section.split(/\n/).map((line, idx) => (
           <LyricsLine
-            key={`line-${ind}`}
+            key={`line-${idx}`}
+            favorite
+            learnedLine={learnedSection.includes(idx)}
             line={line}
             learnLine={learnLine}
             learnReset={learnReset}
+            sectionIdx={sectionIdx}
+            lineIdx={idx}
+            updateLearnedLyrics={updateLearnedLyrics}
           />
         ))}
       </div>

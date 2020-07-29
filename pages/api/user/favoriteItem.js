@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+import { flatten } from 'array-flatten';
 const User = require('../../../models/userModel');
 
 export default async (req, res) => {
@@ -35,10 +36,18 @@ export default async (req, res) => {
           : false;
         const user = await User.findById(verified.userId);
 
-        user.favorites.push(trackData);
+        const favoriteItem = user.favorites.find(
+          ({ trackId }) => trackId === trackData.trackId
+        );
+        if (favoriteItem) {
+          favoriteItem.lyricsLearned = trackData.lyricsLearned;
+          favoriteItem.percentLearned =
+            flatten(trackData.lyricsLearned).filter((line) => line !== null)
+              .length / trackData.lyricsTotal;
+        } else user.favorites.push(trackData);
         user.save();
 
-        res.send('Added favorite successful');
+        res.send('Added / Updated favorite successful');
       } catch (error) {
         res.status(500).json({ error: error.message });
       }
@@ -69,13 +78,3 @@ export default async (req, res) => {
       break;
   }
 };
-
-// {
-//   trackId: { type: String },
-//   trackTitle: { type: String },
-//   trackArtist: { type: String },
-//   albumUrl: { type: String },
-//   lines: [Number],
-//   linesTotal: { type: Number },
-//   percentLearned: { type: Number },
-// },

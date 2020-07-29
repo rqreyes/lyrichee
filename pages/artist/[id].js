@@ -27,7 +27,7 @@ export default ({ data }) => {
   const parseDOM = (DOM) => {
     if (DOM === undefined) return;
 
-    return DOM.map((parent, ind) => {
+    return DOM.map((parent, idx) => {
       if (typeof parent === 'string') return parent;
 
       const Tag = parent.tag;
@@ -35,7 +35,7 @@ export default ({ data }) => {
       if (parent.tag === 'a') parentAttributes.target = '_blank';
 
       return (
-        <Tag key={`key-${ind}`} {...parentAttributes}>
+        <Tag key={`key-${idx}`} {...parentAttributes}>
           {parseDOM(parent.children)}
         </Tag>
       );

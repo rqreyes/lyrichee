@@ -28,9 +28,13 @@ const StyledButtonFavorite = styled(StyledButton)`
   margin-right: 16px;
 
   &:hover {
-    color: ${({ favorite, theme }) =>
-      favorite ? theme.colors.red : theme.colors.greenDark};
+    color: ${({ theme }) => theme.colors.green};
     background: none;
+  }
+
+  &:disabled {
+    color: ${({ theme }) => theme.colors.grey} !important;
+    cursor: auto !important;
   }
 
   svg {
@@ -38,8 +42,8 @@ const StyledButtonFavorite = styled(StyledButton)`
   }
 `;
 
-const StyledButtonReset = styled(StyledButton)`
-  display: block;
+const StyledButtonReset = styled.button`
+  width: auto;
   margin: 0 auto 10px;
 `;
 
@@ -329,46 +333,123 @@ const getFavoriteItem = async (key, id, token) => {
 
 export async function getServerSideProps(context) {
   const dataTrack = await getTrack(null, context.params.id);
-  const dataFavoriteItem = await getFavoriteItem(
-    null,
-    context.params.id,
-    cookie.parse(context.req.headers.cookie).token
-  );
+  const dataFavoriteItem = context.req.headers.cookie
+    ? await getFavoriteItem(
+        null,
+        context.params.id,
+        cookie.parse(context.req.headers.cookie).token
+      )
+    : {};
+  const signedIn = context.req.headers.cookie ? true : false;
+
   return {
     props: {
       dataTrack,
       dataFavoriteItem,
+      signedIn,
     },
   };
 }
 
-export default ({ dataTrack, dataFavoriteItem }) => {
+export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   const [favorite, setFavorite] = useState(dataFavoriteItem);
-  const [learnLine, setLearnLine] = useState(false);
+  const [learnLine, setLearnLine] = useState(
+    Object.keys(dataFavoriteItem).length ? true : false
+  );
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
   const [learnReset, setLearnReset] = useState(false);
 
-  const updateLearnReset = () => {
+  const handleFavorite = () => {
+    setFavorite((prev) => {
+      setLearnSection(false);
+      setHideAll(false);
+      setLearnReset((prev) => !prev);
+
+      if (Object.keys(prev).length) {
+        setLearnLine(false);
+        return {};
+      } else {
+        setLearnLine(true);
+
+        const regex = RegExp('^\\[');
+        const lyricsTotal = dataTrack.lyrics
+          .split(/\n\n/)
+          .map((section) => section.split(/\n/))
+          .flat()
+          .filter((line) => !regex.test(line)).length;
+
+        return {
+          trackId: dataTrack.track.id,
+          trackTitle: dataTrack.track.titles.featured,
+          albumUrl: albumDisplay,
+          lyricsLearned: [],
+          lyricsTotal,
+          percentLearned: 0,
+        };
+      }
+    });
+  };
+
+  const updateLearnedLyrics = (add, sectionIdx, lineIdx) => {
+    let learnedLyricsCopy = [...favorite.lyricsLearned];
+
+    if (add) {
+      if (learnedLyricsCopy[sectionIdx]) {
+        const learnedLyricsSectionCopy = learnedLyricsCopy[sectionIdx];
+
+        learnedLyricsSectionCopy.push(lineIdx);
+        learnedLyricsSectionCopy.sort((a, b) => a - b);
+      } else {
+        learnedLyricsCopy[sectionIdx] = [lineIdx];
+      }
+    } else {
+      learnedLyricsCopy[sectionIdx] = learnedLyricsCopy[sectionIdx].filter(
+        (line) => line !== lineIdx
+      );
+
+      if (learnedLyricsCopy[sectionIdx].length === 0)
+        learnedLyricsCopy = learnedLyricsCopy.filter(
+          (section) => section.length
+        );
+    }
+
+    setFavorite({ ...favorite, lyricsLearned: learnedLyricsCopy });
+  };
+
+  const handleReset = () => {
+    setFavorite({ ...favorite, lyricsLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);
-    setLearnReset(!learnReset);
+    setLearnReset((prev) => !prev);
   };
 
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
-    return lyrics
-      .split(/\n\n/)
-      .map((section, ind) => (
+    return lyrics.split(/\n\n/).map((section, idx) => {
+      let learnedSection;
+
+      if (Object.keys(favorite).length && favorite.lyricsLearned[idx]) {
+        learnedSection = favorite.lyricsLearned[idx];
+      } else {
+        learnedSection = [];
+      }
+
+      return (
         <LyricsSection
-          key={`section-${ind}`}
+          key={`section-${idx}`}
+          favorite={favorite}
+          learnedSection={learnedSection}
           section={section}
           learnLine={learnLine}
           learnSection={learnSection}
           learnReset={learnReset}
+          sectionIdx={idx}
+          updateLearnedLyrics={updateLearnedLyrics}
         />
-      ));
+      );
+    });
   };
 
   // display album art or placeholder image
@@ -382,7 +463,7 @@ export default ({ dataTrack, dataFavoriteItem }) => {
     albumDisplay = '/images/no-image.png';
   }
 
-  const favoriteDisplay = favorite ? (
+  const favoriteDisplay = Object.keys(favorite).length ? (
     <FontAwesomeIcon icon={faStarFull} />
   ) : (
     <FontAwesomeIcon icon={faStarEmpty} />
@@ -501,7 +582,7 @@ export default ({ dataTrack, dataFavoriteItem }) => {
           <span>All</span>
         </StyledCheckboxLabel>
       </StyledCheckboxGroup>
-      <StyledButtonReset className='reset' onClick={updateLearnReset}>
+      <StyledButtonReset type='button' onClick={() => handleReset()}>
         Reset
       </StyledButtonReset>
       <StyledLyricsContent className={lyricsClass}>
@@ -513,19 +594,12 @@ export default ({ dataTrack, dataFavoriteItem }) => {
   useEffect(() => {
     (async () => {
       try {
-        if (favorite) {
+        if (signedIn && Object.keys(favorite).length) {
           await axios.post('http://localhost:3000/api/user/favoriteItem', {
             token: Cookies.get('token'),
-            trackData: {
-              trackId: dataTrack.track.id,
-              trackTitle: dataTrack.track.titles.featured,
-              albumUrl: albumDisplay,
-              lines: [],
-              linesTotal: 20,
-              percentLearned: 0,
-            },
+            trackData: favorite,
           });
-        } else {
+        } else if (signedIn) {
           await axios.delete('http://localhost:3000/api/user/favoriteItem', {
             params: {
               token: Cookies.get('token'),
@@ -562,9 +636,10 @@ export default ({ dataTrack, dataFavoriteItem }) => {
               <p>{dataTrack.track.artist.name}</p>
               <StyledButtonOptions>
                 <StyledButtonFavorite
-                  favorite={favorite}
+                  favorite={Object.keys(favorite).length}
                   type='button'
-                  onClick={() => setFavorite((prev) => !prev)}
+                  onClick={handleFavorite}
+                  disabled={!signedIn}
                 >
                   {favoriteDisplay}
                 </StyledButtonFavorite>
