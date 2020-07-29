@@ -59,7 +59,7 @@ const LyricsSection = ({
         {section.split(/\n/).map((line, idx) => (
           <LyricsLine
             key={`line-${idx}`}
-            favorite
+            favorite={favorite}
             learnedLine={learnedSection.includes(idx)}
             line={line}
             learnLine={learnLine}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import axios from 'axios';
@@ -6,15 +6,14 @@ import cookie from 'cookie';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
-import { faStar as faStarFull } from '@fortawesome/free-solid-svg-icons';
+import {
+  faStar as faStarFull,
+  faChevronCircleRight,
+} from '@fortawesome/free-solid-svg-icons';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
 import { StyledSectionInfo } from '../../components/organisms/Styles';
 import LyricsSection from '../../components/molecules/LyricsSection';
-
-const StyledButtonOptions = styled.div`
-  display: flex;
-`;
 
 const StyledButton = styled.button`
   width: auto;
@@ -59,14 +58,60 @@ const StyledSection = styled.section`
   }
 `;
 
-const StyledSectionStreams = styled(StyledSection)`
-  padding: 20px 40px;
+const StyledSectionContent = styled(StyledSection)`
+  padding: 30px 40px;
   margin-bottom: 10px;
 
   /* Medium devices (tablets, 768px and up) */
   @media (min-width: 768px) {
     margin: 0 auto 10px;
   }
+`;
+
+const StyledSectionDescription = styled(StyledSectionContent)`
+  padding: ${({ description }) =>
+    description ? '30px 40px' : '30px 40px 20px'};
+`;
+
+const StyledHeaderDescription = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const StyledButtonDescription = styled.button`
+  width: 20px;
+  height: 20px;
+  color: ${({ description, theme }) =>
+    description ? theme.colors.greenDark : theme.colors.red};
+  padding: 0;
+  background: none;
+  margin-right: 10px;
+  transition: transform 0.6s;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.green};
+    background: none;
+  }
+
+  &.active {
+    transform: rotate(90deg);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+const StyledHeadingDescription = styled.h3`
+  margin-bottom: 0;
+`;
+
+const StyledContentDescription = styled.div`
+  overflow: hidden;
+  transition: max-height 0.6s;
 `;
 
 const StyledSectionLyrics = styled(StyledSection)`
@@ -81,6 +126,7 @@ const StyledSectionLyrics = styled(StyledSection)`
 
     .section-button {
       height: 40px;
+      background: ${({ theme }) => theme.colors.pink};
       padding: 0;
       margin-bottom: 10px;
       transition: all 0.6s;
@@ -105,7 +151,7 @@ const StyledSectionLyrics = styled(StyledSection)`
       }
     }
 
-    > div {
+    > .lyrics-section-content {
       overflow: hidden;
       transition: all 0.6s;
     }
@@ -145,7 +191,7 @@ const StyledSectionLyrics = styled(StyledSection)`
       opacity: 0;
       width: 20px;
       height: 20px;
-      color: ${({ theme }) => theme.colors.pink};
+      color: ${({ theme }) => theme.colors.red};
       background: none;
       padding: 0;
       margin-right: 10px;
@@ -353,12 +399,14 @@ export async function getServerSideProps(context) {
 
 export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   const [favorite, setFavorite] = useState(dataFavoriteItem);
+  const [description, setDescription] = useState(false);
   const [learnLine, setLearnLine] = useState(
     Object.keys(dataFavoriteItem).length ? true : false
   );
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
   const [learnReset, setLearnReset] = useState(false);
+  const descriptionRef = useRef();
 
   const handleFavorite = () => {
     setFavorite((prev) => {
@@ -423,6 +471,25 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     setLearnSection(false);
     setHideAll(false);
     setLearnReset((prev) => !prev);
+  };
+
+  // parse the description DOM into HTML
+  const parseDOM = (DOM) => {
+    if (DOM === undefined) return;
+
+    return DOM.map((parent, idx) => {
+      if (typeof parent === 'string') return parent;
+
+      const Tag = parent.tag;
+      const parentAttributes = parent.attributes;
+      if (parent.tag === 'a') parentAttributes.target = '_blank';
+
+      return (
+        <Tag key={`key-${idx}`} {...parentAttributes}>
+          {parseDOM(parent.children)}
+        </Tag>
+      );
+    });
   };
 
   // parse lyrics string into HTML
@@ -539,11 +606,11 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     }
 
     streamsDisplay = (
-      <StyledSectionStreams>
+      <StyledSectionContent>
         <h3>Streams</h3>
         {youtubeDisplay}
         {providersDisplay}
-      </StyledSectionStreams>
+      </StyledSectionContent>
     );
   }
 
@@ -551,45 +618,15 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   if (learnSection) lyricsClass += ' learn-section';
   if (hideAll) lyricsClass += ' hide';
 
-  const parsedLyrics = (
-    <>
-      <StyledCheckboxGroup>
-        <StyledCheckboxLabel>
-          <StyledCheckboxInput
-            type='checkbox'
-            checked={learnLine}
-            onChange={() => setLearnLine((prev) => !prev)}
-          />
-          <StyledCheckboxCustom></StyledCheckboxCustom>
-          <span>Line</span>
-        </StyledCheckboxLabel>
-        <StyledCheckboxLabel>
-          <StyledCheckboxInput
-            type='checkbox'
-            checked={learnSection}
-            onChange={() => setLearnSection((prev) => !prev)}
-          />
-          <StyledCheckboxCustom></StyledCheckboxCustom>
-          <span>Section</span>
-        </StyledCheckboxLabel>
-        <StyledCheckboxLabel>
-          <StyledCheckboxInput
-            type='checkbox'
-            checked={hideAll}
-            onChange={() => setHideAll((prev) => !prev)}
-          />
-          <StyledCheckboxCustom></StyledCheckboxCustom>
-          <span>All</span>
-        </StyledCheckboxLabel>
-      </StyledCheckboxGroup>
-      <StyledButtonReset type='button' onClick={() => handleReset()}>
-        Reset
-      </StyledButtonReset>
-      <StyledLyricsContent className={lyricsClass}>
-        {parseLyrics(dataTrack.lyrics)}
-      </StyledLyricsContent>
-    </>
-  );
+  const descriptionClass = description ? 'active' : '';
+
+  useEffect(() => {
+    if (descriptionRef && descriptionRef.current) {
+      descriptionRef.current.style.maxHeight = description
+        ? `${descriptionRef.current.scrollHeight}px`
+        : '0px';
+    }
+  }, [description, descriptionRef]);
 
   useEffect(() => {
     (async () => {
@@ -629,12 +666,14 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
               backgroundImage: `url(${dataTrack.track.artist.image})`,
             }}
           ></div>
-          <div className='details'>
+          <div className='details-container'>
             <img src={albumDisplay} alt='album cover art thumbnail' />
-            <div className='details-text'>
-              <h2>{dataTrack.track.titles.featured}</h2>
-              <p>{dataTrack.track.artist.name}</p>
-              <StyledButtonOptions>
+            <div className='details-content'>
+              <div className='details-favorite'>
+                <div className='details-text'>
+                  <h2>{dataTrack.track.titles.featured}</h2>
+                  <p>{dataTrack.track.artist.name}</p>
+                </div>
                 <StyledButtonFavorite
                   favorite={Object.keys(favorite).length}
                   type='button'
@@ -643,19 +682,69 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                 >
                   {favoriteDisplay}
                 </StyledButtonFavorite>
-                <Link href={`/artist/${dataTrack.track.artist.id}`}>
-                  <a>
-                    <StyledButton className='artist'>View Artist</StyledButton>
-                  </a>
-                </Link>
-              </StyledButtonOptions>
+              </div>
+              <Link href={`/artist/${dataTrack.track.artist.id}`}>
+                <a>
+                  <StyledButton className='artist'>View Artist</StyledButton>
+                </a>
+              </Link>
             </div>
           </div>
         </StyledSectionInfo>
         {streamsDisplay}
+        <StyledSectionDescription description={description}>
+          <StyledHeaderDescription>
+            <StyledButtonDescription
+              description={description}
+              className={`accordion-icon ${descriptionClass}`}
+              type='button'
+              onClick={() => setDescription((prev) => !prev)}
+            >
+              <FontAwesomeIcon icon={faChevronCircleRight} />
+            </StyledButtonDescription>
+            <StyledHeadingDescription>Description</StyledHeadingDescription>
+          </StyledHeaderDescription>
+          <StyledContentDescription ref={descriptionRef}>
+            {parseDOM(dataTrack.track.raw.description.dom.children)}
+          </StyledContentDescription>
+        </StyledSectionDescription>
         <StyledSectionLyrics>
           <h3>Lyrics</h3>
-          {parsedLyrics}
+          <StyledCheckboxGroup>
+            <StyledCheckboxLabel>
+              <StyledCheckboxInput
+                type='checkbox'
+                checked={learnLine}
+                onChange={() => setLearnLine((prev) => !prev)}
+              />
+              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <span>Line</span>
+            </StyledCheckboxLabel>
+            <StyledCheckboxLabel>
+              <StyledCheckboxInput
+                type='checkbox'
+                checked={learnSection}
+                onChange={() => setLearnSection((prev) => !prev)}
+              />
+              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <span>Section</span>
+            </StyledCheckboxLabel>
+            <StyledCheckboxLabel>
+              <StyledCheckboxInput
+                type='checkbox'
+                checked={hideAll}
+                onChange={() => setHideAll((prev) => !prev)}
+              />
+              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <span>All</span>
+            </StyledCheckboxLabel>
+          </StyledCheckboxGroup>
+          <StyledButtonReset type='button' onClick={() => handleReset()}>
+            Reset
+          </StyledButtonReset>
+          <StyledLyricsContent className={lyricsClass}>
+            {parseLyrics(dataTrack.lyrics)}
+          </StyledLyricsContent>
         </StyledSectionLyrics>
       </main>
     </>

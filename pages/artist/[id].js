@@ -64,9 +64,9 @@ export default ({ data }) => {
               backgroundImage: `url(${data.artist.image})`,
             }}
           ></div>
-          <div className='details'>
+          <div className='details-container'>
             <img src={data.artist.thumbnail} alt='artist thumbnail' />
-            <div className='details-text'>
+            <div className='details-content'>
               <h2>{data.artist.name}</h2>
               {alternateNames}
             </div>

@@ -26,7 +26,7 @@ export const StyledSectionInfo = styled.section`
     margin: 0 auto;
   }
 
-  .details {
+  .details-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -38,8 +38,17 @@ export const StyledSectionInfo = styled.section`
     left: 0;
   }
 
-  .details-text {
+  .details-content {
     padding: 0 10px;
+  }
+
+  .details-favorite {
+    display: flex;
+    margin-bottom: 10px;
+  }
+
+  .details-text {
+    margin-right: 10px;
   }
 
   h2 {
@@ -54,13 +63,13 @@ export const StyledSectionInfo = styled.section`
     border: 0;
     border-bottom: 1px solid #eee;
 
-    .details {
+    .details-container {
       flex-direction: row;
       justify-content: center;
       align-items: flex-end;
     }
 
-    .details-text {
+    .details-content {
       padding: 0;
       margin-bottom: 6px;
     }
