@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
@@ -92,6 +93,7 @@ const StyledButton = styled.button`
 `;
 
 const Nav = ({ home, toggleOpen }) => {
+  const [signedIn, setSignedIn] = useState(false);
   const router = useRouter();
 
   const removeData = () => {
@@ -99,7 +101,7 @@ const Nav = ({ home, toggleOpen }) => {
     router.push('/');
   };
 
-  const navDisplay = Cookies.get('token') ? (
+  const navDisplay = signedIn ? (
     <>
       <Link href='/favorites'>
         <a>
@@ -134,6 +136,12 @@ const Nav = ({ home, toggleOpen }) => {
       </Link>
     </>
   );
+
+  useEffect(() => {
+    if (Cookies.get('token')) {
+      setSignedIn(true);
+    }
+  }, []);
 
   return (
     <StyledNav home={home} toggleOpen={toggleOpen}>
