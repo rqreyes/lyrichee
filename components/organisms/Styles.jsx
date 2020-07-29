@@ -89,8 +89,6 @@ export const StyledContainerFull = styled.div`
 
   .half-left,
   .half-right {
-    background: #fff;
-    padding: 20px 10px;
     border-top: ${({ theme }) => theme.border};
     border-bottom: ${({ theme }) => theme.border};
   }
@@ -108,7 +106,6 @@ export const StyledContainerFull = styled.div`
     .half-left,
     .half-right {
       flex: 1;
-      margin: 0 10px;
     }
   }
 
@@ -126,6 +123,10 @@ export const StyledContainerFull = styled.div`
 `;
 
 export const StyledSectionList = styled.section`
+  background: #fff;
+  padding: 20px 10px;
+  margin: 0 10px;
+
   li {
     display: flex;
     justify-content: space-between;

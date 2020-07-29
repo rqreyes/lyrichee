@@ -21,8 +21,8 @@ export default async (req, res) => {
           user.favorites.find(({ trackId }) => trackId === parseInt(queryId)) ||
             false
         );
-      } catch (error) {
-        res.status(500).json({ error: error.message });
+      } catch (err) {
+        res.status(500).json({ err: err.message });
       }
       break;
     case 'POST':
@@ -48,8 +48,8 @@ export default async (req, res) => {
         user.save();
 
         res.send('Added / Updated favorite successful');
-      } catch (error) {
-        res.status(500).json({ error: error.message });
+      } catch (err) {
+        res.status(500).json({ err: err.message });
       }
       break;
     case 'DELETE':
@@ -69,12 +69,12 @@ export default async (req, res) => {
         user.save();
 
         res.send('Deleted favorite successful');
-      } catch (error) {
-        res.status(500).json({ error: error.message });
+      } catch (err) {
+        res.status(500).json({ err: err.message });
       }
       break;
     default:
-      res.status(500).json({ error: false });
+      res.status(500).json({ err: false });
       break;
   }
 };

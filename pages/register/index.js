@@ -39,8 +39,8 @@ export default () => {
 
       Cookies.set('token', data.token);
       router.push('/favorites');
-    } catch (error) {
-      setError(error.response.data.message);
+    } catch (err) {
+      setError(err.response.data.message);
     }
   };
 

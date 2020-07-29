@@ -8,7 +8,7 @@ export default async (req, res) => {
     const tracks = await artist.songs();
 
     res.json({ artist, tracks });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
   }
 };

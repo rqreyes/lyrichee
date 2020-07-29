@@ -430,6 +430,8 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         return {
           trackId: dataTrack.track.id,
           trackTitle: dataTrack.track.titles.featured,
+          artistId: dataTrack.track.artist.id,
+          artistName: dataTrack.track.artist.name,
           albumUrl: albumDisplay,
           lyricsLearned: [],
           lyricsTotal,
@@ -554,7 +556,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
             title='music video'
-          ></StyledIFrame>
+          />
         </StyledEmbedContainer>
       );
     }
@@ -644,8 +646,8 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
             },
           });
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        console.log(err);
       }
     })();
   }, [favorite]);
@@ -665,7 +667,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
             style={{
               backgroundImage: `url(${dataTrack.track.artist.image})`,
             }}
-          ></div>
+          />
           <div className='details-container'>
             <img src={albumDisplay} alt='album cover art thumbnail' />
             <div className='details-content'>
@@ -717,7 +719,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                 checked={learnLine}
                 onChange={() => setLearnLine((prev) => !prev)}
               />
-              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <StyledCheckboxCustom />
               <span>Line</span>
             </StyledCheckboxLabel>
             <StyledCheckboxLabel>
@@ -726,7 +728,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                 checked={learnSection}
                 onChange={() => setLearnSection((prev) => !prev)}
               />
-              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <StyledCheckboxCustom />
               <span>Section</span>
             </StyledCheckboxLabel>
             <StyledCheckboxLabel>
@@ -735,7 +737,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                 checked={hideAll}
                 onChange={() => setHideAll((prev) => !prev)}
               />
-              <StyledCheckboxCustom></StyledCheckboxCustom>
+              <StyledCheckboxCustom />
               <span>All</span>
             </StyledCheckboxLabel>
           </StyledCheckboxGroup>

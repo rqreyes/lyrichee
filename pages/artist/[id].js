@@ -63,7 +63,7 @@ export default ({ data }) => {
             style={{
               backgroundImage: `url(${data.artist.image})`,
             }}
-          ></div>
+          />
           <div className='details-container'>
             <img src={data.artist.thumbnail} alt='artist thumbnail' />
             <div className='details-content'>

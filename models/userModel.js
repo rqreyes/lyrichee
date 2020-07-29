@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     {
       trackId: { type: Number },
       trackTitle: { type: String },
-      trackArtist: { type: String },
+      artistId: { type: Number },
+      artistName: { type: String },
       albumUrl: { type: String },
       lyricsLearned: [[Number]],
       lyricsTotal: { type: Number },

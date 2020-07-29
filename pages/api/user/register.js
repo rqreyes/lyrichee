@@ -43,7 +43,7 @@ export default async (req, res) => {
     res.json({
       token,
     });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
   }
 };
