@@ -10,7 +10,7 @@ const ArtistItem = ({ artist }) => {
         </p>
       </div>
       <div className='button-group'>
-        <Link href={`/artist/${artist.id}`}>
+        <Link href={`/artist/${artist.id}`} passHref>
           <a>
             <button type='button'>View Artist</button>
           </a>

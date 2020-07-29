@@ -24,7 +24,6 @@ const StyledButtonFavorite = styled(StyledButton)`
     favorite ? theme.colors.greenDark : theme.colors.red};
   padding: 0;
   background: none;
-  margin-right: 16px;
 
   &:hover {
     color: ${({ theme }) => theme.colors.green};
@@ -71,6 +70,7 @@ const StyledSectionContent = styled(StyledSection)`
 const StyledSectionDescription = styled(StyledSectionContent)`
   padding: ${({ description }) =>
     description ? '30px 40px' : '30px 40px 20px'};
+  transition: padding 0.6s;
 `;
 
 const StyledHeaderDescription = styled.div`
@@ -468,7 +468,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   };
 
   const handleReset = () => {
-    setFavorite({ ...favorite, lyricsLearned: [] });
+    if (signedIn) setFavorite({ ...favorite, lyricsLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);

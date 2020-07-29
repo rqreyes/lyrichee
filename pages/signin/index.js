@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import {
   StyledMainFormContainer,
   StyledMainFormLabel,
@@ -12,6 +14,11 @@ import {
 } from '../../components/organisms/Styles';
 import Logo from '../../components/molecules/Logo';
 import Error from '../../components/atoms/Error';
+
+const StyledP = styled.p`
+  text-align: center;
+  margin-top: 10px;
+`;
 
 export default () => {
   const [username, setUsername] = useState('');
@@ -73,6 +80,14 @@ export default () => {
           <button type='submit'>Sign In</button>
         </form>
         {errorDisplay}
+        <StyledP>
+          Don't have an account?{' '}
+          <Link href='/register'>
+            <a>
+              <strong>Create one</strong>
+            </a>
+          </Link>
+        </StyledP>
       </StyledMainFormContainer>
     </>
   );

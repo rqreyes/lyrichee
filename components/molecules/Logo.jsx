@@ -32,7 +32,7 @@ const Logo = ({ text, home }) => {
   const logoSrc = text ? '/images/logo-text.png' : '/images/logo-icon.png';
 
   return (
-    <Link href='/'>
+    <Link href='/' passHref>
       <StyledLink home={home}>
         <StyledH1>Lyrichee</StyledH1>
         <StyledImg home={home} src={logoSrc} alt='logo' />

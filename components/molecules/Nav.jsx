@@ -103,7 +103,7 @@ const Nav = ({ home, toggleOpen }) => {
 
   const navDisplay = signedIn ? (
     <>
-      <Link href='/favorites'>
+      <Link href='/favorites' passHref>
         <a>
           <StyledButton type='button'>
             <FontAwesomeIcon icon={faStar} />
@@ -118,7 +118,7 @@ const Nav = ({ home, toggleOpen }) => {
     </>
   ) : (
     <>
-      <Link href='/register'>
+      <Link href='/register' passHref>
         <a>
           <StyledButton type='button'>
             <FontAwesomeIcon icon={faMusic} />
@@ -126,7 +126,7 @@ const Nav = ({ home, toggleOpen }) => {
           </StyledButton>
         </a>
       </Link>
-      <Link href='/signin'>
+      <Link href='/signin' passHref>
         <a>
           <StyledButton type='button'>
             <FontAwesomeIcon icon={faSignInAlt} />

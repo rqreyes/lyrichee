@@ -30,36 +30,33 @@ const StyledLi = styled.li`
   }
 `;
 
-const FavoriteItem = ({ favoriteItem }) => {
-  console.log('favoriteItem.percentLearned: ', favoriteItem.percentLearned);
-  return (
-    <StyledLi
-      percentLearned={favoriteItem.percentLearned}
-      className='favorite-item'
-    >
-      <div className='item-content'>
-        <img src={favoriteItem.albumUrl} alt='album art' />
-        <div>
-          <p>
-            <strong>{favoriteItem.trackTitle}</strong>
-          </p>
-          <p>{favoriteItem.artistName}</p>
-        </div>
+const FavoriteItem = ({ favoriteItem }) => (
+  <StyledLi
+    percentLearned={favoriteItem.percentLearned}
+    className='favorite-item'
+  >
+    <div className='item-content'>
+      <img src={favoriteItem.albumUrl} alt='album art' />
+      <div>
+        <p>
+          <strong>{favoriteItem.trackTitle}</strong>
+        </p>
+        <p>{favoriteItem.artistName}</p>
       </div>
-      <div className='button-group'>
-        <Link href={`/track/${favoriteItem.trackId}`}>
-          <a>
-            <button type='button'>View Track</button>
-          </a>
-        </Link>
-        <Link href={`/artist/${favoriteItem.artistId}`}>
-          <a>
-            <button type='button'>View Artist</button>
-          </a>
-        </Link>
-      </div>
-    </StyledLi>
-  );
-};
+    </div>
+    <div className='button-group'>
+      <Link href={`/track/${favoriteItem.trackId}`} passHref>
+        <a>
+          <button type='button'>View Track</button>
+        </a>
+      </Link>
+      <Link href={`/artist/${favoriteItem.artistId}`} passHref>
+        <a>
+          <button type='button'>View Artist</button>
+        </a>
+      </Link>
+    </div>
+  </StyledLi>
+);
 
 export default FavoriteItem;

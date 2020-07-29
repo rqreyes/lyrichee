@@ -24,12 +24,12 @@ const TrackItem = ({ track }) => {
         </div>
       </div>
       <div className='button-group'>
-        <Link href={`/track/${track.id}`}>
+        <Link href={`/track/${track.id}`} passHref>
           <a>
             <button type='button'>View Track</button>
           </a>
         </Link>
-        <Link href={`/artist/${track.artist.id}`}>
+        <Link href={`/artist/${track.artist.id}`} passHref>
           <a>
             <button type='button'>View Artist</button>
           </a>
