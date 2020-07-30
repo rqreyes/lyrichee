@@ -4,6 +4,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import cookie from 'cookie';
 import Cookies from 'js-cookie';
+import { parseDom } from '../../utils/parseDom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -431,25 +432,6 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     setLearnReset((prev) => !prev);
   };
 
-  // parse the description DOM into HTML
-  const parseDOM = (DOM) => {
-    if (DOM === undefined) return;
-
-    return DOM.map((parent, idx) => {
-      if (typeof parent === 'string') return parent;
-
-      const Tag = parent.tag;
-      const parentAttributes = parent.attributes;
-      if (parent.tag === 'a') parentAttributes.target = '_blank';
-
-      return (
-        <Tag key={`key-${idx}`} {...parentAttributes}>
-          {parseDOM(parent.children)}
-        </Tag>
-      );
-    });
-  };
-
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
     return lyrics.split(/\n\n/).map((section, idx) => {
@@ -671,7 +653,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                 <StyledH3 noBottom>Description</StyledH3>
               </StyledDivHeaderDescription>
               <StyledDivContentDescription ref={descriptionRef}>
-                {parseDOM(dataTrack.track.raw.description.dom.children)}
+                {parseDom(dataTrack.track.raw.description.dom.children)}
               </StyledDivContentDescription>
             </StyledSectionDescription>
           </div>

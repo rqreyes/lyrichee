@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import axios from 'axios';
+import { parseDom } from '../../utils/parseDom';
 import {
   StyledH2,
   StyledH3,
@@ -26,32 +27,13 @@ export async function getServerSideProps(context) {
 }
 
 export default ({ data }) => {
-  // parse the description DOM into HTML
-  const parseDOM = (DOM) => {
-    if (DOM === undefined) return;
-
-    return DOM.map((parent, idx) => {
-      if (typeof parent === 'string') return parent;
-
-      const Tag = parent.tag;
-      const parentAttributes = parent.attributes;
-      if (parent.tag === 'a') parentAttributes.target = '_blank';
-
-      return (
-        <Tag key={`key-${idx}`} {...parentAttributes}>
-          {parseDOM(parent.children)}
-        </Tag>
-      );
-    });
-  };
-
   const alternateNames = data.artist.raw.alternate_names.length ? (
     <p>AKA: {data.artist.raw.alternate_names.join(', ')}</p>
   ) : (
     ''
   );
-  const parsedDOM = (
-    <div>{parseDOM(data.artist.raw.description.dom.children)}</div>
+  const parseDomDisplay = (
+    <div>{parseDom(data.artist.raw.description.dom.children)}</div>
   );
 
   return (
@@ -79,7 +61,7 @@ export default ({ data }) => {
           <TrackList tracks={data.tracks} />
           <StyledSectionContent className='half-right'>
             <StyledH3>About</StyledH3>
-            {parsedDOM}
+            {parseDomDisplay}
           </StyledSectionContent>
         </StyledColumnTwo>
       </main>
