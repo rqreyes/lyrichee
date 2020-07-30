@@ -23,6 +23,10 @@ export default () => {
     <>
       <Head>
         <title>Lyrichee 404</title>
+        <link
+          href='https://fonts.googleapis.com/css2?family=MuseoModerno&display=swap'
+          rel='stylesheet'
+        ></link>
       </Head>
       <StyledMainCenter>
         <StyledH2>404</StyledH2>

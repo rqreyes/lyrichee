@@ -1,6 +1,25 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const randomDelay = () => `${Math.random() * 2}s`;
+
+const notes = keyframes`
+  0% {
+    opacity: 0;
+    transform: scale(1) translate(0, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5) translate(50%, -50%);
+  }
+  80% {
+    opacity: 0;
+    transform: scale(1.5) translate(100%, -100%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.5) translate(100%, -100%);
+  }
+`;
 
 const StyledLoading = styled.div`
   width: 80%;
@@ -68,26 +87,7 @@ const StyledNote = styled.div`
   opacity: 0;
   font-size: 40px;
   position: absolute;
-  animation: notes 2s infinite linear;
-
-  @keyframes notes {
-    0% {
-      opacity: 0;
-      transform: scale(1) translate(0, 0);
-    }
-    50% {
-      opacity: 1;
-      transform: scale(1.5) translate(50%, -50%);
-    }
-    80% {
-      opacity: 0;
-      transform: scale(1.5) translate(100%, -100%);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(1.5) translate(100%, -100%);
-    }
-  }
+  animation: ${notes} 2s infinite linear;
 `;
 
 const StyledLogo = styled(StyledNote)`
