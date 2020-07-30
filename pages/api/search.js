@@ -7,6 +7,6 @@ export default async (req, res) => {
     const results = await Genius.tracks.search(req.query.q);
     res.status(200).json(results);
   } catch (err) {
-    console.log(err);
+    res.status(200).json(err);
   }
 };

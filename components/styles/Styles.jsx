@@ -14,8 +14,12 @@ export const StyledH2 = styled.h2`
   ${({ notFound }) =>
     notFound &&
     `
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-family: 'MuseoModerno', cursive;
       font-size: 72px;
+      margin-bottom: 10px;
   `}
 `;
 

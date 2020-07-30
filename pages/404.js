@@ -18,7 +18,9 @@ export default () => {
         ></link>
       </Head>
       <StyledMainCenter>
-        <StyledH2 notFound>404</StyledH2>
+        <StyledH2 notFound>
+          4<img src='/images/lychee.png' alt='lychee' />4
+        </StyledH2>
         <StyledP alignCenter>Oops, this page does not exist</StyledP>
         <Link href='/' passHref>
           <a>

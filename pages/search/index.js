@@ -5,6 +5,8 @@ import {
   StyledH2,
   StyledSectionHeader,
   StyledColumnTwo,
+  StyledSectionContent,
+  StyledP,
 } from '../../components/styles/Styles';
 import TrackList from '../../components/molecules/TrackList';
 import ArtistList from '../../components/molecules/ArtistList';
@@ -27,13 +29,29 @@ export async function getServerSideProps(context) {
 
 export default ({ data }) => {
   const router = useRouter();
-  const tracks = data;
-  const artists = data.reduce((artistsArr, track) => {
-    if (artistsArr.findIndex(({ name }) => name === track.artist.name) < 0)
-      artistsArr.push(track.artist);
+  let searchResultsDisplay;
 
-    return artistsArr;
-  }, []);
+  if (Array.isArray(data)) {
+    const artists = data.reduce((artistsArr, track) => {
+      if (artistsArr.findIndex(({ name }) => name === track.artist.name) < 0)
+        artistsArr.push(track.artist);
+
+      return artistsArr;
+    }, []);
+
+    searchResultsDisplay = (
+      <StyledColumnTwo>
+        <TrackList tracks={data} />
+        <ArtistList artists={artists} />
+      </StyledColumnTwo>
+    );
+  } else {
+    searchResultsDisplay = (
+      <StyledSectionContent>
+        <StyledP alignCenter>No results were found</StyledP>
+      </StyledSectionContent>
+    );
+  }
 
   return (
     <>
@@ -46,10 +64,7 @@ export default ({ data }) => {
             <StyledH2>Search Results</StyledH2>
             <p>"{router.query.q}"</p>
           </StyledSectionHeader>
-          <StyledColumnTwo>
-            <TrackList tracks={tracks} />
-            <ArtistList artists={artists} />
-          </StyledColumnTwo>
+          {searchResultsDisplay}
         </main>
       </>
     </>

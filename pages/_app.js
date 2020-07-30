@@ -168,7 +168,7 @@ export default ({ Component, pageProps, router }) => {
         }
       }
     })();
-  });
+  }, []);
 
   return (
     <>
