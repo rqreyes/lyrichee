@@ -158,17 +158,21 @@ export default ({ Component, pageProps, router }) => {
 
   useEffect(() => {
     (async () => {
-      if (Cookies.get('token')) {
-        const { data } = await axios.post('/api/user/verify', {
-          token: Cookies.get('token'),
-        });
+      try {
+        if (Cookies.get('token')) {
+          const { data } = await axios.post('/api/user/verify', {
+            token: Cookies.get('token'),
+          });
 
-        if (!data) {
-          Cookies.remove('token');
+          if (!data) {
+            Cookies.remove('token');
+          }
         }
+      } catch (err) {
+        console.log(err);
       }
     })();
-  }, []);
+  });
 
   return (
     <>

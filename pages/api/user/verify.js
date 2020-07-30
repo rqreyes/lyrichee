@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
+const dbConnect = require('../../../utils/dbConnect');
 const User = require('../../../models/userModel');
 
 export default async (req, res) => {
   try {
+    await dbConnect();
     const { token } = req.body;
     const verified = token
       ? jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
