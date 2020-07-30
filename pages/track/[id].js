@@ -12,59 +12,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 import styled from 'styled-components';
-import { StyledSectionInfo } from '../../components/organisms/Styles';
+import {
+  StyledH3,
+  StyledH2,
+  StyledButtonFavorite,
+  StyledButtonText,
+  StyledSectionHero,
+  StyledButton,
+  StyledColumnTwo,
+  StyledSectionContent,
+} from '../../components/styles/Styles';
 import LyricsSection from '../../components/molecules/LyricsSection';
 
-const StyledButton = styled.button`
-  width: auto;
-`;
-
-const StyledButtonFavorite = styled(StyledButton)`
-  color: ${({ favorite, theme }) =>
-    favorite ? theme.colors.greenDark : theme.colors.red};
-  padding: 0;
-  background: none;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.green};
-    background: none;
-  }
-
-  &:disabled {
-    color: ${({ theme }) => theme.colors.grey} !important;
-    cursor: auto !important;
-  }
-
-  svg {
-    height: 36px;
-  }
-`;
-
-const StyledButtonReset = styled.button`
-  width: auto;
-  margin: 0 auto 10px;
-`;
-
-const StyledSection = styled.section`
-  background: #fff;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-
-  /* Medium devices (tablets, 768px and up) */
-  @media (min-width: 768px) {
-    width: 730px;
-    margin: auto;
-  }
-`;
-
-const StyledSectionContent = styled(StyledSection)`
-  padding: 30px 40px;
+const StyledSectionStreams = styled(StyledSectionContent)`
   margin-bottom: 10px;
-
-  /* Medium devices (tablets, 768px and up) */
-  @media (min-width: 768px) {
-    margin: 0 auto 10px;
-  }
 `;
 
 const StyledSectionDescription = styled(StyledSectionContent)`
@@ -73,26 +34,24 @@ const StyledSectionDescription = styled(StyledSectionContent)`
   transition: padding 0.6s;
 `;
 
-const StyledHeaderDescription = styled.div`
+const StyledDivHeaderDescription = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 10px;
 `;
 
-const StyledButtonDescription = styled.button`
+const StyledButtonDescription = styled(StyledButton)`
   width: 20px;
   height: 20px;
   color: ${({ description, theme }) =>
     description ? theme.colors.greenDark : theme.colors.red};
   padding: 0;
-  background: none;
   margin-right: 10px;
-  transition: transform 0.6s;
+  transition: color 0.2s, transform 0.6s;
 
   &:hover {
     color: ${({ theme }) => theme.colors.green};
-    background: none;
   }
 
   &.active {
@@ -105,16 +64,12 @@ const StyledButtonDescription = styled.button`
   }
 `;
 
-const StyledHeadingDescription = styled.h3`
-  margin-bottom: 0;
-`;
-
-const StyledContentDescription = styled.div`
+const StyledDivContentDescription = styled.div`
   overflow: hidden;
   transition: max-height 0.6s;
 `;
 
-const StyledSectionLyrics = styled(StyledSection)`
+const StyledSectionLyrics = styled(StyledSectionContent)`
   padding: 20px 10px;
 
   .lyrics-section {
@@ -213,7 +168,7 @@ const StyledSectionLyrics = styled(StyledSection)`
   }
 `;
 
-const StyledEmbedContainer = styled.div`
+const StyledDivEmbedContainer = styled.div`
   position: relative;
   padding-bottom: 56.25%;
   height: 0;
@@ -231,12 +186,12 @@ const StyledIFrame = styled.iframe`
   height: 100%;
 `;
 
-const StyledProviders = styled.div`
+const StyledDivProviders = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const StyledProvider = styled.a`
+const StyledLinkProvider = styled.a`
   width: 40px;
   height: 40px;
   margin: 0 5px;
@@ -253,13 +208,13 @@ const StyledProvider = styled.a`
   }
 `;
 
-const StyledCheckboxGroup = styled.div`
+const StyledDivCheckboxGroup = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
 
-const StyledCheckboxLabel = styled.label`
+const StyledLabelCheckbox = styled.label`
   display: flex;
   align-items: center;
   margin: 0 10px;
@@ -273,7 +228,7 @@ const StyledCheckboxLabel = styled.label`
   }
 `;
 
-const StyledCheckboxInput = styled.input`
+const StyledInputCheckbox = styled.input`
   opacity: 0;
   position: absolute;
   cursor: pointer;
@@ -303,7 +258,7 @@ const StyledCheckboxInput = styled.input`
   }
 `;
 
-const StyledCheckboxCustom = styled.div`
+const StyledDivCheckboxCustom = styled.div`
   height: 28px;
   width: 28px;
   background: ${({ theme }) => theme.colors.red};
@@ -339,7 +294,7 @@ const StyledCheckboxCustom = styled.div`
   }
 `;
 
-const StyledLyricsContent = styled.div`
+const StyledDivLyricsContent = styled.div`
   transition: all 0.6s;
 
   &.learn-section {
@@ -468,7 +423,8 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   };
 
   const handleReset = () => {
-    if (signedIn) setFavorite({ ...favorite, lyricsLearned: [] });
+    if (signedIn && Object.keys(favorite).length)
+      setFavorite({ ...favorite, lyricsLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);
@@ -549,7 +505,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     );
     if (youtubeURL) {
       youtubeDisplay = (
-        <StyledEmbedContainer>
+        <StyledDivEmbedContainer>
           <StyledIFrame
             src={`${youtubeURL.url.replace('watch?v=', 'embed/')}`}
             frameBorder='0'
@@ -557,7 +513,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
             allowFullScreen
             title='music video'
           />
-        </StyledEmbedContainer>
+        </StyledDivEmbedContainer>
       );
     }
 
@@ -575,13 +531,13 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
       let spotifyDisplay;
       if (spotifyURL) {
         spotifyDisplay = (
-          <StyledProvider
+          <StyledLinkProvider
             href={spotifyURL.url}
             target='_blank'
             rel='noopener noreferrer'
           >
             <FontAwesomeIcon icon={faSpotify} />
-          </StyledProvider>
+          </StyledLinkProvider>
         );
       }
 
@@ -589,30 +545,29 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
       let soundcloudDisplay;
       if (soundcloudURL) {
         soundcloudDisplay = (
-          <StyledProvider
+          <StyledLinkProvider
             href={soundcloudURL.url}
             target='_blank'
             rel='noopener noreferrer'
           >
             <FontAwesomeIcon icon={faSoundcloud} />
-          </StyledProvider>
+          </StyledLinkProvider>
         );
       }
 
       providersDisplay = (
-        <StyledProviders>
+        <StyledDivProviders>
           {spotifyDisplay}
           {soundcloudDisplay}
-        </StyledProviders>
+        </StyledDivProviders>
       );
     }
 
     streamsDisplay = (
-      <StyledSectionContent>
-        <h3>Streams</h3>
+      <>
         {youtubeDisplay}
         {providersDisplay}
-      </StyledSectionContent>
+      </>
     );
   }
 
@@ -661,7 +616,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         </title>
       </Head>
       <main>
-        <StyledSectionInfo>
+        <StyledSectionHero>
           <div
             className='hero'
             style={{
@@ -673,7 +628,9 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
             <div className='details-content'>
               <div className='details-favorite'>
                 <div className='details-text'>
-                  <h2>{dataTrack.track.titles.featured}</h2>
+                  <StyledH2 alignLeft>
+                    {dataTrack.track.titles.featured}
+                  </StyledH2>
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
                 <StyledButtonFavorite
@@ -687,67 +644,83 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
               </div>
               <Link href={`/artist/${dataTrack.track.artist.id}`}>
                 <a>
-                  <StyledButton className='artist'>View Artist</StyledButton>
+                  <StyledButtonText widthAuto className='artist'>
+                    View Artist
+                  </StyledButtonText>
                 </a>
               </Link>
             </div>
           </div>
-        </StyledSectionInfo>
-        {streamsDisplay}
-        <StyledSectionDescription description={description}>
-          <StyledHeaderDescription>
-            <StyledButtonDescription
-              description={description}
-              className={`accordion-icon ${descriptionClass}`}
-              type='button'
-              onClick={() => setDescription((prev) => !prev)}
-            >
-              <FontAwesomeIcon icon={faChevronCircleRight} />
-            </StyledButtonDescription>
-            <StyledHeadingDescription>Description</StyledHeadingDescription>
-          </StyledHeaderDescription>
-          <StyledContentDescription ref={descriptionRef}>
-            {parseDOM(dataTrack.track.raw.description.dom.children)}
-          </StyledContentDescription>
-        </StyledSectionDescription>
-        <StyledSectionLyrics>
-          <h3>Lyrics</h3>
-          <StyledCheckboxGroup>
-            <StyledCheckboxLabel>
-              <StyledCheckboxInput
-                type='checkbox'
-                checked={learnLine}
-                onChange={() => setLearnLine((prev) => !prev)}
-              />
-              <StyledCheckboxCustom />
-              <span>Line</span>
-            </StyledCheckboxLabel>
-            <StyledCheckboxLabel>
-              <StyledCheckboxInput
-                type='checkbox'
-                checked={learnSection}
-                onChange={() => setLearnSection((prev) => !prev)}
-              />
-              <StyledCheckboxCustom />
-              <span>Section</span>
-            </StyledCheckboxLabel>
-            <StyledCheckboxLabel>
-              <StyledCheckboxInput
-                type='checkbox'
-                checked={hideAll}
-                onChange={() => setHideAll((prev) => !prev)}
-              />
-              <StyledCheckboxCustom />
-              <span>All</span>
-            </StyledCheckboxLabel>
-          </StyledCheckboxGroup>
-          <StyledButtonReset type='button' onClick={() => handleReset()}>
-            Reset
-          </StyledButtonReset>
-          <StyledLyricsContent className={lyricsClass}>
-            {parseLyrics(dataTrack.lyrics)}
-          </StyledLyricsContent>
-        </StyledSectionLyrics>
+        </StyledSectionHero>
+        <StyledColumnTwo>
+          <div>
+            <StyledSectionStreams>
+              <StyledH3>Streams</StyledH3>
+              {streamsDisplay}
+            </StyledSectionStreams>
+            <StyledSectionDescription description={description}>
+              <StyledDivHeaderDescription>
+                <StyledButtonDescription
+                  description={description}
+                  className={descriptionClass}
+                  type='button'
+                  onClick={() => setDescription((prev) => !prev)}
+                >
+                  <FontAwesomeIcon icon={faChevronCircleRight} />
+                </StyledButtonDescription>
+                <StyledH3 noBottom>Description</StyledH3>
+              </StyledDivHeaderDescription>
+              <StyledDivContentDescription ref={descriptionRef}>
+                {parseDOM(dataTrack.track.raw.description.dom.children)}
+              </StyledDivContentDescription>
+            </StyledSectionDescription>
+          </div>
+          <div>
+            <StyledSectionLyrics>
+              <StyledH3>Lyrics</StyledH3>
+              <StyledDivCheckboxGroup>
+                <StyledLabelCheckbox>
+                  <StyledInputCheckbox
+                    type='checkbox'
+                    checked={learnLine}
+                    onChange={() => setLearnLine((prev) => !prev)}
+                  />
+                  <StyledDivCheckboxCustom />
+                  <span>Line</span>
+                </StyledLabelCheckbox>
+                <StyledLabelCheckbox>
+                  <StyledInputCheckbox
+                    type='checkbox'
+                    checked={learnSection}
+                    onChange={() => setLearnSection((prev) => !prev)}
+                  />
+                  <StyledDivCheckboxCustom />
+                  <span>Section</span>
+                </StyledLabelCheckbox>
+                <StyledLabelCheckbox>
+                  <StyledInputCheckbox
+                    type='checkbox'
+                    checked={hideAll}
+                    onChange={() => setHideAll((prev) => !prev)}
+                  />
+                  <StyledDivCheckboxCustom />
+                  <span>All</span>
+                </StyledLabelCheckbox>
+              </StyledDivCheckboxGroup>
+              <StyledButtonText
+                widthAuto
+                marginBottom
+                type='button'
+                onClick={() => handleReset()}
+              >
+                Reset
+              </StyledButtonText>
+              <StyledDivLyricsContent className={lyricsClass}>
+                {parseLyrics(dataTrack.lyrics)}
+              </StyledDivLyricsContent>
+            </StyledSectionLyrics>
+          </div>
+        </StyledColumnTwo>
       </main>
     </>
   );

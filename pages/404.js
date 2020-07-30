@@ -1,22 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import styled from 'styled-components';
-import { StyledMainCenter } from '../components/organisms/Styles';
-
-const StyledH2 = styled.h2`
-  font-family: 'MuseoModerno', cursive;
-  font-size: 72px;
-  margin-bottom: 0;
-`;
-
-const StyledP = styled.p`
-  text-align: center;
-`;
-
-const StyledButton = styled.button`
-  width: auto;
-  margin: auto;
-`;
+import {
+  StyledMainCenter,
+  StyledH2,
+  StyledP,
+  StyledButtonText,
+} from '../components/styles/Styles';
 
 export default () => {
   return (
@@ -29,11 +18,13 @@ export default () => {
         ></link>
       </Head>
       <StyledMainCenter>
-        <StyledH2>404</StyledH2>
-        <StyledP>Oops, this page does not exist</StyledP>
+        <StyledH2 notFound>404</StyledH2>
+        <StyledP alignCenter>Oops, this page does not exist</StyledP>
         <Link href='/' passHref>
           <a>
-            <StyledButton>Let's Go Home</StyledButton>
+            <StyledButtonText widthAuto marginAuto>
+              Let's Go Home
+            </StyledButtonText>
           </a>
         </Link>
       </StyledMainCenter>

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { StyledButton } from '../styles/Styles';
 
 const LyricsLine = ({
   favorite,
@@ -51,9 +52,13 @@ const LyricsLine = ({
   } else {
     return (
       <div className={`lyrics-line ${learnLineClass} ${learnLineTextClass}`}>
-        <button type='button' className='line-button' onClick={handleHideLine}>
+        <StyledButton
+          type='button'
+          className='line-button'
+          onClick={handleHideLine}
+        >
           {learnLineButtonDisplay}
-        </button>
+        </StyledButton>
         <p>{line}</p>
       </div>
     );

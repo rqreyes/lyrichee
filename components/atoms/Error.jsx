@@ -5,24 +5,9 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { StyledDivError, StyledP } from '../styles/Styles';
 
-const StyledError = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: rgb(235, 90, 70);
-  background: rgba(235, 90, 70, 0.1);
-  padding: 10px 20px;
-  margin-top: 10px;
-  cursor: pointer;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
-`;
-
-const StyledP = styled.p`
+const StyledPError = styled(StyledP)`
   padding: 0 10px;
   margin: 0;
 `;
@@ -30,11 +15,11 @@ const StyledP = styled.p`
 // display error in forms
 const Error = ({ error, setError }) => {
   return (
-    <StyledError onClick={() => setError('')}>
+    <StyledDivError onClick={() => setError('')}>
       <FontAwesomeIcon icon={faExclamationTriangle} />
-      <StyledP>{error}</StyledP>
+      <StyledPError>{error}</StyledPError>
       <FontAwesomeIcon icon={faTimes} />
-    </StyledError>
+    </StyledDivError>
   );
 };
 

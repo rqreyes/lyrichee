@@ -26,30 +26,6 @@ const theme = {
 };
 
 const GlobalStyle = createGlobalStyle`
-  /* typography */
-  h1 {
-  text-indent: -9999px;
-  }
-
-  h2,
-  h3 {
-    text-align: center;
-    margin: 0 0 10px;
-  }
-
-  body,
-  button {
-    font-family: 'Roboto', sans-serif;
-  }
-
-  button {
-    font-size: 14px;
-  }
-
-  input {
-    font-size: 16px;
-  }
-
 /* general */
   * {
     box-sizing: border-box;
@@ -66,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    font-family: 'Roboto', sans-serif;
     color: ${({ theme }) => theme.colors.brown};
     background: ${({ theme }) => theme.colors.snow};
     margin: 0;
@@ -98,45 +75,9 @@ const GlobalStyle = createGlobalStyle`
     margin-bottom: 60px;
   }
 
-  input {
-    width: 100%;
-    color: ${({ theme }) => theme.colors.brown}
-  }
-
-  .button-group {
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    color: #fff;
-    background: ${({ theme }) => theme.colors.red};
-    padding: 10px 20px;
-    border: 0;
-    border-radius: 4px;
-    transition: all 0.2s;
-    cursor: pointer;
-
-    &:hover {
-      background: ${({ theme }) => theme.colors.greenDark};
-    }
-  }
-
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-  }
-
   a {
     color: inherit;
     text-decoration: none;
-    cursor: pointer;
   }
 
   p {

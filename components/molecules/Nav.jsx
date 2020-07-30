@@ -10,6 +10,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { StyledButtonNav } from '../styles/Styles';
 
 const StyledNav = styled.nav`
   visibility: hidden;
@@ -19,7 +20,7 @@ const StyledNav = styled.nav`
   border-bottom: ${({ theme }) => theme.border};
   box-shadow: ${({ theme }) => theme.boxShadow};
   position: absolute;
-  top: 47px;
+  top: 45px;
   right: -20px;
   transition: all 0.2s;
 
@@ -41,7 +42,7 @@ const StyledNav = styled.nav`
   }
 `;
 
-const StyledButtonGroup = styled.div`
+const StyledDivButtonGroup = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 0;
@@ -50,45 +51,6 @@ const StyledButtonGroup = styled.div`
   @media (min-width: 768px) {
     flex-direction: row;
     padding: 0;
-  }
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  font-size: 20px;
-  color: ${({ theme }) => theme.colors.brown};
-  background: none;
-  border-radius: 0;
-  white-space: nowrap;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.greenDark};
-    background: none;
-  }
-
-  svg {
-    width: 20px !important;
-    margin-right: 10px;
-  }
-
-  /* Medium devices (tablets, 768px and up) */
-  @media (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    font-size: 16px;
-    padding: 10px;
-    border-radius: 4px;
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.greenDark};
-    }
-
-    svg {
-      height: 20px;
-      margin: 0;
-    }
   }
 `;
 
@@ -105,33 +67,33 @@ const Nav = ({ home, toggleOpen }) => {
     <>
       <Link href='/favorites' passHref>
         <a>
-          <StyledButton type='button'>
+          <StyledButtonNav type='button'>
             <FontAwesomeIcon icon={faStar} />
             Favorites
-          </StyledButton>
+          </StyledButtonNav>
         </a>
       </Link>
-      <StyledButton type='button' onClick={removeData}>
+      <StyledButtonNav type='button' onClick={removeData}>
         <FontAwesomeIcon icon={faSignOutAlt} />
         Sign Out
-      </StyledButton>
+      </StyledButtonNav>
     </>
   ) : (
     <>
       <Link href='/register' passHref>
         <a>
-          <StyledButton type='button'>
+          <StyledButtonNav type='button'>
             <FontAwesomeIcon icon={faMusic} />
             Register
-          </StyledButton>
+          </StyledButtonNav>
         </a>
       </Link>
       <Link href='/signin' passHref>
         <a>
-          <StyledButton type='button'>
+          <StyledButtonNav type='button'>
             <FontAwesomeIcon icon={faSignInAlt} />
             Sign In
-          </StyledButton>
+          </StyledButtonNav>
         </a>
       </Link>
     </>
@@ -145,7 +107,7 @@ const Nav = ({ home, toggleOpen }) => {
 
   return (
     <StyledNav home={home} toggleOpen={toggleOpen}>
-      <StyledButtonGroup>{navDisplay}</StyledButtonGroup>
+      <StyledDivButtonGroup>{navDisplay}</StyledDivButtonGroup>
     </StyledNav>
   );
 };

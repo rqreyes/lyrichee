@@ -3,12 +3,14 @@ import { useRouter } from 'next/router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-
-const StyledSearch = styled.div`
-  flex: 1;
-`;
+import {
+  StyledP,
+  StyledButtonSearch,
+  StyledInputSearch,
+} from '../styles/Styles';
 
 const StyledForm = styled.form`
+  flex: 1;
   position: relative;
 
   ${({ home }) =>
@@ -16,47 +18,6 @@ const StyledForm = styled.form`
     `
       margin-bottom: 20px;
   `}
-`;
-
-const StyledInput = styled.input`
-  padding: 10px 40px 10px 20px;
-  border: ${({ theme }) => theme.border};
-  border-radius: 100px;
-  box-shadow: ${({ theme }) => theme.boxShadow};
-
-  ${({ home }) =>
-    home &&
-    `
-      font-size: 24px;
-  `}
-`;
-
-const StyledButton = styled.button`
-  width: 30px;
-  height: 30px;
-  color: #fff;
-  padding: 0;
-  border-radius: 50%;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-
-  svg {
-    width: 50% !important;
-    height: 50%;
-    margin-bottom: 2px;
-  }
-
-  ${({ home }) =>
-    home &&
-    `
-      width: 40px;
-      height: 40px;
-  `}
-`;
-
-const StyledSlogan = styled.p`
-  text-align: center;
 `;
 
 const StyledStrong = styled.strong`
@@ -76,9 +37,9 @@ const Search = ({ home }) => {
 
   // display slogan
   const sloganDisplay = home ? (
-    <StyledSlogan>
+    <StyledP alignCenter>
       Learning lyrics just became more <StyledStrong>appeeling</StyledStrong>
-    </StyledSlogan>
+    </StyledP>
   ) : null;
 
   // focus on input
@@ -87,9 +48,9 @@ const Search = ({ home }) => {
   }, [home]);
 
   return (
-    <StyledSearch>
+    <>
       <StyledForm home={home} onSubmit={handleSubmit}>
-        <StyledInput
+        <StyledInputSearch
           home={home}
           type='text'
           value={search}
@@ -97,12 +58,12 @@ const Search = ({ home }) => {
           required
           ref={searchRef}
         />
-        <StyledButton home={home} type='submit'>
+        <StyledButtonSearch home={home} type='submit'>
           <FontAwesomeIcon icon={faSearch} />
-        </StyledButton>
+        </StyledButtonSearch>
       </StyledForm>
       {sloganDisplay}
-    </StyledSearch>
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+import { StyledH1 } from '../styles/Styles';
 
 const StyledLink = styled.a`
   display: flex;
@@ -10,11 +11,6 @@ const StyledLink = styled.a`
       justify-content: center;
       margin-bottom: 20px;
   `}
-`;
-
-const StyledH1 = styled.h1`
-  visibility: hidden;
-  position: absolute;
 `;
 
 const StyledImg = styled.img`

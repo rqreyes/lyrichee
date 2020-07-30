@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { StyledButton } from '../styles/Styles';
 import Nav from '../molecules/Nav';
 
 const StyledMenu = styled.div`
@@ -9,16 +10,11 @@ const StyledMenu = styled.div`
   position: relative;
 `;
 
-const StyledMenuButton = styled.button`
+const StyledMenuButton = styled(StyledButton)`
   width: 30px;
   height: 30px;
   color: ${({ theme }) => theme.colors.brown};
   padding: 0;
-  background: none;
-
-  &:hover {
-    background: none;
-  }
 
   svg {
     width: 30px;

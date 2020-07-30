@@ -1,20 +1,13 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import styled from 'styled-components';
-import { StyledContainerFull } from '../../components/organisms/Styles';
+import {
+  StyledH2,
+  StyledSectionHeader,
+  StyledColumnTwo,
+} from '../../components/styles/Styles';
 import TrackList from '../../components/molecules/TrackList';
 import ArtistList from '../../components/molecules/ArtistList';
-
-const StyledSection = styled.section`
-  text-align: center;
-  background: #fff;
-  border: 0;
-  border-bottom: ${({ theme }) => theme.border};
-  border-radius: 0;
-  padding: 20px 10px;
-  margin-bottom: 10px;
-`;
 
 const getSearchResults = async (key, query) => {
   const { data } = await axios.get(
@@ -49,14 +42,14 @@ export default ({ data }) => {
       </Head>
       <>
         <main>
-          <StyledSection>
-            <h2>Search Results</h2>
+          <StyledSectionHeader>
+            <StyledH2>Search Results</StyledH2>
             <p>"{router.query.q}"</p>
-          </StyledSection>
-          <StyledContainerFull>
+          </StyledSectionHeader>
+          <StyledColumnTwo>
             <TrackList tracks={tracks} />
             <ArtistList artists={artists} />
-          </StyledContainerFull>
+          </StyledColumnTwo>
         </main>
       </>
     </>

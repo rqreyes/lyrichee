@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import styled from 'styled-components';
+import { StyledButtonText } from '../styles/Styles';
 
-const StyledLi = styled.li`
+const StyledLiFavorite = styled.li`
   overflow: hidden;
   position: relative;
 
@@ -31,13 +32,13 @@ const StyledLi = styled.li`
 `;
 
 const FavoriteItem = ({ favoriteItem }) => (
-  <StyledLi
+  <StyledLiFavorite
     percentLearned={favoriteItem.percentLearned}
     className='favorite-item'
   >
     <div className='item-content'>
       <img src={favoriteItem.albumUrl} alt='album art' />
-      <div>
+      <div className='item-text'>
         <p>
           <strong>{favoriteItem.trackTitle}</strong>
         </p>
@@ -47,16 +48,16 @@ const FavoriteItem = ({ favoriteItem }) => (
     <div className='button-group'>
       <Link href={`/track/${favoriteItem.trackId}`} passHref>
         <a>
-          <button type='button'>View Track</button>
+          <StyledButtonText type='button'>View Track</StyledButtonText>
         </a>
       </Link>
       <Link href={`/artist/${favoriteItem.artistId}`} passHref>
         <a>
-          <button type='button'>View Artist</button>
+          <StyledButtonText type='button'>View Artist</StyledButtonText>
         </a>
       </Link>
     </div>
-  </StyledLi>
+  </StyledLiFavorite>
 );
 
 export default FavoriteItem;

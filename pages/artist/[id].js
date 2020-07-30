@@ -1,9 +1,12 @@
 import Head from 'next/head';
 import axios from 'axios';
 import {
-  StyledSectionInfo,
-  StyledContainerFull,
-} from '../../components/organisms/Styles';
+  StyledH2,
+  StyledH3,
+  StyledSectionHero,
+  StyledColumnTwo,
+  StyledSectionContent,
+} from '../../components/styles/Styles';
 import TrackList from '../../components/molecules/TrackList';
 
 const getArtist = async (key, id) => {
@@ -57,7 +60,7 @@ export default ({ data }) => {
         <title>Lyrichee Artist | {data.artist.name}</title>
       </Head>
       <main>
-        <StyledSectionInfo>
+        <StyledSectionHero>
           <div
             className='hero'
             style={{
@@ -67,18 +70,18 @@ export default ({ data }) => {
           <div className='details-container'>
             <img src={data.artist.thumbnail} alt='artist thumbnail' />
             <div className='details-content'>
-              <h2>{data.artist.name}</h2>
+              <StyledH2 alignLeft>{data.artist.name}</StyledH2>
               {alternateNames}
             </div>
           </div>
-        </StyledSectionInfo>
-        <StyledContainerFull>
+        </StyledSectionHero>
+        <StyledColumnTwo>
           <TrackList tracks={data.tracks} />
-          <section className='half-right'>
-            <h3>About</h3>
+          <StyledSectionContent className='half-right'>
+            <StyledH3>About</StyledH3>
             {parsedDOM}
-          </section>
-        </StyledContainerFull>
+          </StyledSectionContent>
+        </StyledColumnTwo>
       </main>
     </>
   );

@@ -6,10 +6,11 @@ import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import {
+  StyledButtonText,
   StyledMainFormContainer,
   StyledMainFormLabel,
-  StyledMainFormInput,
-} from '../../components/organisms/Styles';
+  StyledInputMainForm,
+} from '../../components/styles/Styles';
 import Logo from '../../components/molecules/Logo';
 import Error from '../../components/atoms/Error';
 
@@ -55,7 +56,7 @@ export default () => {
           <StyledMainFormLabel isPopulated={username}>
             <span>Username</span>
             <FontAwesomeIcon icon={faUser} />
-            <StyledMainFormInput
+            <StyledInputMainForm
               type='text'
               value={username}
               onChange={(evt) => setUsername(evt.target.value)}
@@ -65,7 +66,7 @@ export default () => {
           <StyledMainFormLabel isPopulated={password}>
             <span>Password</span>
             <FontAwesomeIcon icon={faLock} />
-            <StyledMainFormInput
+            <StyledInputMainForm
               type='password'
               value={password}
               onChange={(evt) => setPassword(evt.target.value)}
@@ -75,14 +76,14 @@ export default () => {
           <StyledMainFormLabel isPopulated={passwordConfirm}>
             <span>Confirm Password</span>
             <FontAwesomeIcon icon={faUserLock} />
-            <StyledMainFormInput
+            <StyledInputMainForm
               type='password'
               value={passwordConfirm}
               onChange={(evt) => setPasswordConfirm(evt.target.value)}
               required
             />
           </StyledMainFormLabel>
-          <button type='submit'>Register</button>
+          <StyledButtonText type='submit'>Register</StyledButtonText>
         </form>
         {errorDisplay}
       </StyledMainFormContainer>

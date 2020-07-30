@@ -3,32 +3,14 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import styled from 'styled-components';
-import { StyledSectionList } from '../../components/organisms/Styles';
+import {
+  StyledH2,
+  StyledUl,
+  StyledSectionHeader,
+  StyledColumnOne,
+  StyledSectionList,
+} from '../../components/styles/Styles';
 import FavoriteItem from '../../components/atoms/FavoriteItem';
-
-const StyledSection = styled.section`
-  text-align: center;
-  background: #fff;
-  border: 0;
-  border-bottom: ${({ theme }) => theme.border};
-  border-radius: 0;
-  padding: 20px 10px;
-  margin-bottom: 10px;
-`;
-
-const StyledH2 = styled.h2`
-  margin-bottom: 0;
-`;
-
-const StyledColumnOne = styled.div`
-  max-width: 465px;
-  margin: auto;
-`;
-
-const StyledSectionListColumnOne = styled(StyledSectionList)`
-  border: ${({ theme }) => theme.border};
-`;
 
 export default () => {
   const [favoriteList, setFavoriteList] = useState([]);
@@ -65,13 +47,13 @@ export default () => {
         <title>Lyrichee Favorites</title>
       </Head>
       <main>
-        <StyledSection>
+        <StyledSectionHeader>
           <StyledH2>Favorites</StyledH2>
-        </StyledSection>
+        </StyledSectionHeader>
         <StyledColumnOne>
-          <StyledSectionListColumnOne>
-            <ul>{favoriteListDisplay}</ul>
-          </StyledSectionListColumnOne>
+          <StyledSectionList>
+            <StyledUl>{favoriteListDisplay}</StyledUl>
+          </StyledSectionList>
         </StyledColumnOne>
       </main>
     </>

@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { StyledH2 } from '../styles/Styles';
 
 const randomDelay = () => `${Math.random() * 2}s`;
 
@@ -111,7 +112,7 @@ const Loading = () => {
         <StyledNote>&#119070;</StyledNote>
         <StyledNote>&#9834;</StyledNote>
       </StyledNoteGroup>
-      <h2>Loading...</h2>
+      <StyledH2>Loading...</StyledH2>
     </StyledLoading>
   );
 };

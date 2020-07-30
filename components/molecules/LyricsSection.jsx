@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { StyledButtonText } from '../styles/Styles';
 import LyricsLine from '../atoms/LyricsLine';
 
 const LyricsSection = ({
@@ -48,13 +49,13 @@ const LyricsSection = ({
 
   return (
     <div className={`lyrics-section ${learnSectionClass}`}>
-      <button
+      <StyledButtonText
         type='button'
         className={`section-button ${learnSectionButtonClass}`}
         onClick={() => setHideSection((prev) => !prev)}
       >
         {learnSectionButtonDisplay}
-      </button>
+      </StyledButtonText>
       <div className='lyrics-section-content' ref={lyricsSectionRef}>
         {section.split(/\n/).map((line, idx) => (
           <LyricsLine

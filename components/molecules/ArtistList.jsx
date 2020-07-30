@@ -1,5 +1,5 @@
 import ArtistItem from '../atoms/ArtistItem';
-import { StyledSectionList } from '../organisms/Styles';
+import { StyledH3, StyledUl, StyledSectionList } from '../styles/Styles';
 
 const ArtistList = ({ artists }) => {
   const artistListDisplay = artists.map((artist) => (
@@ -7,9 +7,9 @@ const ArtistList = ({ artists }) => {
   ));
 
   return (
-    <StyledSectionList className='half-right'>
-      <h3>Artists</h3>
-      <ul>{artistListDisplay}</ul>
+    <StyledSectionList>
+      <StyledH3>Artists</StyledH3>
+      <StyledUl>{artistListDisplay}</StyledUl>
     </StyledSectionList>
   );
 };

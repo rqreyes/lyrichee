@@ -1,5 +1,5 @@
 import TrackItem from '../atoms/TrackItem';
-import { StyledSectionList } from '../organisms/Styles';
+import { StyledH3, StyledUl, StyledSectionList } from '../styles/Styles';
 
 const TrackList = ({ tracks }) => {
   const trackListDisplay = tracks.map((track) => (
@@ -7,9 +7,9 @@ const TrackList = ({ tracks }) => {
   ));
 
   return (
-    <StyledSectionList className='half-left'>
-      <h3>Tracks</h3>
-      <ul>{trackListDisplay}</ul>
+    <StyledSectionList>
+      <StyledH3>Tracks</StyledH3>
+      <StyledUl>{trackListDisplay}</StyledUl>
     </StyledSectionList>
   );
 };
