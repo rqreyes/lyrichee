@@ -13,7 +13,9 @@ import ArtistList from '../../components/molecules/ArtistList';
 
 const getSearchResults = async (key, query) => {
   const { data } = await axios.get(
-    `http://localhost:3000/api/search?q=${encodeURI(query)}`
+    `${
+      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
+    }/api/search?q=${encodeURI(query)}`
   );
   return data;
 };

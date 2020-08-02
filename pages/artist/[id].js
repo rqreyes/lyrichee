@@ -12,7 +12,9 @@ import TrackList from '../../components/molecules/TrackList';
 
 const getArtist = async (key, id) => {
   const { data } = await axios.get(
-    `http://localhost:3000/api/artist?id=${encodeURI(id)}`
+    `${
+      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
+    }/api/artist?id=${encodeURI(id)}`
   );
   return data;
 };

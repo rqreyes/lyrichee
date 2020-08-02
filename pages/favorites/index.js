@@ -25,14 +25,11 @@ export default () => {
       try {
         if (!Cookies.get('token')) router.push('/signin');
 
-        const { data } = await axios.get(
-          `http://localhost:3000/api/user/favoriteList`,
-          {
-            params: {
-              token: Cookies.get('token'),
-            },
-          }
-        );
+        const { data } = await axios.get('/api/user/favoriteList', {
+          params: {
+            token: Cookies.get('token'),
+          },
+        });
 
         setFavoriteList(data);
       } catch (err) {

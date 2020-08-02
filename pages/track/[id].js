@@ -315,14 +315,18 @@ const StyledDivLyricsContent = styled.div`
 
 const getTrack = async (key, id) => {
   const { data } = await axios.get(
-    `http://localhost:3000/api/track?id=${encodeURI(id)}`
+    `${
+      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
+    }/api/track?id=${encodeURI(id)}`
   );
   return data;
 };
 
 const getFavoriteItem = async (key, id, token) => {
   const { data } = await axios.get(
-    'http://localhost:3000/api/user/favoriteItem',
+    `${
+      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
+    }/api/user/favoriteItem`,
     {
       params: {
         token,
@@ -571,12 +575,12 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     (async () => {
       try {
         if (signedIn && Object.keys(favorite).length) {
-          await axios.post('http://localhost:3000/api/user/favoriteItem', {
+          await axios.post('/api/user/favoriteItem', {
             token: Cookies.get('token'),
             trackData: favorite,
           });
         } else if (signedIn) {
-          await axios.delete('http://localhost:3000/api/user/favoriteItem', {
+          await axios.delete('/api/user/favoriteItem', {
             params: {
               token: Cookies.get('token'),
               queryId: dataTrack.track.id,
