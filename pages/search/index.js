@@ -8,6 +8,7 @@ import {
   StyledSectionContent,
   StyledP,
 } from '../../components/styles/Styles';
+import Error500 from '../../components/organisms/Error500';
 import Loading from '../../components/atoms/Loading';
 import Header from '../../components/organisms/Header';
 import TrackList from '../../components/molecules/TrackList';
@@ -17,7 +18,7 @@ export default () => {
   const router = useRouter();
   const { data, error } = useSWR(`/api/search?q=${router.query.q}`);
 
-  if (error) return <div>failed to load</div>;
+  if (error) return <Error500 />;
   if (!data) return <Loading />;
 
   let searchResultsDisplay;

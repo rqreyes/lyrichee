@@ -40,10 +40,12 @@ export default async (req, res) => {
           ({ trackId }) => trackId === trackData.trackId
         );
         if (favoriteItem) {
-          favoriteItem.lyricsLearned = trackData.lyricsLearned;
+          favoriteItem.lyricsIdxLearned = trackData.lyricsIdxLearned;
+          favoriteItem.lyricsLinesLearned = flatten(
+            trackData.lyricsIdxLearned
+          ).filter((line) => line !== null).length;
           favoriteItem.percentLearned =
-            flatten(trackData.lyricsLearned).filter((line) => line !== null)
-              .length / trackData.lyricsTotal;
+            favoriteItem.lyricsLinesLearned / trackData.lyricsLinesTotal;
         } else user.favorites.push(trackData);
         user.save();
 

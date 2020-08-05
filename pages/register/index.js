@@ -13,7 +13,7 @@ import {
 } from '../../components/styles/Styles';
 import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
-import Error from '../../components/atoms/Error';
+import ErrorForm from '../../components/atoms/ErrorForm';
 
 export default () => {
   const [username, setUsername] = useState('');
@@ -23,7 +23,7 @@ export default () => {
   const router = useRouter();
 
   const errorDisplay = error ? (
-    <Error error={error} setError={setError} />
+    <ErrorForm error={error} setError={setError} />
   ) : null;
 
   const handleSubmit = async (evt) => {

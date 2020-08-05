@@ -5,7 +5,7 @@ import { StyledButton } from '../styles/Styles';
 
 const LyricsLine = ({
   dataFavoriteItem,
-  learnedLine,
+  learnedIdxLine,
   line,
   learnLine,
   learnReset,
@@ -35,10 +35,10 @@ const LyricsLine = ({
   };
 
   useEffect(() => {
-    if (learnedLine) {
+    if (learnedIdxLine) {
       setHideLine(true);
     }
-  }, [learnedLine]);
+  }, [learnedIdxLine]);
 
   const regex = RegExp('^\\[');
 

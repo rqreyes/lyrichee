@@ -147,7 +147,7 @@ export default ({ Component, pageProps }) => {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <SWRConfig value={{ fetcher }}>
+        <SWRConfig value={{ revalidateOnFocus: false, fetcher }}>
           <Component {...pageProps} />
         </SWRConfig>
         <Footer />

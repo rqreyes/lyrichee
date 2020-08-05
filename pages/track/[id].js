@@ -12,6 +12,7 @@ import {
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
+import ReactTooltip from 'react-tooltip';
 import styled from 'styled-components';
 import {
   StyledH3,
@@ -70,6 +71,11 @@ const StyledButtonDescription = styled(StyledButton)`
 const StyledDivContentDescription = styled.div`
   overflow: hidden;
   transition: max-height 0.6s;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const StyledSectionLyrics = styled(StyledSectionContent)`
@@ -360,7 +366,7 @@ export default () => {
         setLearnLine(true);
 
         const regex = RegExp('^\\[');
-        const lyricsTotal = dataTrack.lyrics
+        const lyricsLinesTotal = dataTrack.lyrics
           .split(/\n\n/)
           .map((section) => section.split(/\n/))
           .flat()
@@ -372,8 +378,9 @@ export default () => {
           artistId: dataTrack.track.artist.id,
           artistName: dataTrack.track.artist.name,
           albumUrl: albumDisplay,
-          lyricsLearned: [],
-          lyricsTotal,
+          lyricsIdxLearned: [],
+          lyricsLinesLearned: 0,
+          lyricsLinesTotal,
           percentLearned: 0,
         };
       }
@@ -381,37 +388,37 @@ export default () => {
   };
 
   const updateLearnedLyrics = (add, sectionIdx, lineIdx) => {
-    let learnedLyricsCopy = [...dataFavoriteItem.lyricsLearned];
+    let learnedIdxLyricsCopy = [...dataFavoriteItem.lyricsIdxLearned];
 
     if (add) {
-      if (learnedLyricsCopy[sectionIdx]) {
-        const learnedLyricsSectionCopy = learnedLyricsCopy[sectionIdx];
+      if (learnedIdxLyricsCopy[sectionIdx]) {
+        const learnedLyricsSectionCopy = learnedIdxLyricsCopy[sectionIdx];
 
         learnedLyricsSectionCopy.push(lineIdx);
         learnedLyricsSectionCopy.sort((a, b) => a - b);
       } else {
-        learnedLyricsCopy[sectionIdx] = [lineIdx];
+        learnedIdxLyricsCopy[sectionIdx] = [lineIdx];
       }
     } else {
-      learnedLyricsCopy[sectionIdx] = learnedLyricsCopy[sectionIdx].filter(
-        (line) => line !== lineIdx
-      );
+      learnedIdxLyricsCopy[sectionIdx] = learnedIdxLyricsCopy[
+        sectionIdx
+      ].filter((line) => line !== lineIdx);
 
-      if (learnedLyricsCopy[sectionIdx].length === 0)
-        learnedLyricsCopy = learnedLyricsCopy.filter(
+      if (learnedIdxLyricsCopy[sectionIdx].length === 0)
+        learnedIdxLyricsCopy = learnedIdxLyricsCopy.filter(
           (section) => section.length
         );
     }
 
     setDataFavoriteItem({
       ...dataFavoriteItem,
-      lyricsLearned: learnedLyricsCopy,
+      lyricsIdxLearned: learnedIdxLyricsCopy,
     });
   };
 
   const handleReset = () => {
     if (Object.keys(dataFavoriteItem).length)
-      setDataFavoriteItem({ ...dataFavoriteItem, lyricsLearned: [] });
+      setDataFavoriteItem({ ...dataFavoriteItem, lyricsIdxLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);
@@ -421,22 +428,22 @@ export default () => {
   // parse lyrics string into HTML
   const parseLyrics = (lyrics) => {
     return lyrics.split(/\n\n/).map((section, idx) => {
-      let learnedSection;
+      let learnedIdxSection;
 
       if (
         Object.keys(dataFavoriteItem).length &&
-        dataFavoriteItem.lyricsLearned[idx]
+        dataFavoriteItem.lyricsIdxLearned[idx]
       ) {
-        learnedSection = dataFavoriteItem.lyricsLearned[idx];
+        learnedIdxSection = dataFavoriteItem.lyricsIdxLearned[idx];
       } else {
-        learnedSection = [];
+        learnedIdxSection = [];
       }
 
       return (
         <LyricsSection
           key={`section-${idx}`}
           dataFavoriteItem={dataFavoriteItem}
-          learnedSection={learnedSection}
+          learnedIdxSection={learnedIdxSection}
           section={section}
           learnLine={learnLine}
           learnSection={learnSection}
@@ -633,14 +640,20 @@ export default () => {
                   </StyledH2>
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
-                <StyledButtonFavorite
-                  dataFavoriteItem={Object.keys(dataFavoriteItem).length}
-                  type='button'
-                  onClick={handleFavorite}
-                  disabled={!Cookies.get('token')}
-                >
-                  {favoriteDisplay}
-                </StyledButtonFavorite>
+                <div data-tip='Register or sign in to save track as a favorite'>
+                  <StyledButtonFavorite
+                    dataFavoriteItem={Object.keys(dataFavoriteItem).length}
+                    type='button'
+                    onClick={handleFavorite}
+                    disabled={Cookies.get('token') ? false : true}
+                  >
+                    {favoriteDisplay}
+                  </StyledButtonFavorite>
+                </div>
+                <ReactTooltip
+                  effect='solid'
+                  disable={Cookies.get('token') ? true : false}
+                />
               </div>
               <Link href={`/artist/${dataTrack.track.artist.id}`}>
                 <a>

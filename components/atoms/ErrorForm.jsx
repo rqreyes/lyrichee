@@ -13,7 +13,7 @@ const StyledPError = styled(StyledP)`
 `;
 
 // display error in forms
-const Error = ({ error, setError }) => {
+const ErrorForm = ({ error, setError }) => {
   return (
     <StyledDivError onClick={() => setError('')}>
       <FontAwesomeIcon icon={faExclamationTriangle} />
@@ -23,4 +23,4 @@ const Error = ({ error, setError }) => {
   );
 };
 
-export default Error;
+export default ErrorForm;

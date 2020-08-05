@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { StyledButtonText } from '../styles/Styles';
 
@@ -31,6 +33,29 @@ const StyledLiFavorite = styled.li`
   }
 `;
 
+const StyledPArtist = styled.p`
+  && {
+    margin-bottom: 6px;
+  }
+`;
+
+const StyledPLinesLearned = styled.p`
+  display: flex;
+
+  > * {
+    margin-right: 6px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  svg {
+    width: 20px;
+    color: ${({ theme }) => theme.colors.greenDark};
+  }
+`;
+
 const FavoriteItem = ({ favoriteItem }) => (
   <StyledLiFavorite
     percentLearned={favoriteItem.percentLearned}
@@ -42,7 +67,14 @@ const FavoriteItem = ({ favoriteItem }) => (
         <p>
           <strong>{favoriteItem.trackTitle}</strong>
         </p>
-        <p>{favoriteItem.artistName}</p>
+        <StyledPArtist>{favoriteItem.artistName}</StyledPArtist>
+        <StyledPLinesLearned>
+          <FontAwesomeIcon icon={faChartLine} />
+          <strong>
+            {favoriteItem.lyricsLinesLearned} / {favoriteItem.lyricsLinesTotal}
+          </strong>
+          <span>lines learned</span>
+        </StyledPLinesLearned>
       </div>
     </div>
     <div className='button-group'>

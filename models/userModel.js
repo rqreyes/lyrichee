@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
   favorites: [
     {
       trackId: { type: Number },
@@ -10,8 +11,9 @@ const userSchema = new mongoose.Schema({
       artistId: { type: Number },
       artistName: { type: String },
       albumUrl: { type: String },
-      lyricsLearned: [[Number]],
-      lyricsTotal: { type: Number },
+      lyricsIdxLearned: [[Number]],
+      lyricsLinesLearned: { type: Number },
+      lyricsLinesTotal: { type: Number },
       percentLearned: { type: Number },
     },
   ],

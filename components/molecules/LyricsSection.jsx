@@ -6,7 +6,7 @@ import LyricsLine from '../atoms/LyricsLine';
 
 const LyricsSection = ({
   dataFavoriteItem,
-  learnedSection,
+  learnedIdxSection,
   section,
   learnLine,
   learnSection,
@@ -61,7 +61,7 @@ const LyricsSection = ({
           <LyricsLine
             key={`line-${idx}`}
             dataFavoriteItem={dataFavoriteItem}
-            learnedLine={learnedSection.includes(idx)}
+            learnedIdxLine={learnedIdxSection.includes(idx)}
             line={line}
             learnLine={learnLine}
             learnReset={learnReset}
