@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import {
   StyledH2,
+  StyledH3,
   StyledSectionHeader,
   StyledColumnTwo,
   StyledSectionContent,
   StyledP,
 } from '../../components/styles/Styles';
-import Error500 from '../../components/organisms/Error500';
 import Loading from '../../components/atoms/Loading';
 import Header from '../../components/organisms/Header';
 import TrackList from '../../components/molecules/TrackList';
@@ -16,9 +16,7 @@ import ArtistList from '../../components/molecules/ArtistList';
 
 export default () => {
   const router = useRouter();
-  const { data, error } = useSWR(`/api/search?q=${router.query.q}`);
-
-  if (error) return <Error500 />;
+  const { data } = useSWR(`/api/search?q=${router.query.q}`);
 
   let searchResultsDisplay;
 
@@ -35,6 +33,12 @@ export default () => {
         <TrackList tracks={data} />
         <ArtistList artists={artists} />
       </StyledColumnTwo>
+    );
+  } else if (data === undefined) {
+    searchResultsDisplay = (
+      <StyledSectionContent>
+        <StyledH3 noBottom>Searching...</StyledH3>
+      </StyledSectionContent>
     );
   } else {
     searchResultsDisplay = (

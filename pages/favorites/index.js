@@ -11,7 +11,6 @@ import {
   StyledColumnOne,
   StyledSectionList,
 } from '../../components/styles/Styles';
-import Error500 from '../../components/organisms/Error500';
 import Loading from '../../components/atoms/Loading';
 import Header from '../../components/organisms/Header';
 import FavoriteItem from '../../components/atoms/FavoriteItem';
@@ -22,11 +21,9 @@ const StyledDivWelcome = styled.div`
 `;
 
 export default () => {
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     `/api/user/favoriteList?token=${Cookies.get('token')}`
   );
-
-  if (error) return <Error500 />;
 
   let favoriteListDisplay;
 
