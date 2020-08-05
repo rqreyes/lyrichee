@@ -478,7 +478,9 @@ export default () => {
       youtubeDisplay = (
         <StyledDivEmbedContainer>
           <StyledIFrame
-            src={`${youtubeURL.url.replace('watch?v=', 'embed/')}`}
+            src={`${youtubeURL.url
+              .replace('http', 'https')
+              .replace('watch?v=', 'embed/')}`}
             frameBorder='0'
             allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
             allowFullScreen
