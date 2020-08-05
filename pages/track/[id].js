@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import axios from 'axios';
-import cookie from 'cookie';
 import Cookies from 'js-cookie';
 import { parseDom } from '../../utils/parseDom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -23,15 +23,17 @@ import {
   StyledColumnTwo,
   StyledSectionContent,
 } from '../../components/styles/Styles';
+import Loading from '../../components/atoms/Loading';
+import Header from '../../components/organisms/Header';
 import LyricsSection from '../../components/molecules/LyricsSection';
 
 const StyledSectionStreams = styled(StyledSectionContent)`
+  padding: 20px;
   margin-bottom: 10px;
 `;
 
 const StyledSectionDescription = styled(StyledSectionContent)`
-  padding: ${({ description }) =>
-    description ? '30px 40px' : '30px 40px 20px'};
+  padding: ${({ description }) => (description ? '20px' : '20px 20px 10px')};
   transition: padding 0.6s;
 `;
 
@@ -243,7 +245,7 @@ const StyledInputCheckbox = styled.input`
         opacity: 0;
         width: 28px;
         height: 28px;
-        z-index: 99;
+        z-index: 1;
         transform: scale(3);
         transition: all 0.4s;
       }
@@ -313,63 +315,40 @@ const StyledDivLyricsContent = styled.div`
   }
 `;
 
-const getTrack = async (key, id) => {
-  const { data } = await axios.get(
-    `${
-      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
-    }/api/track?id=${encodeURI(id)}`
-  );
-  return data;
-};
-
-const getFavoriteItem = async (key, id, token) => {
-  const { data } = await axios.get(
-    `${
-      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
-    }/api/user/favoriteItem`,
-    {
-      params: {
-        token,
-        queryId: encodeURI(id),
+export default () => {
+  const [dataTrack, setDataTrack] = useState({
+    track: {
+      id: 0,
+      titles: {
+        featured: '',
       },
-    }
-  );
-  return data;
-};
-
-export async function getServerSideProps(context) {
-  const dataTrack = await getTrack(null, context.params.id);
-  const dataFavoriteItem = context.req.headers.cookie
-    ? await getFavoriteItem(
-        null,
-        context.params.id,
-        cookie.parse(context.req.headers.cookie).token
-      )
-    : {};
-  const signedIn = context.req.headers.cookie ? true : false;
-
-  return {
-    props: {
-      dataTrack,
-      dataFavoriteItem,
-      signedIn,
+      artist: {
+        id: 0,
+        name: '',
+      },
+      album: undefined,
+      raw: {
+        media: [],
+        description: {
+          dom: {
+            children: undefined,
+          },
+        },
+      },
     },
-  };
-}
-
-export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
-  const [favorite, setFavorite] = useState(dataFavoriteItem);
+    lyrics: '',
+  });
+  const [dataFavoriteItem, setDataFavoriteItem] = useState({});
   const [description, setDescription] = useState(false);
-  const [learnLine, setLearnLine] = useState(
-    Object.keys(dataFavoriteItem).length ? true : false
-  );
+  const [learnLine, setLearnLine] = useState(false);
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
   const [learnReset, setLearnReset] = useState(false);
+  const router = useRouter();
   const descriptionRef = useRef();
 
   const handleFavorite = () => {
-    setFavorite((prev) => {
+    setDataFavoriteItem((prev) => {
       setLearnSection(false);
       setHideAll(false);
       setLearnReset((prev) => !prev);
@@ -402,7 +381,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
   };
 
   const updateLearnedLyrics = (add, sectionIdx, lineIdx) => {
-    let learnedLyricsCopy = [...favorite.lyricsLearned];
+    let learnedLyricsCopy = [...dataFavoriteItem.lyricsLearned];
 
     if (add) {
       if (learnedLyricsCopy[sectionIdx]) {
@@ -424,12 +403,15 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         );
     }
 
-    setFavorite({ ...favorite, lyricsLearned: learnedLyricsCopy });
+    setDataFavoriteItem({
+      ...dataFavoriteItem,
+      lyricsLearned: learnedLyricsCopy,
+    });
   };
 
   const handleReset = () => {
-    if (signedIn && Object.keys(favorite).length)
-      setFavorite({ ...favorite, lyricsLearned: [] });
+    if (Object.keys(dataFavoriteItem).length)
+      setDataFavoriteItem({ ...dataFavoriteItem, lyricsLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);
@@ -441,8 +423,11 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     return lyrics.split(/\n\n/).map((section, idx) => {
       let learnedSection;
 
-      if (Object.keys(favorite).length && favorite.lyricsLearned[idx]) {
-        learnedSection = favorite.lyricsLearned[idx];
+      if (
+        Object.keys(dataFavoriteItem).length &&
+        dataFavoriteItem.lyricsLearned[idx]
+      ) {
+        learnedSection = dataFavoriteItem.lyricsLearned[idx];
       } else {
         learnedSection = [];
       }
@@ -450,7 +435,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
       return (
         <LyricsSection
           key={`section-${idx}`}
-          favorite={favorite}
+          dataFavoriteItem={dataFavoriteItem}
           learnedSection={learnedSection}
           section={section}
           learnLine={learnLine}
@@ -474,7 +459,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
     albumDisplay = '/images/no-image.png';
   }
 
-  const favoriteDisplay = Object.keys(favorite).length ? (
+  const favoriteDisplay = Object.keys(dataFavoriteItem).length ? (
     <FontAwesomeIcon icon={faStarFull} />
   ) : (
     <FontAwesomeIcon icon={faStarEmpty} />
@@ -569,17 +554,17 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         ? `${descriptionRef.current.scrollHeight}px`
         : '0px';
     }
-  }, [description, descriptionRef]);
+  }, [dataTrack, description, descriptionRef]);
 
   useEffect(() => {
     (async () => {
       try {
-        if (signedIn && Object.keys(favorite).length) {
+        if (Cookies.get('token') && Object.keys(dataFavoriteItem).length) {
           await axios.post('/api/user/favoriteItem', {
             token: Cookies.get('token'),
-            trackData: favorite,
+            trackData: dataFavoriteItem,
           });
-        } else if (signedIn) {
+        } else if (Cookies.get('token')) {
           await axios.delete('/api/user/favoriteItem', {
             params: {
               token: Cookies.get('token'),
@@ -591,9 +576,35 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         console.log(err);
       }
     })();
-  }, [favorite]);
+  }, [dataFavoriteItem]);
 
-  return (
+  useEffect(() => {
+    if (router.query.id) {
+      (async () => {
+        try {
+          const trackRes = await axios.get(`/api/track?id=${router.query.id}`);
+          setDataTrack(trackRes.data);
+
+          if (Cookies.get('token')) {
+            const favoriteItemRes = await axios.get(
+              `/api/user/favoriteItem?token=${Cookies.get('token')}&queryId=${
+                router.query.id
+              }`
+            );
+
+            if (favoriteItemRes.data) {
+              setDataFavoriteItem(favoriteItemRes.data);
+              setLearnLine(true);
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [router.query.id]);
+
+  const lyricsDisplay = dataTrack.lyrics ? (
     <>
       <Head>
         <title>
@@ -601,6 +612,7 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
           {dataTrack.track.titles.featured}
         </title>
       </Head>
+      <Header />
       <main>
         <StyledSectionHero>
           <div
@@ -620,10 +632,10 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
                 <StyledButtonFavorite
-                  favorite={Object.keys(favorite).length}
+                  dataFavoriteItem={Object.keys(dataFavoriteItem).length}
                   type='button'
                   onClick={handleFavorite}
-                  disabled={!signedIn}
+                  disabled={!Cookies.get('token')}
                 >
                   {favoriteDisplay}
                 </StyledButtonFavorite>
@@ -709,5 +721,9 @@ export default ({ dataTrack, dataFavoriteItem, signedIn }) => {
         </StyledColumnTwo>
       </main>
     </>
+  ) : (
+    <Loading />
   );
+
+  return lyricsDisplay;
 };

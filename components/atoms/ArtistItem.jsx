@@ -13,7 +13,7 @@ const ArtistItem = ({ artist }) => {
         </div>
       </div>
       <div className='button-group'>
-        <Link href={`/artist/${artist.id}`} passHref>
+        <Link href='/artist/[id]' as={`/artist/${artist.id}`} passHref>
           <a>
             <StyledButtonText type='button'>View Artist</StyledButtonText>
           </a>

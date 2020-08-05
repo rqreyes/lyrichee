@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import NProgress from 'nprogress';
 import styled, { keyframes } from 'styled-components';
 import { StyledH2 } from '../styles/Styles';
 
@@ -97,6 +99,17 @@ const StyledLogo = styled(StyledNote)`
 
 const Loading = () => {
   const logoSrc = '/images/logo-icon.png';
+
+  NProgress.configure({
+    minimum: 0.4,
+    showSpinner: false,
+  });
+
+  useEffect(() => {
+    NProgress.start();
+
+    return () => NProgress.done();
+  }, []);
 
   return (
     <StyledLoading>

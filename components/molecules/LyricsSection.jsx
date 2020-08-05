@@ -5,7 +5,7 @@ import { StyledButtonText } from '../styles/Styles';
 import LyricsLine from '../atoms/LyricsLine';
 
 const LyricsSection = ({
-  favorite,
+  dataFavoriteItem,
   learnedSection,
   section,
   learnLine,
@@ -60,7 +60,7 @@ const LyricsSection = ({
         {section.split(/\n/).map((line, idx) => (
           <LyricsLine
             key={`line-${idx}`}
-            favorite={favorite}
+            dataFavoriteItem={dataFavoriteItem}
             learnedLine={learnedSection.includes(idx)}
             line={line}
             learnLine={learnLine}

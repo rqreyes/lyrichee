@@ -46,12 +46,16 @@ const FavoriteItem = ({ favoriteItem }) => (
       </div>
     </div>
     <div className='button-group'>
-      <Link href={`/track/${favoriteItem.trackId}`} passHref>
+      <Link href='/track/[id]' as={`/track/${favoriteItem.trackId}`} passHref>
         <a>
           <StyledButtonText type='button'>View Track</StyledButtonText>
         </a>
       </Link>
-      <Link href={`/artist/${favoriteItem.artistId}`} passHref>
+      <Link
+        href='/artist/[id]'
+        as={`/artist/${favoriteItem.artistId}`}
+        passHref
+      >
         <a>
           <StyledButtonText type='button'>View Artist</StyledButtonText>
         </a>

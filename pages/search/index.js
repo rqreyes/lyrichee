@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import axios from 'axios';
+import useSWR from 'swr';
 import {
   StyledH2,
   StyledSectionHeader,
@@ -8,29 +8,18 @@ import {
   StyledSectionContent,
   StyledP,
 } from '../../components/styles/Styles';
+import Loading from '../../components/atoms/Loading';
+import Header from '../../components/organisms/Header';
 import TrackList from '../../components/molecules/TrackList';
 import ArtistList from '../../components/molecules/ArtistList';
 
-const getSearchResults = async (key, query) => {
-  const { data } = await axios.get(
-    `${
-      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
-    }/api/search?q=${encodeURI(query)}`
-  );
-  return data;
-};
-
-export async function getServerSideProps(context) {
-  const data = await getSearchResults(null, context.query.q);
-  return {
-    props: {
-      data,
-    },
-  };
-}
-
-export default ({ data }) => {
+export default () => {
   const router = useRouter();
+  const { data, error } = useSWR(`/api/search?q=${router.query.q}`);
+
+  if (error) return <div>failed to load</div>;
+  if (!data) return <Loading />;
+
   let searchResultsDisplay;
 
   if (Array.isArray(data)) {
@@ -60,15 +49,14 @@ export default ({ data }) => {
       <Head>
         <title>Lyrichee Search | {router.query.q}</title>
       </Head>
-      <>
-        <main>
-          <StyledSectionHeader>
-            <StyledH2>Search Results</StyledH2>
-            <p>"{router.query.q}"</p>
-          </StyledSectionHeader>
-          {searchResultsDisplay}
-        </main>
-      </>
+      <Header />
+      <main>
+        <StyledSectionHeader>
+          <StyledH2>Search Results</StyledH2>
+          <p>"{router.query.q}"</p>
+        </StyledSectionHeader>
+        {searchResultsDisplay}
+      </main>
     </>
   );
 };

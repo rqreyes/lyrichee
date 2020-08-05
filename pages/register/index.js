@@ -11,6 +11,7 @@ import {
   StyledMainFormLabel,
   StyledInputMainForm,
 } from '../../components/styles/Styles';
+import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
 import Error from '../../components/atoms/Error';
 
@@ -47,6 +48,7 @@ export default () => {
       <Head>
         <title>Lyrichee Register</title>
       </Head>
+      <Header />
       <StyledMainFormContainer>
         <Logo text />
         <form onSubmit={handleSubmit}>

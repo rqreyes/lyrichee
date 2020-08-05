@@ -132,8 +132,8 @@ export const StyledButtonNav = styled(StyledButton)`
 `;
 
 export const StyledButtonFavorite = styled(StyledButton)`
-  color: ${({ favorite, theme }) =>
-    favorite ? theme.colors.greenDark : theme.colors.red};
+  color: ${({ dataFavoriteItem, theme }) =>
+    dataFavoriteItem ? theme.colors.greenDark : theme.colors.red};
   padding: 0;
   transition: color 0.2s;
 
@@ -313,7 +313,7 @@ export const StyledSectionHero = styled(StyledSection)`
 `;
 
 export const StyledSectionContent = styled(StyledSection)`
-  padding: 20px 10px;
+  padding: ${({ padding }) => (padding ? '20px' : '20px 10px')};
   border-top: ${({ theme }) => theme.border};
   border-bottom: ${({ theme }) => theme.border};
 `;
@@ -407,19 +407,6 @@ export const StyledColumnTwo = styled.div`
       }
     }
   }
-
-  /* Large devices (desktops, 992px and up) */
-  /* @media (min-width: 992px) {
-    > * {
-      &:nth-child(1) {
-        margin: 0 10px 0 0;
-      }
-
-      &:nth-child(2) {
-        margin: 0 0 0 10px;
-      }
-    }
-  } */
 `;
 
 export const StyledDivError = styled.div`

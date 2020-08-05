@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
-import NProgress from 'nprogress';
+import { SWRConfig } from 'swr';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import Loading from '../components/atoms/Loading';
-import Header from '../components/organisms/Header';
 import Footer from '../components/organisms/Footer';
 import 'nprogress/nprogress.css';
 
@@ -118,44 +116,9 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default ({ Component, pageProps, router }) => {
-  const [loading, setLoading] = useState(false);
+const fetcher = (url) => axios.get(url).then((res) => res.data);
 
-  const headerDisplay = router.pathname === '/' ? <Header home /> : <Header />;
-  const loadingDisplay = loading ? (
-    <Loading />
-  ) : (
-    <>
-      {headerDisplay}
-      <Component {...pageProps} />
-    </>
-  );
-
-  NProgress.configure({
-    minimum: 0.4,
-    showSpinner: false,
-  });
-
-  useEffect(() => {
-    const start = () => {
-      setLoading(true);
-      NProgress.start();
-    };
-    const end = () => {
-      setLoading(false);
-      NProgress.done();
-    };
-
-    router.events.on('routeChangeStart', start);
-    router.events.on('routeChangeComplete', end);
-    router.events.on('routeChangeError', end);
-    return () => {
-      router.events.off('routeChangeStart', start);
-      router.events.off('routeChangeComplete', end);
-      router.events.off('routeChangeError', end);
-    };
-  }, []);
-
+export default ({ Component, pageProps }) => {
   useEffect(() => {
     (async () => {
       try {
@@ -184,7 +147,9 @@ export default ({ Component, pageProps, router }) => {
       </Head>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        {loadingDisplay}
+        <SWRConfig value={{ fetcher }}>
+          <Component {...pageProps} />
+        </SWRConfig>
         <Footer />
       </ThemeProvider>
     </>

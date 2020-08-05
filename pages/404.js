@@ -6,6 +6,7 @@ import {
   StyledP,
   StyledButtonText,
 } from '../components/styles/Styles';
+import Header from '../components/organisms/Header';
 
 export default () => {
   return (
@@ -17,6 +18,7 @@ export default () => {
           rel='stylesheet'
         ></link>
       </Head>
+      <Header />
       <StyledMainCenter>
         <StyledH2 notFound>
           4<img src='/images/lychee.png' alt='lychee' />4

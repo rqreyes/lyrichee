@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import useSWR from 'swr';
 import Cookies from 'js-cookie';
 import {
   StyledH2,
@@ -10,39 +8,28 @@ import {
   StyledColumnOne,
   StyledSectionList,
 } from '../../components/styles/Styles';
+import Loading from '../../components/atoms/Loading';
+import Header from '../../components/organisms/Header';
 import FavoriteItem from '../../components/atoms/FavoriteItem';
 
 export default () => {
-  const [favoriteList, setFavoriteList] = useState([]);
-  const router = useRouter();
+  const { data, error } = useSWR(
+    `/api/user/favoriteList?token=${Cookies.get('token')}`
+  );
 
-  const favoriteListDisplay = favoriteList.map((favoriteItem) => (
+  if (error) return <div>failed to load</div>;
+  if (!data) return <Loading />;
+
+  const favoriteListDisplay = data.map((favoriteItem) => (
     <FavoriteItem key={favoriteItem.trackId} favoriteItem={favoriteItem} />
   ));
-
-  useEffect(() => {
-    (async () => {
-      try {
-        if (!Cookies.get('token')) router.push('/signin');
-
-        const { data } = await axios.get('/api/user/favoriteList', {
-          params: {
-            token: Cookies.get('token'),
-          },
-        });
-
-        setFavoriteList(data);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
 
   return (
     <>
       <Head>
         <title>Lyrichee Favorites</title>
       </Head>
+      <Header />
       <main>
         <StyledSectionHeader>
           <StyledH2>Favorites</StyledH2>

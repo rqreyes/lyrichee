@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { StyledMainCenter } from '../components/styles/Styles';
+import Header from '../components/organisms/Header';
 import Logo from '../components/molecules/Logo';
 import Search from '../components/molecules/Search';
 
@@ -9,6 +10,7 @@ export default () => {
       <Head>
         <title>Lyrichee</title>
       </Head>
+      <Header home />
       <StyledMainCenter>
         <Logo text home />
         <Search home />

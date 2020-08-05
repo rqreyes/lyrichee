@@ -4,7 +4,7 @@ import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { StyledButton } from '../styles/Styles';
 
 const LyricsLine = ({
-  favorite,
+  dataFavoriteItem,
   learnedLine,
   line,
   learnLine,
@@ -13,8 +13,7 @@ const LyricsLine = ({
   lineIdx,
   updateLearnedLyrics,
 }) => {
-  const [hideLine, setHideLine] = useState(learnedLine);
-
+  const [hideLine, setHideLine] = useState(false);
   const learnLineClass = learnLine ? 'hide-line' : '';
   const learnLineTextClass = hideLine ? 'active' : '';
   const learnLineButtonDisplay =
@@ -26,7 +25,7 @@ const LyricsLine = ({
 
   const handleHideLine = () => {
     setHideLine((prev) => {
-      if (Object.keys(favorite).length) {
+      if (Object.keys(dataFavoriteItem).length) {
         if (prev) updateLearnedLyrics(false, sectionIdx, lineIdx);
         else updateLearnedLyrics(true, sectionIdx, lineIdx);
       }
@@ -34,6 +33,12 @@ const LyricsLine = ({
       return !prev;
     });
   };
+
+  useEffect(() => {
+    if (learnedLine) {
+      setHideLine(true);
+    }
+  }, [learnedLine]);
 
   const regex = RegExp('^\\[');
 

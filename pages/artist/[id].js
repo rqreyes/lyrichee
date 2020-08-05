@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import axios from 'axios';
+import { useRouter } from 'next/router';
+import useSWR from 'swr';
 import { parseDom } from '../../utils/parseDom';
 import {
   StyledH2,
@@ -8,27 +9,17 @@ import {
   StyledColumnTwo,
   StyledSectionContent,
 } from '../../components/styles/Styles';
+import Loading from '../../components/atoms/Loading';
+import Header from '../../components/organisms/Header';
 import TrackList from '../../components/molecules/TrackList';
 
-const getArtist = async (key, id) => {
-  const { data } = await axios.get(
-    `${
-      process.env.VERCEL_URL ? process.env.VERCEL_URL : process.env.BASE_URL
-    }/api/artist?id=${encodeURI(id)}`
-  );
-  return data;
-};
+export default () => {
+  const router = useRouter();
+  const { data, error } = useSWR(`/api/artist?id=${router.query.id}`);
 
-export async function getServerSideProps(context) {
-  const data = await getArtist(null, context.params.id);
-  return {
-    props: {
-      data,
-    },
-  };
-}
+  if (error) return <div>failed to load</div>;
+  if (!data) return <Loading />;
 
-export default ({ data }) => {
   const alternateNames = data.artist.raw.alternate_names.length ? (
     <p>AKA: {data.artist.raw.alternate_names.join(', ')}</p>
   ) : (
@@ -43,6 +34,7 @@ export default ({ data }) => {
       <Head>
         <title>Lyrichee Artist | {data.artist.name}</title>
       </Head>
+      <Header />
       <main>
         <StyledSectionHero>
           <div
@@ -61,7 +53,7 @@ export default ({ data }) => {
         </StyledSectionHero>
         <StyledColumnTwo>
           <TrackList tracks={data.tracks} />
-          <StyledSectionContent className='half-right'>
+          <StyledSectionContent className='half-right' padding>
             <StyledH3>About</StyledH3>
             {parseDomDisplay}
           </StyledSectionContent>
