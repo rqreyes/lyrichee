@@ -29,6 +29,10 @@ import Loading from '../../components/atoms/Loading';
 import Header from '../../components/organisms/Header';
 import LyricsSection from '../../components/molecules/LyricsSection';
 
+const StyledLinkViewArtist = styled.a`
+  display: inline-block;
+`;
+
 const StyledSectionStreams = styled(StyledSectionContent)`
   padding: 20px;
   margin-bottom: 10px;
@@ -645,7 +649,7 @@ export default () => {
                   </StyledH2>
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
-                <div data-tip='Register or sign in to save track as a favorite'>
+                <div data-tip='Register or sign in to favorite this track'>
                   <StyledButtonFavorite
                     dataFavoriteItem={Object.keys(dataFavoriteItem).length}
                     type='button'
@@ -661,11 +665,11 @@ export default () => {
                 />
               </div>
               <Link href={`/artist/${dataTrack.track.artist.id}`}>
-                <a>
+                <StyledLinkViewArtist>
                   <StyledButtonText widthAuto className='artist'>
                     View Artist
                   </StyledButtonText>
-                </a>
+                </StyledLinkViewArtist>
               </Link>
             </div>
           </div>

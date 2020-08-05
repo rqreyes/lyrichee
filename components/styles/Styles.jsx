@@ -280,6 +280,7 @@ export const StyledSectionHero = styled(StyledSection)`
 
   .details-favorite {
     display: flex;
+    justify-content: center;
     margin-bottom: 10px;
   }
 

@@ -48,7 +48,8 @@ export default () => {
       <StyledDivWelcome>
         <StyledH3>Welcome to the fam!</StyledH3>
         <StyledP alignCenter>
-          Tracks that are favorited with a star will appear here
+          Measure your progress by clicking on the star next to your favorite
+          tracks
         </StyledP>
       </StyledDivWelcome>
     );
