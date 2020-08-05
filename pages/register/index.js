@@ -36,7 +36,7 @@ export default () => {
         passwordConfirm,
       });
 
-      Cookies.set('token', data.token);
+      Cookies.set('token', data.token, { expires: 1 });
       router.push('/favorites');
     } catch (err) {
       setError(err.response.data.message);

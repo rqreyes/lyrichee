@@ -27,29 +27,32 @@ export default () => {
   );
 
   if (error) return <Error500 />;
-  if (!data) return <Loading />;
 
-  const favoriteListDisplay = data.length ? (
-    <StyledColumnOne>
-      <StyledSectionList>
-        <StyledUl>
-          {data.map((favoriteItem) => (
-            <FavoriteItem
-              key={favoriteItem.trackId}
-              favoriteItem={favoriteItem}
-            />
-          ))}
-        </StyledUl>
-      </StyledSectionList>
-    </StyledColumnOne>
-  ) : (
-    <StyledDivWelcome>
-      <StyledH3>Welcome to the fam!</StyledH3>
-      <StyledP alignCenter>
-        Tracks that are favorited with a star will appear here
-      </StyledP>
-    </StyledDivWelcome>
-  );
+  let favoriteListDisplay;
+
+  if (data) {
+    favoriteListDisplay = data.length ? (
+      <StyledColumnOne>
+        <StyledSectionList>
+          <StyledUl>
+            {data.map((favoriteItem) => (
+              <FavoriteItem
+                key={favoriteItem.trackId}
+                favoriteItem={favoriteItem}
+              />
+            ))}
+          </StyledUl>
+        </StyledSectionList>
+      </StyledColumnOne>
+    ) : (
+      <StyledDivWelcome>
+        <StyledH3>Welcome to the fam!</StyledH3>
+        <StyledP alignCenter>
+          Tracks that are favorited with a star will appear here
+        </StyledP>
+      </StyledDivWelcome>
+    );
+  }
 
   return (
     <>
@@ -63,6 +66,7 @@ export default () => {
         </StyledSectionHeader>
         {favoriteListDisplay}
       </main>
+      <Loading data={data} />
     </>
   );
 };

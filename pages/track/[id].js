@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { parseDom } from '../../utils/parseDom';
+import fallbackSrc from '../../utils/fallbackSrc';
+import parseDom from '../../utils/parseDom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -613,7 +614,7 @@ export default () => {
     }
   }, [router.query.id]);
 
-  const lyricsDisplay = dataTrack.lyrics ? (
+  return (
     <>
       <Head>
         <title>
@@ -631,7 +632,11 @@ export default () => {
             }}
           />
           <div className='details-container'>
-            <img src={albumDisplay} alt='album cover art thumbnail' />
+            <img
+              src={albumDisplay}
+              onError={fallbackSrc}
+              alt='album cover art thumbnail'
+            />
             <div className='details-content'>
               <div className='details-favorite'>
                 <div className='details-text'>
@@ -735,10 +740,7 @@ export default () => {
           </div>
         </StyledColumnTwo>
       </main>
+      <Loading data={dataTrack.lyrics} />
     </>
-  ) : (
-    <Loading />
   );
-
-  return lyricsDisplay;
 };

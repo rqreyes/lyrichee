@@ -24,7 +24,7 @@ export default () => {
           5<img src='/images/lychee.png' alt='lychee' />
           <img src='/images/lychee.png' alt='lychee' />
         </StyledH2>
-        <StyledP alignCenter>Oops, you've found a glitch in the Matrix</StyledP>
+        <StyledP alignCenter>Whoa, you've found a glitch in the Matrix</StyledP>
         <Link href='/' passHref>
           <a>
             <StyledButtonText widthAuto marginAuto>

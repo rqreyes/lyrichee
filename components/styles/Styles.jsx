@@ -342,6 +342,7 @@ export const StyledSectionList = styled(StyledSectionContent)`
   img {
     width: 80px;
     height: 80px;
+    object-fit: cover;
     border-radius: 4px;
     margin-right: 10px;
   }

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import fallbackSrc from '../../utils/fallbackSrc';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
@@ -62,7 +63,7 @@ const FavoriteItem = ({ favoriteItem }) => (
     className='favorite-item'
   >
     <div className='item-content'>
-      <img src={favoriteItem.albumUrl} alt='album art' />
+      <img src={favoriteItem.albumUrl} onError={fallbackSrc} alt='album art' />
       <div className='item-text'>
         <p>
           <strong>{favoriteItem.trackTitle}</strong>

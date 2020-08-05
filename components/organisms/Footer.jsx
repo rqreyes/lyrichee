@@ -10,6 +10,7 @@ const StyledFooter = styled.footer`
   border-top: ${({ theme }) => theme.border};
   position: absolute;
   bottom: 0;
+  z-index: 2;
 `;
 
 const Footer = () => {

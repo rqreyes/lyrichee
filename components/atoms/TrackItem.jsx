@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import fallbackSrc from '../../utils/fallbackSrc';
 import { StyledButtonText } from '../styles/Styles';
 
 const TrackItem = ({ track }) => {
@@ -16,7 +17,7 @@ const TrackItem = ({ track }) => {
   return (
     <li>
       <div className='item-content'>
-        <img src={albumDisplay} alt='album art' />
+        <img src={albumDisplay} onError={fallbackSrc} alt='album art' />
         <div className='item-text'>
           <p>
             <strong>{track.titles.featured}</strong>

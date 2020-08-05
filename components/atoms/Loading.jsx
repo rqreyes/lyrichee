@@ -25,13 +25,41 @@ const notes = keyframes`
 `;
 
 const StyledLoading = styled.div`
-  width: 80%;
-  margin: 30vh auto 0;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.snow};
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: top 2s 1s;
+
+  &::before {
+    content: '';
+    display: block;
+    opacity: 0.1;
+    width: 100%;
+    height: 100%;
+    background: url(/images/bg.png) no-repeat center bottom;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  ${({ data }) =>
+    data &&
+    `
+      top: 100vh;
+  `}
 `;
 
 const StyledNoteGroup = styled.div`
-  margin-bottom: 80px;
+  width: 80%;
+  height: 60px;
+  position: relative;
+  margin: 30vh auto 40px;
 
   > * {
     &:nth-child(1) {
@@ -97,7 +125,7 @@ const StyledLogo = styled(StyledNote)`
   height: 40px;
 `;
 
-const Loading = () => {
+const Loading = ({ data }) => {
   const logoSrc = '/images/logo-icon.png';
 
   NProgress.configure({
@@ -105,14 +133,14 @@ const Loading = () => {
     showSpinner: false,
   });
 
+  if (data) NProgress.done();
+
   useEffect(() => {
     NProgress.start();
-
-    return () => NProgress.done();
   }, []);
 
   return (
-    <StyledLoading>
+    <StyledLoading data={data}>
       <StyledNoteGroup>
         <StyledNote>&#9835;</StyledNote>
         <StyledNote>&#9839;</StyledNote>

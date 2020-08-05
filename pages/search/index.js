@@ -19,7 +19,6 @@ export default () => {
   const { data, error } = useSWR(`/api/search?q=${router.query.q}`);
 
   if (error) return <Error500 />;
-  if (!data) return <Loading />;
 
   let searchResultsDisplay;
 
@@ -58,6 +57,7 @@ export default () => {
         </StyledSectionHeader>
         {searchResultsDisplay}
       </main>
+      <Loading data={data} />
     </>
   );
 };

@@ -1,5 +1,5 @@
 // parse the description DOM into HTML
-export const parseDom = (DOM) => {
+const parseDom = (DOM) => {
   if (DOM === undefined) return;
   if (DOM[0] === '?') return 'No description available';
 
@@ -17,3 +17,5 @@ export const parseDom = (DOM) => {
     );
   });
 };
+
+export default parseDom;
