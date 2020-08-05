@@ -664,7 +664,11 @@ export default () => {
                   disable={Cookies.get('token') ? true : false}
                 />
               </div>
-              <Link href={`/artist/${dataTrack.track.artist.id}`}>
+              <Link
+                href='/artist/[id]'
+                as={`/artist/${dataTrack.track.artist.id}`}
+                passHref
+              >
                 <StyledLinkViewArtist>
                   <StyledButtonText widthAuto className='artist'>
                     View Artist
