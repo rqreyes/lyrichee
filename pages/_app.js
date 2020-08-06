@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Footer from '../components/organisms/Footer';
 import 'nprogress/nprogress.css';
+import 'react-responsive-modal/styles.css';
 
 const theme = {
   colors: {
@@ -81,7 +82,7 @@ const GlobalStyle = createGlobalStyle`
   p {
     margin: 0 0 16px;
 
-    &:last-child {
+    &:last-of-type {
       margin-bottom: 0;
     }
 

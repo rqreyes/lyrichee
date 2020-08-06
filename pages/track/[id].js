@@ -6,18 +6,21 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import fallbackSrc from '../../utils/fallbackSrc';
 import parseDom from '../../utils/parseDom';
+import { Modal } from 'react-responsive-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as faStarEmpty } from '@fortawesome/free-regular-svg-icons';
 import {
   faStar as faStarFull,
   faChevronCircleRight,
+  faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faSpotify, faSoundcloud } from '@fortawesome/free-brands-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import styled from 'styled-components';
 import {
-  StyledH3,
   StyledH2,
+  StyledH3,
+  StyledH4,
   StyledButtonFavorite,
   StyledButtonText,
   StyledSectionHero,
@@ -43,7 +46,7 @@ const StyledSectionDescription = styled(StyledSectionContent)`
   transition: padding 0.6s;
 `;
 
-const StyledDivHeaderDescription = styled.div`
+const StyledDivHeader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +58,6 @@ const StyledButtonDescription = styled(StyledButton)`
   height: 20px;
   color: ${({ description, theme }) =>
     description ? theme.colors.greenDark : theme.colors.red};
-  padding: 0;
   margin-right: 10px;
   transition: color 0.2s, transform 0.6s;
 
@@ -222,6 +224,28 @@ const StyledLinkProvider = styled.a`
   }
 `;
 
+const StyledDivHeaderLyrics = styled(StyledDivHeader)`
+  h3 {
+    margin-right: 10px;
+  }
+`;
+
+const StyledButtonLyrics = styled(StyledButton)`
+  width: 20px;
+  height: 20px;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    color: ${({ theme }) => theme.colors.red};
+    transition: color 0.2s;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.greenDark};
+    }
+  }
+`;
+
 const StyledDivCheckboxGroup = styled.div`
   display: flex;
   justify-content: center;
@@ -355,6 +379,7 @@ export default () => {
   const [learnSection, setLearnSection] = useState(false);
   const [hideAll, setHideAll] = useState(false);
   const [learnReset, setLearnReset] = useState(false);
+  const [lyricsModal, setLyricsModal] = useState(false);
   const router = useRouter();
   const descriptionRef = useRef();
 
@@ -655,7 +680,7 @@ export default () => {
                   </StyledH2>
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
-                <div data-tip='Register or sign in to favorite this track'>
+                <div data-for='favorite' data-tip>
                   <StyledButtonFavorite
                     dataFavoriteItem={Object.keys(dataFavoriteItem).length}
                     type='button'
@@ -666,9 +691,12 @@ export default () => {
                   </StyledButtonFavorite>
                 </div>
                 <ReactTooltip
+                  id='favorite'
                   effect='solid'
                   disable={Cookies.get('token') ? true : false}
-                />
+                >
+                  <span>Register or sign in to favorite this track</span>
+                </ReactTooltip>
               </div>
               <Link
                 href='/artist/[id]'
@@ -691,7 +719,7 @@ export default () => {
               {streamsDisplay}
             </StyledSectionStreams>
             <StyledSectionDescription description={description}>
-              <StyledDivHeaderDescription>
+              <StyledDivHeader>
                 <StyledButtonDescription
                   description={description}
                   className={descriptionClass}
@@ -701,7 +729,7 @@ export default () => {
                   <FontAwesomeIcon icon={faChevronCircleRight} />
                 </StyledButtonDescription>
                 <StyledH3 noBottom>Description</StyledH3>
-              </StyledDivHeaderDescription>
+              </StyledDivHeader>
               <StyledDivContentDescription ref={descriptionRef}>
                 {parseDom(dataTrack.track.raw.description.dom.children)}
               </StyledDivContentDescription>
@@ -709,7 +737,22 @@ export default () => {
           </div>
           <div>
             <StyledSectionLyrics>
-              <StyledH3>Lyrics</StyledH3>
+              <StyledDivHeaderLyrics>
+                <StyledH3 noBottom>Lyrics</StyledH3>
+                <StyledButtonLyrics onClick={() => setLyricsModal(true)}>
+                  <FontAwesomeIcon icon={faQuestionCircle} />
+                </StyledButtonLyrics>
+                <Modal open={lyricsModal} onClose={() => setLyricsModal(false)}>
+                  <StyledH4>Quick Guide for Learning Lyrics</StyledH4>
+                  <p>
+                    Use the <strong>lines</strong>, <strong>section</strong>,
+                    and <strong>all</strong> options to customize your learning
+                    experience. If you favorited this track, only the{' '}
+                    <strong>visible lines</strong> will be taken into account
+                    for measuring your progress.
+                  </p>
+                </Modal>
+              </StyledDivHeaderLyrics>
               <StyledDivCheckboxGroup>
                 <StyledLabelCheckbox>
                   <StyledInputCheckbox

@@ -28,6 +28,11 @@ export const StyledH3 = styled.h3`
   margin: ${({ noBottom }) => (noBottom ? '0' : '0 0 10px')};
 `;
 
+export const StyledH4 = styled.h4`
+  text-align: center;
+  margin: 0 0 10px;
+`;
+
 // p
 export const StyledP = styled.p`
   text-align: ${({ alignCenter }) => (alignCenter ? 'center' : 'left')};
@@ -43,6 +48,7 @@ export const StyledUl = styled.ul`
 // button
 export const StyledButton = styled.button`
   background: none;
+  padding: 0;
   border: 0;
   cursor: pointer;
 `;
