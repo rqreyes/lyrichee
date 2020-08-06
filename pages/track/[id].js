@@ -480,7 +480,7 @@ export default () => {
   // display media
   let streamsDisplay;
 
-  if (dataTrack.track.raw.media.length > 0) {
+  if (dataTrack.track.raw.media.length) {
     // display youtube video
     let youtubeDisplay;
     const youtubeURL = dataTrack.track.raw.media.find(
@@ -554,11 +554,17 @@ export default () => {
         {providersDisplay}
       </>
     );
+  } else {
+    streamsDisplay = <p>No streams available</p>;
   }
 
   let lyricsClass = '';
   if (learnSection) lyricsClass += ' learn-section';
   if (hideAll) lyricsClass += ' hide';
+
+  const parseLyricsDisplay = dataTrack.lyrics
+    ? parseLyrics(dataTrack.lyrics)
+    : null;
 
   const descriptionClass = description ? 'active' : '';
 
@@ -742,7 +748,7 @@ export default () => {
                 Reset
               </StyledButtonText>
               <StyledDivLyricsContent className={lyricsClass}>
-                {parseLyrics(dataTrack.lyrics)}
+                {parseLyricsDisplay}
               </StyledDivLyricsContent>
             </StyledSectionLyrics>
           </div>

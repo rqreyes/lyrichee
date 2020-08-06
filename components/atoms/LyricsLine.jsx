@@ -40,7 +40,7 @@ const LyricsLine = ({
     }
   }, [learnedIdxLine]);
 
-  const regex = RegExp('^\\[');
+  const regex = RegExp('^\\[|^\\(');
 
   const isFirstRun = useRef(true);
   useEffect(() => {

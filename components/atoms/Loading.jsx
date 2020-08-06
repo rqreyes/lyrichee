@@ -133,11 +133,15 @@ const Loading = ({ data }) => {
     showSpinner: false,
   });
 
-  if (data) NProgress.done();
-
   useEffect(() => {
     NProgress.start();
+
+    return () => NProgress.done();
   }, []);
+
+  useEffect(() => {
+    if (data) NProgress.done();
+  }, [data]);
 
   return (
     <StyledLoading data={data}>
