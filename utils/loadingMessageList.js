@@ -1,0 +1,26 @@
+const loadingMessageList = [
+  'Bending the spoon...',
+  'Following the white rabbit...',
+  'Opening the 4th dimension...',
+  'Regenerating our cells...',
+  'Peeping the frequency...',
+  'Writing your name in the stars...',
+  'Testing your patience...',
+  'Slaying it, queen...',
+  'Hitching a ride on a rocket...',
+  'Reading your mind...',
+  'Waking up the fruit gods...',
+  'Drinking quenchy cactus juice...',
+  'Eating the lychee fruit and tasting its mysteries...',
+  'Fact-checking if a truthful fact is not true...',
+  'Lacking calmness...',
+  'Hey! Listen...',
+  'Waiting for lightning to strike...',
+  'Constructing additional pylons...',
+  'Taking the red pill...',
+  'Catching the golden snitch...',
+  'Depending on you...',
+  'Becoming soft as shadows...',
+];
+
+export default loadingMessageList;

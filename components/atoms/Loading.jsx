@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import NProgress from 'nprogress';
+import loadingMessageList from '../../utils/loadingMessageList';
 import styled, { keyframes } from 'styled-components';
 import { StyledH2 } from '../styles/Styles';
+
+const randomLoadingMessageItem = () =>
+  loadingMessageList[Math.floor(Math.random() * loadingMessageList.length)];
 
 const randomDelay = () => `${Math.random() * 2}s`;
 
@@ -126,6 +130,9 @@ const StyledLogo = styled(StyledNote)`
 `;
 
 const Loading = ({ data }) => {
+  const [loadingMessageItem, setLoadingMessageItem] = useState(
+    randomLoadingMessageItem()
+  );
   const logoSrc = '/images/logo-icon.png';
 
   NProgress.configure({
@@ -134,13 +141,21 @@ const Loading = ({ data }) => {
   });
 
   useEffect(() => {
+    const intervalLoadingMessage = setInterval(() => {
+      setLoadingMessageItem(randomLoadingMessageItem());
+    }, 4000);
     NProgress.start();
 
-    return () => NProgress.done();
+    return () => {
+      clearInterval(intervalLoadingMessage);
+      NProgress.done();
+    };
   }, []);
 
   useEffect(() => {
-    if (data) NProgress.done();
+    if (data) {
+      NProgress.done();
+    }
   }, [data]);
 
   return (
@@ -157,7 +172,7 @@ const Loading = ({ data }) => {
         <StyledNote>&#119070;</StyledNote>
         <StyledNote>&#9834;</StyledNote>
       </StyledNoteGroup>
-      <StyledH2>Loading...</StyledH2>
+      <StyledH2>{loadingMessageItem}</StyledH2>
     </StyledLoading>
   );
 };
