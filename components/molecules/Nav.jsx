@@ -2,15 +2,17 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+import { Modal } from 'react-responsive-modal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  faIdCard,
   faMusic,
   faStar,
   faSignInAlt,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { StyledButtonNav } from '../styles/Styles';
+import { StyledH4, StyledButtonNav } from '../styles/Styles';
 
 const StyledNav = styled.nav`
   visibility: hidden;
@@ -56,6 +58,7 @@ const StyledDivButtonGroup = styled.div`
 
 const Nav = ({ home, toggleOpen }) => {
   const [signedIn, setSignedIn] = useState(false);
+  const [aboutModal, setAboutModal] = useState(false);
   const router = useRouter();
 
   const removeData = () => {
@@ -107,7 +110,27 @@ const Nav = ({ home, toggleOpen }) => {
 
   return (
     <StyledNav home={home} toggleOpen={toggleOpen}>
-      <StyledDivButtonGroup>{navDisplay}</StyledDivButtonGroup>
+      <StyledDivButtonGroup>
+        <StyledButtonNav type='button' onClick={() => setAboutModal(true)}>
+          <FontAwesomeIcon icon={faIdCard} />
+          About
+        </StyledButtonNav>
+        <Modal open={aboutModal} onClose={() => setAboutModal(false)}>
+          <StyledH4>About</StyledH4>
+          <p>
+            Lyrichee is a lyrics search engine application that helps users
+            learn lyrics from their favorite tracks and measure their progress,
+            line by line.
+          </p>
+          <StyledH4>But it's so slow!</StyledH4>
+          <p>
+            Ah, sorry! Lyrichee works hard, and it sometimes may take a while to
+            retrieve the information. In the meanwhile, feel free to drink some
+            tea, take a nap, or enjoy a long walk to the fridge :&#41;
+          </p>
+        </Modal>
+        {navDisplay}
+      </StyledDivButtonGroup>
     </StyledNav>
   );
 };

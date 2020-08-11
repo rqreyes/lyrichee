@@ -16,7 +16,8 @@ const StyledForm = styled.form`
   ${({ home }) =>
     home &&
     `
-      margin-bottom: 20px;
+      max-width: 400px;
+      margin: 0 auto 20px;
   `}
 `;
 

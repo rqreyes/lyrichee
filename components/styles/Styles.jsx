@@ -126,8 +126,9 @@ export const StyledButtonNav = styled(StyledButton)`
   /* Medium devices (tablets, 768px and up) */
   @media (min-width: 768px) {
     flex-direction: column;
+    width: 70px;
     font-size: 16px;
-    padding: 10px;
+    padding: 10px 0;
     border-radius: 4px;
 
     svg {
@@ -206,7 +207,7 @@ export const StyledMainCenter = styled.main`
 
   /* Medium devices (tablets, 768px and up) */
   @media (min-width: 768px) {
-    max-width: 420px;
+    max-width: 440px;
   }
 `;
 
