@@ -16,7 +16,7 @@ import Logo from '../../components/molecules/Logo';
 import ErrorForm from '../../components/atoms/ErrorForm';
 
 export default () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
@@ -31,7 +31,7 @@ export default () => {
 
     try {
       const { data } = await axios.post('/api/user/register', {
-        username,
+        email,
         password,
         passwordConfirm,
       });
@@ -52,13 +52,13 @@ export default () => {
       <StyledMainFormContainer>
         <Logo text />
         <form onSubmit={handleSubmit}>
-          <StyledMainFormLabel isPopulated={username}>
-            <span>Username</span>
+          <StyledMainFormLabel isPopulated={email}>
+            <span>Email</span>
             <FontAwesomeIcon icon={faUser} />
             <StyledInputMainForm
-              type='text'
-              value={username}
-              onChange={(evt) => setUsername(evt.target.value)}
+              type='email'
+              value={email}
+              onChange={(evt) => setEmail(evt.target.value)}
               required
             />
           </StyledMainFormLabel>

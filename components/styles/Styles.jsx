@@ -201,7 +201,7 @@ export const StyledInputMainForm = styled(StyledInput)`
 
 // main
 export const StyledMainCenter = styled.main`
-  padding: 0 10px;
+  padding: 0 20px;
   margin: 20vh auto 0;
 
   /* Medium devices (tablets, 768px and up) */

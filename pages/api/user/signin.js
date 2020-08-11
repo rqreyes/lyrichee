@@ -6,15 +6,15 @@ const User = require('../../../models/userModel');
 export default async (req, res) => {
   try {
     await dbConnect();
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    // if username or password are missing, then send an error
-    if (!username || !password) {
+    // if email or password are missing, then send an error
+    if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // if username is not registered or if password is not a match, then send an error
-    const user = await User.findOne({ username });
+    // if email is not registered or if password is not a match, then send an error
+    const user = await User.findOne({ email });
     const isMatch = user
       ? await bcrypt.compare(password, user.password)
       : false;

@@ -23,7 +23,7 @@ const StyledP = styled.p`
 `;
 
 export default () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
@@ -37,7 +37,7 @@ export default () => {
 
     try {
       const { data } = await axios.post('/api/user/signin', {
-        username,
+        email,
         password,
       });
 
@@ -57,13 +57,13 @@ export default () => {
       <StyledMainFormContainer>
         <Logo text />
         <form onSubmit={handleSubmit}>
-          <StyledMainFormLabel isPopulated={username}>
-            <span>Username</span>
+          <StyledMainFormLabel isPopulated={email}>
+            <span>Email</span>
             <FontAwesomeIcon icon={faUser} />
             <StyledInputMainForm
-              type='text'
-              value={username}
-              onChange={(evt) => setUsername(evt.target.value)}
+              type='email'
+              value={email}
+              onChange={(evt) => setEmail(evt.target.value)}
               required
             />
           </StyledMainFormLabel>
