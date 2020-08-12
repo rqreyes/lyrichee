@@ -65,13 +65,15 @@ export default () => {
             }}
           />
           <div className='details-container'>
-            <img
-              src={artistThumbnail}
-              onError={fallbackSrc}
-              alt='artist thumbnail'
-            />
+            <div className='details-image-container'>
+              <img
+                src={artistThumbnail}
+                onError={fallbackSrc}
+                alt='artist thumbnail'
+              />
+            </div>
             <div className='details-content'>
-              <StyledH2 alignLeft>{artistNameDisplay}</StyledH2>
+              <StyledH2>{artistNameDisplay}</StyledH2>
               {alternateNamesDisplay}
             </div>
           </div>

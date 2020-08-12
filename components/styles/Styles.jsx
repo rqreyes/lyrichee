@@ -8,7 +8,7 @@ export const StyledH1 = styled.h1`
 `;
 
 export const StyledH2 = styled.h2`
-  text-align: ${({ alignLeft }) => (alignLeft ? 'left' : 'center')};
+  text-align: center;
   margin: 0;
 
   ${({ notFound }) =>
@@ -259,16 +259,6 @@ export const StyledSectionHero = styled(StyledSection)`
     background-position: center;
   }
 
-  img {
-    display: block;
-    width: 180px;
-    height: 180px;
-    object-fit: cover;
-    border: 6px solid #fff;
-    border-radius: 10px;
-    margin: 0 auto;
-  }
-
   .details-container {
     display: flex;
     flex-direction: column;
@@ -279,6 +269,22 @@ export const StyledSectionHero = styled(StyledSection)`
     right: 0;
     bottom: 20px;
     left: 0;
+  }
+
+  .details-image-container {
+    width: 180px;
+    height: 180px;
+    background: white;
+    border: 6px solid #fff;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .details-content {
@@ -309,13 +315,17 @@ export const StyledSectionHero = styled(StyledSection)`
       align-items: flex-end;
     }
 
+    .details-image-container {
+      margin: 0 10px 0 0;
+    }
+
     .details-content {
       padding: 0;
       margin-bottom: 6px;
     }
 
-    img {
-      margin: 0 10px 0 0;
+    h2 {
+      text-align: left;
     }
   }
 `;

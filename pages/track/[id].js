@@ -667,17 +667,17 @@ export default () => {
             }}
           />
           <div className='details-container'>
-            <img
-              src={albumDisplay}
-              onError={fallbackSrc}
-              alt='album cover art thumbnail'
-            />
+            <div className='details-image-container'>
+              <img
+                src={albumDisplay}
+                onError={fallbackSrc}
+                alt='album cover art thumbnail'
+              />
+            </div>
             <div className='details-content'>
               <div className='details-favorite'>
                 <div className='details-text'>
-                  <StyledH2 alignLeft>
-                    {dataTrack.track.titles.featured}
-                  </StyledH2>
+                  <StyledH2>{dataTrack.track.titles.featured}</StyledH2>
                   <p>{dataTrack.track.artist.name}</p>
                 </div>
                 <div data-for='favorite' data-tip>
