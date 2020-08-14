@@ -38,6 +38,11 @@ export const StyledP = styled.p`
   text-align: ${({ alignCenter }) => (alignCenter ? 'center' : 'left')};
 `;
 
+export const StyledPForm = styled(StyledP)`
+  text-align: center;
+  margin-top: 10px;
+`;
+
 // list
 export const StyledUl = styled.ul`
   margin: 0;

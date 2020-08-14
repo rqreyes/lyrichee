@@ -116,13 +116,13 @@ const Nav = ({ home, toggleOpen }) => {
           About
         </StyledButtonNav>
         <Modal open={aboutModal} onClose={() => setAboutModal(false)}>
-          <StyledH4>About</StyledH4>
+          <StyledH4>What is Lyrichee?</StyledH4>
           <p>
             Lyrichee is a lyrics search engine application that helps users
             learn lyrics from their favorite tracks and measure their progress,
             line by line.
           </p>
-          <StyledH4>But it's so slow!</StyledH4>
+          <StyledH4>And why is it slow?</StyledH4>
           <p>
             Ah, sorry! Lyrichee works hard, and it sometimes may take a while to
             retrieve the information. In the meanwhile, feel free to drink some

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -10,6 +11,7 @@ import {
   StyledMainFormContainer,
   StyledMainFormLabel,
   StyledInputMainForm,
+  StyledPForm,
 } from '../../components/styles/Styles';
 import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
@@ -68,6 +70,7 @@ export default () => {
             <StyledInputMainForm
               type='password'
               value={password}
+              minLength={10}
               onChange={(evt) => setPassword(evt.target.value)}
               required
             />
@@ -78,6 +81,7 @@ export default () => {
             <StyledInputMainForm
               type='password'
               value={passwordConfirm}
+              minLength={10}
               onChange={(evt) => setPasswordConfirm(evt.target.value)}
               required
             />
@@ -85,6 +89,14 @@ export default () => {
           <StyledButtonText type='submit'>Register</StyledButtonText>
         </form>
         {errorDisplay}
+        <StyledPForm>
+          Already have an account?{' '}
+          <Link href='/signin'>
+            <a>
+              <strong>Sign in</strong>
+            </a>
+          </Link>
+        </StyledPForm>
       </StyledMainFormContainer>
     </>
   );

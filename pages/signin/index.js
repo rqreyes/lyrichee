@@ -6,21 +6,16 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
 import {
   StyledButtonText,
   StyledMainFormContainer,
   StyledMainFormLabel,
   StyledInputMainForm,
+  StyledPForm,
 } from '../../components/styles/Styles';
 import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
 import ErrorForm from '../../components/atoms/ErrorForm';
-
-const StyledP = styled.p`
-  text-align: center;
-  margin-top: 10px;
-`;
 
 export default () => {
   const [email, setEmail] = useState('');
@@ -80,14 +75,14 @@ export default () => {
           <StyledButtonText type='submit'>Sign In</StyledButtonText>
         </form>
         {errorDisplay}
-        <StyledP>
+        <StyledPForm>
           Don't have an account?{' '}
           <Link href='/register'>
             <a>
               <strong>Create one</strong>
             </a>
           </Link>
-        </StyledP>
+        </StyledPForm>
       </StyledMainFormContainer>
     </>
   );

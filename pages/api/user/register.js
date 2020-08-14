@@ -13,6 +13,13 @@ export default async (req, res) => {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
+    // if passwords are less than 10 characters, then send an error
+    if (password.length < 10 || passwordConfirm.length < 10) {
+      return res
+        .status(400)
+        .json({ message: 'Passwords must be at least 10 characters long' });
+    }
+
     // if passwords do not match, then send an error
     if (password !== passwordConfirm) {
       return res.status(400).json({ message: 'Passwords must match' });
