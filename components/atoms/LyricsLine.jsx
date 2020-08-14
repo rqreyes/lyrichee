@@ -4,7 +4,7 @@ import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { StyledButton } from '../styles/Styles';
 
 const LyricsLine = ({
-  dataFavoriteItem,
+  dataTrackDB,
   learnedIdxLine,
   line,
   learnLine,
@@ -25,7 +25,7 @@ const LyricsLine = ({
 
   const handleHideLine = () => {
     setHideLine((prev) => {
-      if (Object.keys(dataFavoriteItem).length) {
+      if (Object.keys(dataTrackDB).length) {
         if (prev) updateLearnedLyrics(false, sectionIdx, lineIdx);
         else updateLearnedLyrics(true, sectionIdx, lineIdx);
       }

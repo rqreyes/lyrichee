@@ -139,8 +139,8 @@ export const StyledButtonNav = styled(StyledButton)`
 `;
 
 export const StyledButtonFavorite = styled(StyledButton)`
-  color: ${({ dataFavoriteItem, theme }) =>
-    dataFavoriteItem ? theme.colors.greenDark : theme.colors.red};
+  color: ${({ isFavorite, theme }) =>
+    isFavorite ? theme.colors.greenDark : theme.colors.red};
   padding: 0;
   transition: color 0.2s;
 

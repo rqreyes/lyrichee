@@ -351,7 +351,7 @@ const StyledDivLyricsContent = styled.div`
 `;
 
 export default () => {
-  const [dataTrack, setDataTrack] = useState({
+  const [dataTrackAPI, setDataTrackAPI] = useState({
     track: {
       id: 0,
       titles: {
@@ -361,19 +361,30 @@ export default () => {
         id: 0,
         name: '',
       },
-      album: undefined,
+      album: null,
       raw: {
         media: [],
         description: {
           dom: {
-            children: undefined,
+            children: null,
           },
         },
       },
     },
     lyrics: '',
   });
-  const [dataFavoriteItem, setDataFavoriteItem] = useState({});
+  const [dataTrackDB, setDataTrackDB] = useState({
+    trackId: 0,
+    trackTitle: '',
+    artistId: 0,
+    artistName: '',
+    albumUrl: '',
+    lyricsIdxLearned: [],
+    lyricsLinesLearned: 0,
+    lyricsLinesTotal: 0,
+    percentLearned: 0,
+  });
+  const [isFavorite, setIsFavorite] = useState(false);
   const [description, setDescription] = useState(false);
   const [learnLine, setLearnLine] = useState(false);
   const [learnSection, setLearnSection] = useState(false);
@@ -383,42 +394,22 @@ export default () => {
   const router = useRouter();
   const descriptionRef = useRef();
 
-  const handleFavorite = () => {
-    setDataFavoriteItem((prev) => {
-      setLearnSection(false);
-      setHideAll(false);
-      setLearnReset((prev) => !prev);
+  const checkAlbum = (track) => {
+    let albumUrl;
 
-      if (Object.keys(prev).length) {
-        setLearnLine(false);
-        return {};
-      } else {
-        setLearnLine(true);
+    if (track.album) {
+      albumUrl = track.album.cover_art_url;
+    } else if (track.thumbnail) {
+      albumUrl = track.thumbnail;
+    } else {
+      albumUrl = '/images/no-image.png';
+    }
 
-        const regex = RegExp('^\\[');
-        const lyricsLinesTotal = dataTrack.lyrics
-          .split(/\n\n/)
-          .map((section) => section.split(/\n/))
-          .flat()
-          .filter((line) => !regex.test(line)).length;
-
-        return {
-          trackId: dataTrack.track.id,
-          trackTitle: dataTrack.track.titles.featured,
-          artistId: dataTrack.track.artist.id,
-          artistName: dataTrack.track.artist.name,
-          albumUrl: albumDisplay,
-          lyricsIdxLearned: [],
-          lyricsLinesLearned: 0,
-          lyricsLinesTotal,
-          percentLearned: 0,
-        };
-      }
-    });
+    return albumUrl;
   };
 
   const updateLearnedLyrics = (add, sectionIdx, lineIdx) => {
-    let learnedIdxLyricsCopy = [...dataFavoriteItem.lyricsIdxLearned];
+    let learnedIdxLyricsCopy = [...dataTrackDB.lyricsIdxLearned];
 
     if (add) {
       if (learnedIdxLyricsCopy[sectionIdx]) {
@@ -440,15 +431,14 @@ export default () => {
         );
     }
 
-    setDataFavoriteItem({
-      ...dataFavoriteItem,
+    setDataTrackDB({
+      ...dataTrackDB,
       lyricsIdxLearned: learnedIdxLyricsCopy,
     });
   };
 
   const handleReset = () => {
-    if (Object.keys(dataFavoriteItem).length)
-      setDataFavoriteItem({ ...dataFavoriteItem, lyricsIdxLearned: [] });
+    if (isFavorite) setDataTrackDB({ ...dataTrackDB, lyricsIdxLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
     setHideAll(false);
@@ -460,11 +450,8 @@ export default () => {
     return lyrics.split(/\n\n/).map((section, idx) => {
       let learnedIdxSection;
 
-      if (
-        Object.keys(dataFavoriteItem).length &&
-        dataFavoriteItem.lyricsIdxLearned[idx]
-      ) {
-        learnedIdxSection = dataFavoriteItem.lyricsIdxLearned[idx];
+      if (isFavorite && dataTrackDB.lyricsIdxLearned[idx]) {
+        learnedIdxSection = dataTrackDB.lyricsIdxLearned[idx];
       } else {
         learnedIdxSection = [];
       }
@@ -472,7 +459,7 @@ export default () => {
       return (
         <LyricsSection
           key={`section-${idx}`}
-          dataFavoriteItem={dataFavoriteItem}
+          dataTrackDB={dataTrackDB}
           learnedIdxSection={learnedIdxSection}
           section={section}
           learnLine={learnLine}
@@ -486,17 +473,9 @@ export default () => {
   };
 
   // display album art or placeholder image
-  let albumDisplay;
+  let albumDisplay = checkAlbum(dataTrackAPI.track);
 
-  if (dataTrack.track.album) {
-    albumDisplay = dataTrack.track.album.cover_art_url;
-  } else if (dataTrack.track.thumbnail) {
-    albumDisplay = dataTrack.track.thumbnail;
-  } else {
-    albumDisplay = '/images/no-image.png';
-  }
-
-  const favoriteDisplay = Object.keys(dataFavoriteItem).length ? (
+  const favoriteDisplay = isFavorite ? (
     <FontAwesomeIcon icon={faStarFull} />
   ) : (
     <FontAwesomeIcon icon={faStarEmpty} />
@@ -505,10 +484,10 @@ export default () => {
   // display media
   let streamsDisplay;
 
-  if (dataTrack.track.raw.media.length) {
+  if (dataTrackAPI.track.raw.media.length) {
     // display youtube video
     let youtubeDisplay;
-    const youtubeURL = dataTrack.track.raw.media.find(
+    const youtubeURL = dataTrackAPI.track.raw.media.find(
       (media) => media.provider === 'youtube'
     );
     if (youtubeURL) {
@@ -529,10 +508,10 @@ export default () => {
 
     // display providers
     let providersDisplay;
-    const spotifyURL = dataTrack.track.raw.media.find(
+    const spotifyURL = dataTrackAPI.track.raw.media.find(
       (media) => media.provider === 'spotify'
     );
-    const soundcloudURL = dataTrack.track.raw.media.find(
+    const soundcloudURL = dataTrackAPI.track.raw.media.find(
       (media) => media.provider === 'soundcloud'
     );
 
@@ -587,8 +566,8 @@ export default () => {
   if (learnSection) lyricsClass += ' learn-section';
   if (hideAll) lyricsClass += ' hide';
 
-  const parseLyricsDisplay = dataTrack.lyrics
-    ? parseLyrics(dataTrack.lyrics)
+  const parseLyricsDisplay = dataTrackAPI.lyrics
+    ? parseLyrics(dataTrackAPI.lyrics)
     : null;
 
   const descriptionClass = description ? 'active' : '';
@@ -599,21 +578,21 @@ export default () => {
         ? `${descriptionRef.current.scrollHeight}px`
         : '0px';
     }
-  }, [dataTrack, description, descriptionRef]);
+  }, [dataTrackAPI, description, descriptionRef]);
 
   useEffect(() => {
     (async () => {
       try {
-        if (Cookies.get('token') && Object.keys(dataFavoriteItem).length) {
+        if (Cookies.get('token') && isFavorite) {
           await axios.post('/api/user/favoriteItem', {
             token: Cookies.get('token'),
-            trackData: dataFavoriteItem,
+            trackData: dataTrackDB,
           });
         } else if (Cookies.get('token')) {
           await axios.delete('/api/user/favoriteItem', {
             params: {
               token: Cookies.get('token'),
-              queryId: dataTrack.track.id,
+              queryId: dataTrackAPI.track.id,
             },
           });
         }
@@ -621,14 +600,14 @@ export default () => {
         console.log(err);
       }
     })();
-  }, [dataFavoriteItem]);
+  }, [isFavorite, dataTrackDB]);
 
   useEffect(() => {
     if (router.query.id) {
       (async () => {
         try {
           const trackRes = await axios.get(`/api/track?id=${router.query.id}`);
-          setDataTrack(trackRes.data);
+          setDataTrackAPI(trackRes.data);
 
           if (Cookies.get('token')) {
             const favoriteItemRes = await axios.get(
@@ -638,8 +617,28 @@ export default () => {
             );
 
             if (favoriteItemRes.data) {
-              setDataFavoriteItem(favoriteItemRes.data);
+              setDataTrackDB(favoriteItemRes.data);
+              setIsFavorite(true);
               setLearnLine(true);
+            } else {
+              const regex = RegExp('^\\[');
+              const lyricsLinesTotal = trackRes.data.lyrics
+                .split(/\n\n/)
+                .map((section) => section.split(/\n/))
+                .flat()
+                .filter((line) => !regex.test(line)).length;
+
+              setDataTrackDB({
+                trackId: trackRes.data.track.id,
+                trackTitle: trackRes.data.track.titles.featured,
+                artistId: trackRes.data.track.artist.id,
+                artistName: trackRes.data.track.artist.name,
+                albumUrl: checkAlbum(trackRes.data.track),
+                lyricsIdxLearned: [],
+                lyricsLinesLearned: 0,
+                lyricsLinesTotal,
+                percentLearned: 0,
+              });
             }
           }
         } catch (err) {
@@ -653,8 +652,8 @@ export default () => {
     <>
       <Head>
         <title>
-          Lyrichee Track | {dataTrack.track.artist.name} -{' '}
-          {dataTrack.track.titles.featured}
+          Lyrichee Track | {dataTrackAPI.track.artist.name} -{' '}
+          {dataTrackAPI.track.titles.featured}
         </title>
       </Head>
       <Header />
@@ -663,7 +662,7 @@ export default () => {
           <div
             className='hero'
             style={{
-              backgroundImage: `url(${dataTrack.track.artist.image})`,
+              backgroundImage: `url(${dataTrackAPI.track.artist.image})`,
             }}
           />
           <div className='details-container'>
@@ -677,14 +676,14 @@ export default () => {
             <div className='details-content'>
               <div className='details-favorite'>
                 <div className='details-text'>
-                  <StyledH2>{dataTrack.track.titles.featured}</StyledH2>
-                  <p>{dataTrack.track.artist.name}</p>
+                  <StyledH2>{dataTrackAPI.track.titles.featured}</StyledH2>
+                  <p>{dataTrackAPI.track.artist.name}</p>
                 </div>
                 <div data-for='favorite' data-tip>
                   <StyledButtonFavorite
-                    dataFavoriteItem={Object.keys(dataFavoriteItem).length}
+                    isFavorite={isFavorite}
                     type='button'
-                    onClick={handleFavorite}
+                    onClick={() => setIsFavorite((prev) => !prev)}
                     disabled={Cookies.get('token') ? false : true}
                   >
                     {favoriteDisplay}
@@ -700,7 +699,7 @@ export default () => {
               </div>
               <Link
                 href='/artist/[id]'
-                as={`/artist/${dataTrack.track.artist.id}`}
+                as={`/artist/${dataTrackAPI.track.artist.id}`}
                 passHref
               >
                 <StyledLinkViewArtist>
@@ -731,7 +730,7 @@ export default () => {
                 <StyledH3 noBottom>Description</StyledH3>
               </StyledDivHeader>
               <StyledDivContentDescription ref={descriptionRef}>
-                {parseDom(dataTrack.track.raw.description.dom.children)}
+                {parseDom(dataTrackAPI.track.raw.description.dom.children)}
               </StyledDivContentDescription>
             </StyledSectionDescription>
           </div>
@@ -797,7 +796,7 @@ export default () => {
           </div>
         </StyledColumnTwo>
       </main>
-      <Loading data={dataTrack.lyrics} />
+      <Loading data={dataTrackAPI.lyrics} />
     </>
   );
 };

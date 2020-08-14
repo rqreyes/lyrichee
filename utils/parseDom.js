@@ -1,6 +1,6 @@
 // parse the description DOM into HTML
 const parseDom = (DOM) => {
-  if (DOM === undefined) return;
+  if (!DOM) return;
   if (DOM[0] === '?') return 'No description available';
 
   return DOM.map((parent, idx) => {
