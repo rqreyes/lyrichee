@@ -137,6 +137,7 @@ const StyledSectionLyrics = styled(StyledSectionContent)`
     display: flex;
     align-items: center;
     margin: 0 0 4px;
+    transition: opacity 0.6s;
 
     &.hide-line {
       .line-button {
@@ -333,8 +334,6 @@ const StyledDivCheckboxCustom = styled.div`
 `;
 
 const StyledDivLyricsContent = styled.div`
-  transition: all 0.6s;
-
   &.learn-section {
     .lyrics-section-content {
       > div {
@@ -345,8 +344,10 @@ const StyledDivLyricsContent = styled.div`
     }
   }
 
-  &.hide {
-    opacity: 0;
+  &.learn-all {
+    .lyrics-line {
+      opacity: 0;
+    }
   }
 `;
 
@@ -388,7 +389,7 @@ export default () => {
   const [description, setDescription] = useState(false);
   const [learnLine, setLearnLine] = useState(false);
   const [learnSection, setLearnSection] = useState(false);
-  const [hideAll, setHideAll] = useState(false);
+  const [learnAll, setLearnAll] = useState(false);
   const [learnReset, setLearnReset] = useState(false);
   const [lyricsModal, setLyricsModal] = useState(false);
   const router = useRouter();
@@ -441,7 +442,7 @@ export default () => {
     if (isFavorite) setDataTrackDB({ ...dataTrackDB, lyricsIdxLearned: [] });
     setLearnLine(false);
     setLearnSection(false);
-    setHideAll(false);
+    setLearnAll(false);
     setLearnReset((prev) => !prev);
   };
 
@@ -564,7 +565,7 @@ export default () => {
 
   let lyricsClass = '';
   if (learnSection) lyricsClass += ' learn-section';
-  if (hideAll) lyricsClass += ' hide';
+  if (learnAll) lyricsClass += ' learn-all';
 
   const parseLyricsDisplay = dataTrackAPI.lyrics
     ? parseLyrics(dataTrackAPI.lyrics)
@@ -774,8 +775,8 @@ export default () => {
                 <StyledLabelCheckbox>
                   <StyledInputCheckbox
                     type='checkbox'
-                    checked={hideAll}
-                    onChange={() => setHideAll((prev) => !prev)}
+                    checked={learnAll}
+                    onChange={() => setLearnAll((prev) => !prev)}
                   />
                   <StyledDivCheckboxCustom />
                   <span>All</span>
