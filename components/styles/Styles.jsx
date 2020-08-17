@@ -231,7 +231,7 @@ export const StyledMainFormContainer = styled(StyledMainCenter)`
   @media (min-width: 768px) {
     border: ${({ theme }) => theme.border};
     border-radius: 10px;
-    margin-top: 20vh;
+    margin-top: 16vh;
   }
 `;
 
@@ -433,13 +433,16 @@ export const StyledColumnTwo = styled.div`
   }
 `;
 
-export const StyledDivError = styled.div`
+export const StyledDivFormMessage = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: rgb(235, 90, 70);
-  background: rgba(235, 90, 70, 0.1);
+  color: ${({ success }) =>
+    success ? 'rgb(40, 167, 69)' : 'rgb(220, 53, 69)'};
+  background: ${({ success }) =>
+    success ? 'rgba(40, 167, 69, 0.1)' : 'rgba(220, 53, 69, 0.1)'};
   padding: 10px 20px;
+  border-radius: 4px;
   margin-top: 10px;
   cursor: pointer;
 

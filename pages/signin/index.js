@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -15,16 +15,17 @@ import {
 } from '../../components/styles/Styles';
 import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
-import ErrorForm from '../../components/atoms/ErrorForm';
+import FormMessage from '../../components/atoms/FormMessage';
 
 export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [formMessage, setFormMessage] = useState({});
   const router = useRouter();
+  let formMessageDisplay;
 
-  const errorDisplay = error ? (
-    <ErrorForm error={error} setError={setError} />
+  formMessageDisplay = Object.keys(formMessage).length ? (
+    <FormMessage formMessage={formMessage} setFormMessage={setFormMessage} />
   ) : null;
 
   const handleSubmit = async (evt) => {
@@ -39,9 +40,25 @@ export default () => {
       Cookies.set('token', data.token, { expires: 1 });
       router.push('/favorites');
     } catch (err) {
-      setError(err.response.data.message);
+      setFormMessage(err.response.data);
     }
   };
+
+  useEffect(() => {
+    if (router.query.token) {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            `/api/user/email?token=${router.query.token}`
+          );
+
+          setFormMessage(data);
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  });
 
   return (
     <>
@@ -74,7 +91,7 @@ export default () => {
           </StyledMainFormLabel>
           <StyledButtonText type='submit'>Sign In</StyledButtonText>
         </form>
-        {errorDisplay}
+        {formMessageDisplay}
         <StyledPForm>
           Don't have an account?{' '}
           <Link href='/register'>

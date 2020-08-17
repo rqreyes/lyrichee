@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faUserLock } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -15,17 +13,16 @@ import {
 } from '../../components/styles/Styles';
 import Header from '../../components/organisms/Header';
 import Logo from '../../components/molecules/Logo';
-import ErrorForm from '../../components/atoms/ErrorForm';
+import FormMessage from '../../components/atoms/FormMessage';
 
 export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [error, setError] = useState('');
-  const router = useRouter();
+  const [formMessage, setFormMessage] = useState({});
 
-  const errorDisplay = error ? (
-    <ErrorForm error={error} setError={setError} />
+  const formMessageDisplay = Object.keys(formMessage).length ? (
+    <FormMessage formMessage={formMessage} setFormMessage={setFormMessage} />
   ) : null;
 
   const handleSubmit = async (evt) => {
@@ -38,10 +35,12 @@ export default () => {
         passwordConfirm,
       });
 
-      Cookies.set('token', data.token, { expires: 1 });
-      router.push('/favorites');
+      setEmail('');
+      setPassword('');
+      setPasswordConfirm('');
+      setFormMessage(data);
     } catch (err) {
-      setError(err.response.data.message);
+      setFormMessage(err.response.data);
     }
   };
 
@@ -88,7 +87,7 @@ export default () => {
           </StyledMainFormLabel>
           <StyledButtonText type='submit'>Register</StyledButtonText>
         </form>
-        {errorDisplay}
+        {formMessageDisplay}
         <StyledPForm>
           Already have an account?{' '}
           <Link href='/signin'>

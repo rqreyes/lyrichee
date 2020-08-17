@@ -1,12 +1,19 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import styled from 'styled-components';
 import {
   StyledMainCenter,
   StyledH2,
-  StyledP,
   StyledButtonText,
 } from '../components/styles/Styles';
 import Header from '../components/organisms/Header';
+
+const StyledP = styled.p`
+  && {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+`;
 
 export default () => {
   return (
