@@ -64,7 +64,7 @@ const FavoriteItem = ({ favoriteItem }) => (
   >
     <div className='item-content'>
       <img src={favoriteItem.albumUrl} onError={fallbackSrc} alt='album art' />
-      <div className='item-text'>
+      <div>
         <p>
           <strong>{favoriteItem.trackTitle}</strong>
         </p>

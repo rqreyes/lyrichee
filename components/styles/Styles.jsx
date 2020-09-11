@@ -189,6 +189,7 @@ export const StyledInputSearch = styled(StyledInput)`
   padding: 10px 40px 10px 20px;
   border: ${({ theme }) => theme.border};
   border-radius: 100px;
+  -webkit-appearance: none;
   box-shadow: ${({ theme }) => theme.boxShadow};
 
   ${({ home }) =>
@@ -208,11 +209,12 @@ export const StyledInputMainForm = styled(StyledInput)`
 // main
 export const StyledMainCenter = styled.main`
   padding: 0 20px;
-  margin: 20vh auto 0;
+  margin: 16vh auto 0;
 
   /* Medium devices (tablets, 768px and up) */
   @media (min-width: 768px) {
     max-width: 440px;
+    margin-top: 20vh;
   }
 `;
 
@@ -221,7 +223,7 @@ export const StyledMainFormContainer = styled(StyledMainCenter)`
   padding: 40px;
   border-top: ${({ theme }) => theme.border};
   border-bottom: ${({ theme }) => theme.border};
-  margin-top: 20px;
+  margin-top: 0;
 
   img {
     margin: 0 auto 20px;
@@ -368,13 +370,6 @@ export const StyledSectionList = styled(StyledSectionContent)`
     object-fit: cover;
     border-radius: 4px;
     margin-right: 10px;
-  }
-
-  .item-text {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    word-wrap: break-word;
   }
 
   p {

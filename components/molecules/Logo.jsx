@@ -19,7 +19,8 @@ const StyledImg = styled.img`
   ${({ home }) =>
     home &&
     `
-      width: 300px;
+      align-self: flex-start;
+      width: 100%;
       height: auto;
   `}
 `;

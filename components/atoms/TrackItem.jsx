@@ -18,7 +18,7 @@ const TrackItem = ({ track }) => {
     <li>
       <div className='item-content'>
         <img src={albumDisplay} onError={fallbackSrc} alt='album art' />
-        <div className='item-text'>
+        <div>
           <p>
             <strong>{track.titles.featured}</strong>
           </p>

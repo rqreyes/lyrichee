@@ -11,7 +11,7 @@ const ArtistItem = ({ artist }) => {
           onError={fallbackSrc}
           alt='artist thumbnail'
         />
-        <div className='item-text'>
+        <div>
           <p>
             <strong>{artist.name}</strong>
           </p>
